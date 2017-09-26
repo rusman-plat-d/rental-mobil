@@ -33,34 +33,39 @@ function gets() {
             Sewa$_[key].supir = Supir.get(Sewa$_[key].id_supir);
         }
     }
-    return Sewa$_.filter(function (sewa) {
-        return sewa.mobil;
-    });
+    return Sewa$_;
 }
 exports.gets = gets;
 function get(id) {
     console.log('[db]Sewa: get');
-    return Sewa$.filter(function (sewa) { return sewa.id === id; })[0];
+    return gets().filter(function (sewa) { return sewa.id === id; })[0];
 }
 exports.get = get;
 function add(sewa) {
     console.log('[db]Sewa: add');
-    Sewa$.unshift(Object.assign(sewa, {
+    var _sewa = Object.assign(sewa, {
         id: uuid_1.v4(),
         createdAt: Date.now(),
         updatedAt: Date.now()
-    }));
+    });
+    Sewa$.unshift(_sewa);
+    Mobil.update(Object.assign(Mobil.get(_sewa.id_mobil), { _status: 'Dipesan' }));
+    if (_sewa.id_supir)
+        Supir.update(Object.assign(Supir.get(_sewa.id_supir), { _status: 'Dipesan' }));
     save();
+    return get(_sewa.id);
 }
 exports.add = add;
 function update(sewa) {
     console.log('[db]Sewa: update');
+    var _sewa;
     for (var i in Sewa$) {
         if (Sewa$[i].id == sewa.id) {
-            Object.assign(Sewa$[i], sewa, { updatedAt: Date.now() });
+            _sewa = Sewa$[i] = Object.assign(sewa, { updatedAt: Date.now() });
         }
     }
     save();
+    return _sewa;
 }
 exports.update = update;
 function remove(id) {
@@ -74,5 +79,6 @@ function remove(id) {
         return id !== sewa.id;
     });
     save();
+    return get(id);
 }
 exports.remove = remove;

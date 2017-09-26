@@ -1,6 +1,6 @@
 {
 	"name": "pp2",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"license": "MIT",
 	"scripts": {
 		"build:prod": "ng build --prod -aot --output-hashing=none && ng build --prod --app server --output-hashing=none && npm run tsc && npm run start",

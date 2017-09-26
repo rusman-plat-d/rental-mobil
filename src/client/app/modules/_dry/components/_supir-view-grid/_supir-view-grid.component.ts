@@ -23,7 +23,7 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 })
 export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	get Supir$(): Supir[] { return this._database.dataChange.value; }
+	get Supir$(): Supir[] { return this._database.data }
 	get cols(): number {
 		if (this.$_pp2MQ.screen.gtOE.l)
 			return 3;
@@ -43,6 +43,6 @@ export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	ngAfterViewInit() { }
 	ngOnInit() { }
 	pindah(ke) {
-		this.$_ngRouter.navigate(['saya', 'sewa', `("s":"${ke}", "m":"")`]);
+		this.$_ngRouter.navigate(['saya', 'sewa', `("m":"", "s":"${ke}")`]);
 	}
 }

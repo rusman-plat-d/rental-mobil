@@ -1,7 +1,7 @@
 <div class="pp2-dry-penggunaViewTable container pp2-content margin-auto">
 	<mat-drawer-container>
 		<mat-drawer #C_Mat_Drawer align='end' mode='side' (open)='btnClose.focus()' style='width: 300px'>
-			<mat-toolbar color='accent'>
+			<mat-toolbar color='primary'>
 				<span class='flex-auto'></span>
 				<button color='primary' mat-icon-button mat-raised-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + pengguna.id'><mat-icon>mode_edit</mat-icon></button>
 				<button (click)='remove(pengguna.id)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Pengguna'><mat-icon>delete</mat-icon></button>

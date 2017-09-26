@@ -9,6 +9,7 @@ import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import { IndexRouter } from './routes/index';
 
 const { createServer } = require('http');
@@ -22,14 +23,18 @@ const app = express();
 
 app.use((req, res, next) => {
 	res.set({
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE'
+		'Access-Control-Allow-Headers': '*',
+		'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE',
+		'Access-Control-Allow-Origin': '*'
 	})
 	next()
 })
+app.use(express.static(join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 app.use('/', IndexRouter);
 
-const PORT = 443;
+const PORT = process.env.PORT || 4136;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { Pp2ServerModuleNgFactory, Pp2ServerModule, LAZY_MODULE_MAP } = require('./main.bundle');
@@ -55,10 +60,15 @@ app.get('*.*', express.static(join(__dirname, 'public')));
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
 	// res.sendFile(join(__dirname, 'public', 'index.html'))
-	res.render('index', { req });
+	res.render('index', { req, res });
 });
 
 // // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Node server listening on http://localhost:${PORT}`);
+// });
+
+const server = createServer(app)
+server.listen(PORT, (err)=>{
+	console.log(err, PORT)
+})
