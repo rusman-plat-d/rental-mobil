@@ -8,11 +8,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export class _KonfirmasiHapusDialogComponent implements OnInit {
 	$btn$ = new EventEmitter<string>();
 	constructor(
-	    @Inject(MAT_DIALOG_DATA) public dialogData: any,
-		public dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>
+	    @Inject(MAT_DIALOG_DATA) public _dialogData: any,
+		public $_matDialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>
 	) {}
 	ngOnInit() {
-		console.log(this.dialogData)
-		console.log(this.dialogRef)
+		console.log(this._dialogData)
+		console.log(this.$_matDialogRef)
 	}
 }

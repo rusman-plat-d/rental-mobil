@@ -4,7 +4,6 @@ import { Pengguna } from './pengguna.interface';
 
 export interface Sewa {
 	denda?: number;
-	id?: string;
 	id_mobil?: string;
 	id_pengguna?: string;
 	id_supir?: string;
@@ -22,4 +21,8 @@ export interface Sewa {
 	totalSewa?: number;
 	createdAt?: number;
 	updatedAt?: number;
+}
+
+export interface SewaId extends Sewa{
+	id?: string;
 }

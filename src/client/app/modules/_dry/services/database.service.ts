@@ -2,79 +2,82 @@ import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable, isDevMode } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
+import * as firebase from 'firebase';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
-import { ConfigService } from '../services/config.service';
+export type Operator = '<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!==';
 
 @Injectable()
-export class DatabaseService {
-	dataChange: any;
-	get data() { return this.prop == '' ? this.dataChange.value : this.data_ }
-	get data_() {
-		return this.dataChange.value.filter((data) => {
-			return data[this.prop] == this.val
-		})
-	};
-	url = '';
-	prop = '';
-	table: string;
-	val = '';
-	constructor(
-		private $_ngHttpClient: HttpClient,
-		private $_pp2Conf: ConfigService
-	) {}
-	private getData<T>(){
-		this.$_ngHttpClient.get(this.url)
-			.subscribe((res: T[]) => {
-				this.dataChange.next(res)
-				localStorage[this.table] = JSON.stringify(res);
-			})
-	}
-	init<T>(url: string, table: string, prop = '', val = '') {
-		this.url = url;
-		this.table = table;
-		this.prop = prop;
-		this.val = val;
-		this.dataChange = new BehaviorSubject<T[]>([]);
-		this.getData<T>()
-		setInterval(() => {
-			this.getData<T>()
-		}, 8000)
-	}
-	add<T>(data: T): T[] {
-		const copiedData = this.data.slice();
-		copiedData.unshift(data);
-		localStorage[this.table] = JSON.stringify(copiedData);
-		this.dataChange.next(copiedData);
-		return this.data;
-	}
-	get<T>(id: string): T {
-		return this.data.filter((data) => data.id === id)
-	}
-	update<T>(data: T): T[] {
-		const copiedData = this.data.slice();
-		for (let i in copiedData) {
-			if (data['id'] === copiedData[i].id)
-				Object.assign(copiedData[i], data);
+export class DatabaseService<T> {
+	get data(): T[] {
+		let _data = this.dataChange.value;
+		if (this.where) {
+			for(let i in this.where){
+				_data = _data.filter((data: T) => {
+					let retVal;
+					switch (this.where[i][1]) {
+						case '<':	retVal = data[this.where[i][0]] <	this.where[i][2]; break;
+						case '>':	retVal = data[this.where[i][0]] >	this.where[i][2]; break;
+						case '<=':	retVal = data[this.where[i][0]] <=	this.where[i][2]; break;
+						case '>=':	retVal = data[this.where[i][0]] >=	this.where[i][2]; break;
+						case '==':	retVal = data[this.where[i][0]] ==	this.where[i][2]; break;
+						case '===':	retVal = data[this.where[i][0]] ===	this.where[i][2]; break;
+						case '!=':	retVal = data[this.where[i][0]] !=	this.where[i][2]; break;
+						case '!==':	retVal = data[this.where[i][0]] !==	this.where[i][2]; break;
+					}
+					return retVal;
+				})
+			}
 		}
-		this.dataChange.next(copiedData);
-		localStorage[this.table] = JSON.stringify(copiedData);
-		return this.data;
+		return _data;
 	}
-	remove<T>(id: string) {
-		let copiedData = this.data.slice();
-		copiedData = copiedData.filter((data: T) => {
-			return id !== data['id'];
-		});
-		this.dataChange.next(copiedData);
-		localStorage[this.table] = JSON.stringify(copiedData);
-		return this.data;
+	private _table: string;
+	get table() {
+		return this._table;
 	}
-	clear() {
-		this.dataChange.next([]);
-		localStorage[this.table] = '[]';
-		return [];
+	set table(val){
+		this._table = val
+		this.itemsRef = this.$_ngfDatabase.list('/' + this.table);
+		this.items = this.itemsRef.valueChanges()
+	}
+	where;
+	dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
+	itemsRef: AngularFireList<T>;
+	items: Observable<T[]>;
+	itemRef:  AngularFireObject<T>;
+	item: Observable<T>
+	constructor(
+		private $_ngfDatabase: AngularFireDatabase
+	) {}
+	create(data: T): firebase.database.ThenableReference {
+		return this.itemsRef.push(data)
+	}
+	gets(): Observable<T[]>{
+		return this.itemsRef.snapshotChanges().map((arr) => {
+			console.log(arr);
+			return arr.map((snap) => {
+				return Object.assign(snap.payload.val(), { $key: snap.key })
+			})
+		})
+	}
+	get(key: string): Observable<T | null> {
+		const itemPath = `/${this.table}/${key}`;
+		return this.$_ngfDatabase.object(itemPath).valueChanges() as Observable<T | null>
+	}
+	update(key: string, data: T): Promise<void> {
+		return this.itemsRef.update(key, data)
+	}
+	remove(key: string): Promise<void> {
+		return this.itemsRef.remove(key)
+	}
+	clearAll(): Promise<void> {
+		return this.itemsRef.remove()
 	}
 }

@@ -1,3 +1,5 @@
+export * from './classes/upload.class';
+
 export * from './components/_container/_container.component';
 export * from './components/_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 export * from './components/_file-image/_file-image.component';
@@ -31,3 +33,4 @@ export * from './services/config.service';
 export * from './services/database.service';
 export * from './services/pp2.service';
 export * from './services/Pp2-media-query.service';
+export * from './services/upload.service';

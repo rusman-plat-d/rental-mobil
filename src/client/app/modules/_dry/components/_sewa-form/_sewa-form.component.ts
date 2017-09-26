@@ -1,16 +1,18 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DateAdapter, MatCheckbox, MatDatepicker, MatSnackBar, NativeDateAdapter } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
-import { Mobil } from '../../interfaces/mobil.interface';
-import { Supir } from '../../interfaces/supir.interface';
+import { Mobil, MobilId } from '../../interfaces/mobil.interface';
+import { Supir, SupirId } from '../../interfaces/supir.interface';
 import { Sewa } from '../../interfaces/sewa.interface';
-import { Pengguna } from '../../interfaces/pengguna.interface';
+import { Pengguna, PenggunaId } from '../../interfaces/pengguna.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -35,7 +37,6 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	@ViewChild('mulai') __mulai: MatDatepicker<Date>;
 	@ViewChild('selesai') __selesai: MatDatepicker<Date>;
 
-	private headers = new HttpHeaders({'Content-Type': 'application/json'});
 	private tgl_mulai_val;
 
 	idMobil: string;
@@ -47,13 +48,13 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	Mobil$: Mobil[] = [];
 	Supir$: Supir[] = [];
 	_sewa: Sewa = {};
-	_mobilDatabase: DatabaseService = new DatabaseService(this.$_ngHttpClient, this.$_pp2Conf);
-	_supirDatabase: DatabaseService = new DatabaseService(this.$_ngHttpClient, this.$_pp2Conf);
+	$_pp2MobilDatabase: DatabaseService<MobilId>;
+	$_pp2SupirDatabase: DatabaseService<SupirId> = new DatabaseService<SupirId>();
 	sewaForm_mobil: FormGroup;
 	sewaForm_supir: FormGroup;
 	sewaForm_saya: FormGroup;
 	sewaForm_sewa: FormGroup;
-	Saya: Pengguna;
+	Saya: PenggunaId;
 
 	get _m() { return `"m":"${this.idMobil || ''}"`; }
 	get _s() { return `,"s":"${this.idSupir || ''}"`; }
@@ -74,15 +75,19 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		private $_ngFormBuilder: FormBuilder,
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
+		private $_ngfDatabase: AngularFireDatabase,
 		private $_pp2: Pp2Service,
 		private $_pp2MQ: Pp2MediaQueryService,
 		private $_matSnackBar: MatSnackBar
 	) {
 		// $_matDialog.afterOpen.subscribe(() => {if (!doc.body.classList.contains('no-scroll')) {doc.body.classList.add('no-scroll');}});
 		// $_matDialog.afterAllClosed.subscribe(() => {doc.body.classList.remove('no-scroll');});
-		console.log($_ngRouter)
-		this._mobilDatabase.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil')
-		this._supirDatabase.init<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/gets', 'supir')
+		this.$_pp2MobilDatabase = new DatabaseService<MobilId>($_ngfDatabase);
+		this.$_pp2SupirDatabase = new DatabaseService<SupirId>($_ngfDatabase);
+
+		this.$_pp2MobilDatabase.table = 'mobil';
+		this.$_pp2SupirDatabase.table = 'supir';
+
 		if (this.$_ngActivatedRoute.snapshot.params['id'] != undefined) {
 			const id = JSON.parse(this.$_ngActivatedRoute.snapshot.params['id'].replace('(', '{').replace(')', '}'))
 			try {
@@ -147,32 +152,6 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			tgl_mulai: ['', Validators.required],
 			tgl_selesai: ['', Validators.required]
 		});
-		setTimeout(() => {
-			if (this.$_ngRouter.url.indexOf('/saya/sewa') !== -1) {
-				this._mobilDatabase.dataChange.subscribe((Mobil$: Mobil[]) => {
-					this.Mobil$ = Mobil$.filter((mobil: Mobil) => {
-						return (mobil._status == 'Tersedia') || (mobil.id == this.idMobil);
-					});
-					this.sewaForm_mobil.get('mobil').setValue(JSON.stringify(
-						this.Mobil$.filter((mobil: Mobil) => {
-							return mobil.id == this.idMobil
-						})[0]
-					))
-				})
-				this._supirDatabase.dataChange.subscribe((Supir$: Supir[]) => {
-					this.Supir$ = Supir$.filter((supir: Supir) => {
-						return (supir._status == 'Tersedia') || (supir.id == this.idSupir);
-					});
-					if (this.idSupir) {
-						this.sewaForm_supir.get('supir').setValue(JSON.stringify(
-							this.Supir$.filter((supir: Supir) => {
-								return supir.id == this.idSupir
-							})[0]
-						))
-					}
-				})
-			}
-		}, 10);
 	}
 	tgl_keypress(e: Event) {
 		e.preventDefault();

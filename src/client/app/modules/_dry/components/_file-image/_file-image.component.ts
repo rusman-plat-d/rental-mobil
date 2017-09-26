@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Output, OnDestroy, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-
-declare var document: any,
-	SocketIOFileUpload: any;
 
 @Component({
 	selector: 'pp2-dry-fileImage',
@@ -13,13 +10,13 @@ declare var document: any,
 })
 
 export class _FileImageComponent implements OnDestroy, OnInit {
+	@Output() change: EventEmitter<any> = new EventEmitter<any>();
 	@ViewChild('preview') img;
-	imageSrc: string = '';
 	fileExist: boolean = false;
 	i_file: HTMLInputElement;
 	SIOFU: any;
 	get label() {
-		return this.fileExist ? 'Ganti' : 'Upload';
+		return this.fileExist ? 'Ganti' : 'Unggah';
 	}
 	constructor(
 		private $_ngHttpClient: HttpClient,
@@ -50,39 +47,5 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 	}
 	chooseFile() {
 		this.i_file.dispatchEvent(new MouseEvent('click'))
-	}
-	save(url: string, data, type: 'tambah' | 'ubah', navigateTo?: string[]) {
-		let retVal = false;
-		const formData = new FormData();
-		formData.append('data', JSON.stringify(data))
-		if (this.i_file.files.length >= 1) { formData.append('photo', this.i_file.files[0]) }
-		if (type === 'tambah')
-			this.$_ngHttpClient.post(url, formData)
-				.subscribe((res: any) => {
-					if (res.success) retVal = true;
-					localStorage[navigateTo[1]] = JSON.stringify(
-						JSON.parse(localStorage[navigateTo[1]])
-							.unshift(res.data)
-						)
-				})
-		else
-			this.$_ngHttpClient.put(url, formData)
-				.subscribe((res: any) => {
-					if (res.success) retVal = true;
-					localStorage[navigateTo[1]] = JSON.stringify(
-						JSON.parse(localStorage[navigateTo[1]])
-							.map((_data: any) => _data.id === res.data.id ? res.data : _data)
-						)
-				})
-		if (navigateTo) {
-			setTimeout(() => {
-				this.$_ngRouter.navigate(navigateTo);
-			}, 500)
-		}
-		this.$_matSnackBar.open('Data Berhasil ' + (type == 'tambah' ? 'Ditambahkan' : 'Perbarui'))
-		setTimeout(() => {
-			this.$_matSnackBar.dismiss();
-		}, 4000)
-		return retVal;
 	}
 }

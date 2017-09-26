@@ -1,5 +1,4 @@
 export interface Mobil {
-	id?: string;
 	nama?: string;
 	platNo?: string;
 	kursi?: number;
@@ -12,4 +11,8 @@ export interface Mobil {
 	_disewaSampai?: number;
 	createdAt?: number;
 	updatedAt?: number;
+}
+
+export interface MobilId extends Mobil {
+	id?: string;
 }

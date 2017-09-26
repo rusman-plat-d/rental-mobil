@@ -1,5 +1,4 @@
 export interface Pengguna {
-	id?: string;
 	nama?: string;
 	username?: string;
 	password?: string;
@@ -11,4 +10,8 @@ export interface Pengguna {
 	image?: string;
 	createdAt?: number;
 	updatedAt?: number;
+}
+
+export interface PenggunaId extends Pengguna{
+	id?: string;
 }

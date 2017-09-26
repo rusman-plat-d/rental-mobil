@@ -4,8 +4,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from "@angular/router";
 
 import { AngularFireModule }         from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule }     from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { CdkModules, MatModules } from './material.module';
 
@@ -19,9 +20,10 @@ export const RequireModule = [
 	ReactiveFormsModule,
 	RouterModule,
 
-	AngularFireModule.initializeApp(firebaseConfig),
-	AngularFireDatabaseModule,
+	AngularFireModule.initializeApp(firebaseConfig, 'pp2-rental'),
 	AngularFireAuthModule,
+	AngularFireDatabaseModule,
+	AngularFirestoreModule.enablePersistence(),
 
 	...CdkModules,
 	...MatModules

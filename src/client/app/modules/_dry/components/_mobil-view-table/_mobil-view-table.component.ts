@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Inject, InjectionToken, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -13,13 +12,11 @@ import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_ko
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
-import { MobilTableDataSource } from './_mobil-view-table.datasource';
-import { DetailRow, MobilTableDetailDataSource } from './_mobil-view-table.detail.datasource';
-
-import { Mobil } from '../../interfaces/mobil.interface';
+import { Mobil, MobilId } from '../../interfaces/mobil.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
+import { UploadService } from '../../services/upload.service';
 
 export type MobilTableProperties = 'id' | 'nama' | 'platNo' | 'kursi' | 'bensin' | 'hargaSewa' | 'image' | 'kondisi' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
@@ -35,61 +32,67 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
-	
-	_database: DatabaseService;
-	dataSource: MobilTableDataSource | null;
-	dataSourceWithDetails: MobilTableDetailDataSource | null;
+
+	get length(): number { return this._database.data.length; }
+
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: MobilProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt', 'action'];
 	displayedColumns: MobilTableProperties[] = ['image', 'nama', '_status'];
-	wasExpanded = new Set<Mobil>();
-	mobil: Mobil = {
-		id: ''
-	};
-	expandedMobil: Mobil;
+	mobil: MobilId = {id: ''};
+	mobilMatTableDataSource = new MatTableDataSource<MobilId>();
 
-	isDetailRow = (_index: number, row: DetailRow|Mobil) => row.hasOwnProperty('detailRow');
 	constructor(
 		@Inject(DOCUMENT) doc: Document,
 		public $_matDialog: MatDialog,
-		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		public $_pp2Conf: ConfigService
+		public $_pp2Conf: ConfigService,
+		public $_pp2Upload: UploadService,
+		public _database: DatabaseService<MobilId>
 	){
 		// Possible useful example for the open and closeAll events.
 		// Adding a class to the body if a dialog opens and
 		// removing it after all open dialogs are closed
 		$_matDialog.afterOpen.subscribe(() => {
-			if (!doc.body.classList.contains('no-scroll'))
-				doc.body.classList.add('no-scroll');
+			if (!doc.body.classList.contains('no-scroll')) doc.body.classList.add('no-scroll');
 		});
 		$_matDialog.afterAllClosed.subscribe(() => {
 			doc.body.classList.remove('no-scroll');
 		});
+		_database.table='mobil';
+		this.mobilMatTableDataSource.sortingDataAccessor = (mobil: MobilId, prop: string) => {
+			switch (prop) {
+				case 'id': return +mobil.id;
+				case 'nama': return +mobil.nama;
+				case 'platNo': return +mobil.platNo;
+				case 'kursi': return +mobil.kursi;
+				case 'bensin': return +mobil.bensin;
+				case 'hargaSewa': return +mobil.hargaSewa;
+				case 'kondisi': return +mobil.kondisi;
+				case '_status': return +mobil._status;
+				default: return '';
+			}
+		}
+		this.mobilMatTableDataSource.filterPredicate = (mobil: MobilId, filter: string) => JSON.stringify(mobil).indexOf(filter) != -1;
 	}
-	ngAfterViewInit(){}
+	ngAfterViewInit(){
+		this.mobilMatTableDataSource!.paginator = this.C_Mat_Paginator;
+		this.mobilMatTableDataSource!.sort = this.C_Mat_Sort;
+	}
 	ngOnDestroy(){
 		this._database = null;
 	}
 	ngOnInit() {
-		this._database = new DatabaseService(this.$_ngHttpClient, this.$_pp2Conf);
-		this._database.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil');
-		this.dataSource = new MobilTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
+		this.mobilMatTableDataSource!.data = this._database.data.slice();
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
-				if (!this.dataSource) { return; }
-				this.dataSource.filter = this.filter.nativeElement.value;
+				this.C_Mat_Paginator.pageIndex = 0;
+				this.mobilMatTableDataSource.filter = this.filter.nativeElement.value;
 			});
-		this.dataSourceWithDetails = new MobilTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
-		if (this.expandedMobil == row) {
-			this.expandedMobil = null;
-		} else {
-			this.expandedMobil = row;
-		}
-		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
+		this.mobil = this.mobil == row ? null : row;
+		// this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id: string) {
 		this.dialogRef = this.$_matDialog.open(_KonfirmasiHapusDialogComponent, {
@@ -101,16 +104,7 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		})
 		this.dialogRef.componentInstance
 			.$btn$.subscribe((res: 'O' | 'X')=>{
-				if (res === 'O') {
-					this.$_ngHttpClient.delete(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/delete/'+id)
-						.subscribe((res: {success: boolean}) => {
-							if (res.success) {
-								this._database.dataChange.next(
-									this._database.data.filter((mobil: Mobil) => mobil.id !== id)
-								)
-							}
-						})
-				}
+				if (res === 'O') this._database.remove(id)
 				this.dialogRef.close()
 				this.dialogRef = null;
 			})

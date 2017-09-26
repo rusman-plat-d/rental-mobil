@@ -51,7 +51,7 @@
 							<input #filter matInput placeholder="Cari Mobil">
 						</mat-form-field>
 					</mat-toolbar>
-					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
+					<mat-table #table [dataSource]="mobilMatTableDataSource" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 						<mat-row *matRowDef="let row; columns: displayedColumns;" (click)='btnClose.focus();C_Mat_Drawer.open();mobil = row' [style.borderBottomColor]="expandedMobil == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedMobil ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
@@ -160,7 +160,7 @@
 							</mat-cell>
 						</ng-container>
 					</mat-table>
-					<mat-paginator color='accent' #paginator [length]="_database.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+					<mat-paginator color='accent' #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 				</mat-card-content>
 			</mat-card>
 		</mat-drawer-content>

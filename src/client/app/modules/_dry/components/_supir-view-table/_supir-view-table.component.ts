@@ -1,25 +1,22 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { animate, transition, trigger, state, style, } from '@angular/animations';
-import { MatDialog, MatDialogRef, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 
 import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
-import { Supir } from '../../interfaces/supir.interface';
-
-import { SupirTableDataSource } from './_supir-view-table.datasource';
-import { DetailRow, SupirTableDetailDataSource } from './_supir-view-table.detail.datasource';
+import { Supir, SupirId } from '../../interfaces/supir.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
+import { UploadService } from '../../services/upload.service';
 
 export type SupirProperties = 'id' | 'nama' | 'noSim' | 'noHP' | 'jk' | 'hargaSewa' | 'alamat' | 'email' | 'image' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
@@ -32,48 +29,76 @@ export type SupirProperties = 'id' | 'nama' | 'noSim' | 'noHP' | 'jk' | 'hargaSe
 	]
 })
 export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnInit {
-	@ViewChild(MatPaginator) C_mat_paginator: MatPaginator;
-	@ViewChild(MatSort) C_mat_sort: MatSort;
+	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
+	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	
-	dataSource: SupirTableDataSource | null;
-	dataSourceWithDetails: SupirTableDetailDataSource | null;
+	get length(): number { return this._database.data.length; }
+
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'noHP', 'jk', 'hargaSewa', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
 	displayedColumns: SupirProperties[] = ['image', 'nama', '_status'];
-	changeReferences = false;
-	wasExpanded = new Set<Supir>();
+	supir: SupirId = {id: ''};
+	supirMatTableDataSource = new MatTableDataSource<SupirId>();
 
-	dynamicColumnDefs: any[] = [];
-	dynamicColumnIds: string[] = [];
-	supir: Supir = {id: ''};
-
-	isDetailRow = (_index: number, row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
 	constructor(
 		@Inject(DOCUMENT) doc: Document,
 		public $_matDialog: MatDialog,
-		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		public _database: DatabaseService,
+		public _database: DatabaseService<SupirId>,
+		public $_pp2Upload: UploadService,
 		public $_pp2Conf: ConfigService
 	) {
-		_database.init<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/gets', 'supir');
+		// Possible useful example for the open and closeAll events.
+		// Adding a class to the body if a dialog opens and
+		// removing it after all open dialogs are closed
+		$_matDialog.afterOpen.subscribe(() => {
+			if (!doc.body.classList.contains('no-scroll')) doc.body.classList.add('no-scroll');
+		});
+		$_matDialog.afterAllClosed.subscribe(() => {
+			doc.body.classList.remove('no-scroll');
+		});
+		_database.table='supir';
+		this.supirMatTableDataSource.sortingDataAccessor = (supir: SupirId, prop: string) => {
+			switch (prop) {
+				case 'id': return +supir.id;
+				case 'nama': return +supir.nama;
+				case 'noSIM': return +supir.noSIM;
+				case 'noHP': return +supir.noHP;
+				case 'jk': return +supir.jk;
+				case 'hargaSewa': return +supir.hargaSewa;
+				case 'alamat': return +supir.alamat;
+				case 'email': return +supir.email;
+				case 'image': return +supir.image;
+				case '_status': return +supir._status;
+				case '_disewa': return +supir._disewa;
+				case '_disewaSampai': return +supir._disewaSampai;
+				case 'createdAt': return +supir.createdAt;
+				case 'updatedAt': return +supir.updatedAt;
+				default: return '';
+			}
+		}
+		this.supirMatTableDataSource.filterPredicate = (supir: SupirId, filter: string) => JSON.stringify(supir).indexOf(filter) != -1;
 	}
-	ngAfterViewInit(){}
-	ngOnDestroy(){}
+	ngAfterViewInit(){
+		this.supirMatTableDataSource!.paginator = this.C_Mat_Paginator;
+		this.supirMatTableDataSource!.sort = this.C_Mat_Sort;
+	}
+	ngOnDestroy(){
+		this._database = null;
+	}
 	ngOnInit() {
-		this.dataSource = new SupirTableDataSource(this._database, this.C_mat_paginator, this.C_mat_sort)
+		this.supirMatTableDataSource!.data = this._database.data.slice();
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
-				if (!this.dataSource) { return; }
-				this.dataSource.filter = this.filter.nativeElement.value;
+				this.C_Mat_Paginator.pageIndex = 0;
+				this.supirMatTableDataSource.filter = this.filter.nativeElement.value;
 			});
-		this.dataSourceWithDetails = new SupirTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
 		this.supir = this.supir == row ? null : row;
-		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
+		// this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id: string) {
 		this.dialogRef = this.$_matDialog.open(_KonfirmasiHapusDialogComponent, {
@@ -85,16 +110,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		})
 		this.dialogRef.componentInstance
 			.$btn$.subscribe((res: 'O' | 'X')=>{
-				if (res === 'O') {
-					this.$_ngHttpClient.delete(this.$_pp2Conf.baseUrl + '/api/db/file/supir/delete/' + id)
-						.subscribe((res: {success: boolean}) => {
-							if (res.success) {
-								this._database.dataChange.next(
-									this._database.data.filter((supir: Supir) => supir.id !== id)
-								)
-							}
-						})
-				}
+				if (res === 'O') this._database.remove(id)
 				this.dialogRef.close()
 				this.dialogRef = null;
 			})

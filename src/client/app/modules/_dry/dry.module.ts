@@ -23,10 +23,11 @@ import { _UbahComponent } from './components/_ubah/_ubah.component';
 
 import { GridDirective } from './directives/grid.directive';
 
-import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
-import { DatabaseService } from './services/database.service';
 import { ConfigService } from './services/config.service';
+import { DatabaseService } from './services/database.service';
+import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
 import { Pp2Service } from './services/pp2.service';
+import { UploadService } from './services/upload.service';
 
 export const DryComponents = [
 	_ContainerComponent,
@@ -62,7 +63,8 @@ export const DryServices = [
 	ConfigService,
 	DatabaseService,
 	Pp2MediaQueryService,
-	Pp2Service
+	Pp2Service,
+	UploadService
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Mobil } from '../../interfaces/mobil.interface';
+import { Mobil, MobilId } from '../../interfaces/mobil.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -24,7 +24,7 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 
 export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	get data(): Mobil[] { return this._database.data }
+	get Mobil$(): Mobil[] { return this.$_pp2Database.data }
 	get cols(): number {
 		if (this.$_pp2MQ.screen.gtOE.l)
 			return 3;
@@ -35,13 +35,14 @@ export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	}
 	constructor(
 		public $_pp2Conf: ConfigService,
-		public _database: DatabaseService,
+		public $_pp2Database: DatabaseService<MobilId>,
 		public $_pp2MQ: Pp2MediaQueryService,
 		public $_ngRouter: Router
 	) {
-		_database.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil', '_status', 'Tersedia');
+		$_pp2Database.where = [['_status', '==', 'Tersedia']]
+		$_pp2Database.table = 'mobil';
 	}
-	ngAfterViewInit() { }
+	ngAfterViewInit() {}
 	ngOnInit() {}
 	pindah(ke) {
 		this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${ke}")`]);

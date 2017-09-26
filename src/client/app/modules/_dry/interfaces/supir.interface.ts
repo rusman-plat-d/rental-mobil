@@ -1,5 +1,4 @@
 export interface Supir {
-	id?: string;
 	nama?: string;
 	noSIM?: string;
 	noHP?: string;
@@ -13,4 +12,8 @@ export interface Supir {
 	_disewaSampai?: number;
 	createdAt?: number;
 	updatedAt?: number;
+}
+
+export interface SupirId extends Supir{
+	id?: string;
 }

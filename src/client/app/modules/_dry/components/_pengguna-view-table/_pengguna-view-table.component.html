@@ -47,7 +47,7 @@
 							<input matInput #filter placeholder="Cari Pengguna">
 						</mat-form-field>
 					</mat-toolbar>
-					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
+					<mat-table #table [dataSource]="penggunaMatTableDataSource" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 						<mat-row *matRowDef="let row; columns: displayedColumns;" (click)='btnClose.focus();C_Mat_Drawer.open();pengguna = row' [style.borderBottomColor]="expandedPengguna == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedPengguna ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
