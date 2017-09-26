@@ -18,10 +18,10 @@ export class Pp2Component implements OnInit {
 		private $_ngHttpClient: HttpClient,
 		private $_pp2Conf: ConfigService
 	){
-		this._mobilDatabase.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil');
-		this._supirDatabase.init<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/gets', 'supir');
-		this._sewaDatabase.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa');
-		this._penggunaDatabase.init<Pengguna>(this.$_pp2Conf.baseUrl + '/api/db/file/pengguna/gets', 'pengguna');
+		// this._mobilDatabase.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil');
+		// this._supirDatabase.init<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/gets', 'supir');
+		// this._sewaDatabase.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa');
+		// this._penggunaDatabase.init<Pengguna>(this.$_pp2Conf.baseUrl + '/api/db/file/pengguna/gets', 'pengguna');
 	}
 	ngOnInit() {
 		// if (!isDevMode()) {

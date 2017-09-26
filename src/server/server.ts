@@ -12,7 +12,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { IndexRouter } from './routes/index';
 
-const { Server } = require('http');
+const { createServer } = require('http');
 const { join } = require('path');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
@@ -29,6 +29,7 @@ app.use((req, res, next) => {
 	})
 	next()
 })
+app.use(express.static(join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use('/', IndexRouter);
@@ -67,7 +68,7 @@ app.get('*', (req, res) => {
 //   console.log(`Node server listening on http://localhost:${PORT}`);
 // });
 
-const server = Server(app)
+const server = createServer(app)
 server.listen(PORT, (err)=>{
 	console.log(err, PORT)
 })

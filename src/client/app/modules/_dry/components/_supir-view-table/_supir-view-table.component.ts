@@ -46,7 +46,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 
 	dynamicColumnDefs: any[] = [];
 	dynamicColumnIds: string[] = [];
-	expandedSupir: Supir;
+	supir: Supir = {id: ''};
 
 	isDetailRow = (_index: number, row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
 	constructor(
@@ -72,11 +72,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		this.dataSourceWithDetails = new SupirTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
-		if (this.expandedSupir == row) {
-			this.expandedSupir = null;
-		} else {
-			this.expandedSupir = row;
-		}
+		this.supir = this.supir == row ? null : row;
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id: string) {

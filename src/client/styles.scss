@@ -37,10 +37,15 @@ button a {
 		box-sizing: border-box !important;
 	}
 }
-.mat-drawer, .mat-toolbar, {
+.mat-drawer{
 	border-radius: 0 !important;
 	margin: 0 !important;
 	padding: 0 !important;
+}
+.mat-toolbar{
+	border-radius: 0 !important;
+	margin: 0 !important;
+	padding: 0 24px !important;
 }
 .mat-dialog-container {
 	padding: 0 !important;
@@ -116,7 +121,9 @@ h1 {
 .margin-auto{
 	margin: 64px auto;
 }
-
+.m24px{
+	margin:0 24px !important;
+}
 .iil{
 	margin: 2px 8px 2px 0;
 	height: 40px;
@@ -125,9 +132,6 @@ h1 {
 }
 .owit{
 	float: left;
-}
-.nav.menu{
-	margin: 0 12px !important;
 }
 .mat-toolbar a {
 	margin: none 10px !important;

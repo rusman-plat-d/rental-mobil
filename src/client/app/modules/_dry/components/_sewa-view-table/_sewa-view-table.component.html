@@ -14,7 +14,7 @@
 				<ng-container matColumnDef="details">
 					<mat-cell *matCellDef="let row">
 						<ng-container *ngIf="wasExpanded.has(row.data)">
-							<table>
+							<table class='browser-default'>
 								<colgroup width='150px'></colgroup>
 								<tr>
 									<td colspan="2" style="padding: 5px;">
@@ -76,12 +76,22 @@
 				<!-- Column Definition: m_nama -->
 				<ng-container matColumnDef="m_nama">
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Mobil </mat-header-cell>
-					<mat-cell *matCellDef="let row;"> {{row.mobil.nama}} </mat-cell>
+					<mat-cell *matCellDef="let row;">
+						<span style='float: left !important; margin-right: 8px'>
+							<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.mobil.image" style='height: 56px;width: 64px;align-self: center; justify-self: center;'>
+						</span>
+						<span> <br>{{row.mobil.nama}} </span>
+					</mat-cell>
 				</ng-container>
 				<!-- Column Definition: s_nama -->
 				<ng-container matColumnDef="s_nama">
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Supir </mat-header-cell>
-					<mat-cell *matCellDef="let row;"> {{row.supir?.nama ? row.supir?.nama : '---'}} </mat-cell>
+					<mat-cell *matCellDef="let row;">
+						<span *ngIf='row.supir' style='float: left !important; margin-right: 8px'>
+							<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + row.supir.image" style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
+						</span>
+						<span> <br>{{row.supir?.nama ? row.supir?.nama : '---'}} </span>
+					</mat-cell>
 				</ng-container>
 				<!-- Column Definition: _s_hari -->
 				<ng-container matColumnDef="_s_hari">
@@ -97,17 +107,20 @@
 				<ng-container matColumnDef="action">
 					<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 					<mat-cell *matCellDef="let row">
-						<button *ngIf='level == "pengguna"' color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Penyewaan' [routerLink]='"/saya/sewa/" + id(row)'>
-							<mat-icon>mode_edit</mat-icon>
+						<!-- <button *ngIf='level == "pengguna"' color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Penyewaan' [routerLink]='"/saya/sewa/" + id(row)'>
+							<mat-icon>arrow_forward</mat-icon>
 						</button>
 						<button *ngIf='level == "pengurus"' color='accent' mat-icon-button mat-raised-button>
 							<mat-icon>arrow_forward</mat-icon>
-						</button>
-						<button color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Penyewaan' (click)='remove(row.id)'>
-							<mat-icon>delete</mat-icon>
+						</button> -->
+						<button color='primary' mat-button matTooltip='Cetak Laporan'>
+							<mat-icon>print</mat-icon>
 						</button>
 						<button color='accent' mat-raised-button mat-icon-button matTooltip='Detail' (click)="rowClick(row)">
 							<mat-icon>details</mat-icon>
+						</button>
+						<button color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Penyewaan' (click)='remove(row.id)'>
+							<mat-icon>delete</mat-icon>
 						</button>
 					</mat-cell>
 				</ng-container>
