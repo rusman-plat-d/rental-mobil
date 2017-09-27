@@ -21,10 +21,6 @@ import { SayaModule } from './modules/saya/saya.module';
 import { Pp2Component } from './pp2.component';
 import { NavComponent_ } from './components/_nav/_nav.component';
 
-
-export const Pp2Guards = [
-];
-
 @NgModule({
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
@@ -42,9 +38,6 @@ export const Pp2Guards = [
 		NavComponent_,
 		...Pp2Components
 	],
-	providers: [
-		...Pp2Guards
-	],
 	bootstrap: [Pp2Component]
 })
 export class Pp2Module {
@@ -53,5 +46,10 @@ export class Pp2Module {
 		@Inject(APP_ID) private appId: string) {
 		const platform = isPlatformBrowser(platformId) ? 'on the browser' : 'in the server';
 		console.log(`Running ${platform} with appId=${appId}`);
+		if ( platform == 'on the browser' ) {
+			const swRegister = document.createElement('script');
+			swRegister.src = 'assets/sw-register.js';
+			document.body.appendChild(swRegister);
+		}
 	}
 }

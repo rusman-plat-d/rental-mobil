@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"license": "MIT",
 	"scripts": {
-		"build:prod": "ng build --prod -aot --output-hashing=none && ng build --prod --app server --output-hashing=none && npm run tsc && npm run start",
+		"build:prod": "ng build --prod -aot --output-hashing=none && npm run generate-sw && npm run pp2-ngsw && ng build --prod --app server --output-hashing=none && npm run tsc && npm run start",
 		"build": "ng build --output-hashing=none && ng build --app server --output-hashing=none",
 		"generate-sw": "node generate-sw.js",
 		"pp2-ngsw": "ngsw-config dist/public ./src/client/ngsw-config.json",
