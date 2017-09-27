@@ -7,9 +7,23 @@
 			<button mat-raised-button color='danger'>button</button>
 			<mat-icon>arrow_back</mat-icon>
 			<mat-icon>arrow_forward</mat-icon>
-			<p [fxHide]='sembunyikan'>
+			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, voluptatibus iste asperiores ipsam, expedita dolores libero atque quibusdam sapiente in itaque perferendis corporis! Earum nesciunt distinctio officia odit obcaecati excepturi, doloremque explicabo tempora eius eligendi itaque rerum vel quaerat officiis ratione fugiat quam neque possimus architecto laudantium praesentium? Provident cumque modi odit nihil ea similique voluptate enim nesciunt ad, nisi praesentium quaerat magnam quibusdam autem inventore aperiam consectetur officiis amet sint eveniet architecto voluptas consequuntur? Sapiente quas aliquam harum impedit.
 			</p>
+			<mat-list dense>
+				<mat-list-item> foo </mat-list-item>
+				<mat-list-item>
+					<span style="display: block">bar</span>
+					<br>
+					<mat-list style="display: block">
+						<mat-list-item> foo </mat-list-item>
+						<mat-list-item> bar </mat-list-item>
+						<mat-list-item> baz </mat-list-item>
+					</mat-list>
+				</mat-list-item>
+				<mat-list-item> baz </mat-list-item>
+				<mat-list-item *ngFor='let i of daftar'>{{ i }}</mat-list-item>
+			</mat-list>
 			<button mat-fab style='position: fixed;bottom: 64px; right: 64px'><mat-icon>add</mat-icon></button>
 			<!-- <pp2-dry-pengembalianForm></pp2-dry-pengembalianForm> -->
 		</div>

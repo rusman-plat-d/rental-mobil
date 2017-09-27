@@ -47,7 +47,7 @@ export class DatabaseService<T> {
 		this.itemsRef = this.$_ngfDatabase.list('/' + this.table);
 		this.items = this.itemsRef.valueChanges()
 	}
-	where;
+	where: any[][2];
 	dataChange: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
 	itemsRef: AngularFireList<T>;
 	items: Observable<T[]>;

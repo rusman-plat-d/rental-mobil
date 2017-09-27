@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { DryModule } from '../_dry/dry.module';
+import { FirebaseModule } from '../_dry/firebase.module';
 
 import { PengurusRoutingModule, PengurusComponents } from './pengurus.routing.module';
 
@@ -15,6 +16,7 @@ export const PengurusServices = [
 @NgModule({
 	imports: [
 		DryModule,
+		...FirebaseModule,
 		PengurusRoutingModule
 	],
 	exports: [

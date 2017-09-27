@@ -11,7 +11,7 @@ import 'rxjs/add/operator/filter';
 
 import { Mobil, MobilId } from '../../interfaces/mobil.interface';
 import { Supir, SupirId } from '../../interfaces/supir.interface';
-import { Sewa } from '../../interfaces/sewa.interface';
+import { Sewa, SewaId } from '../../interfaces/sewa.interface';
 import { Pengguna, PenggunaId } from '../../interfaces/pengguna.interface';
 
 import { ConfigService } from '../../services/config.service';
@@ -45,11 +45,11 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	tglSelesai;
 
 	minDate = new Date();
-	Mobil$: Mobil[] = [];
-	Supir$: Supir[] = [];
-	_sewa: Sewa = {};
+	Mobil$: MobilId[] = [];
+	Supir$: SupirId[] = [];
+	_sewa: SewaId = {};
 	$_pp2MobilDatabase: DatabaseService<MobilId>;
-	$_pp2SupirDatabase: DatabaseService<SupirId> = new DatabaseService<SupirId>();
+	$_pp2SupirDatabase: DatabaseService<SupirId>;
 	sewaForm_mobil: FormGroup;
 	sewaForm_supir: FormGroup;
 	sewaForm_saya: FormGroup;
@@ -59,8 +59,8 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	get _m() { return `"m":"${this.idMobil || ''}"`; }
 	get _s() { return `,"s":"${this.idSupir || ''}"`; }
 
-	get Mobil(): Mobil { return this.$_pp2.parse(this.sewaForm_mobil.value.mobil); }
-	get Supir(): Supir { return this.$_pp2.parse(this.sewaForm_supir.value.supir); }
+	get Mobil(): MobilId { return this.$_pp2.parse(this.sewaForm_mobil.value.mobil); }
+	get Supir(): SupirId { return this.$_pp2.parse(this.sewaForm_supir.value.supir); }
 	get tgl_mulai() { return this.sewaForm_sewa.value.tgl_mulai.valueOf(); }
 	get tgl_selesai() { return this.sewaForm_sewa.value.tgl_selesai.valueOf(); }
 	get tgl_selesai_minDate() { return new Date(this.tgl_mulai + 86400000) }
@@ -165,7 +165,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			totalSewaHari: this.total_hari_sewa
 		};
 		if (this._butuhSupir.checked) { this._sewa.id_supir = this.Supir.id }
-		this.$_ngHttpClient.post(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/post', {data: JSON.stringify(this._sewa)}, {headers: this.headers})
+		this.$_ngHttpClient.post(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/post', {data: JSON.stringify(this._sewa)})
 			.subscribe(
 				(a)=>{console.log(a)},
 				(a)=>{console.log(a)},

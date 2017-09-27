@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 
+import { FirebaseModule } from './firebase.module';
 import { RequireModule } from './require.module';
 
 import { _ContainerComponent } from './components/_container/_container.component';
@@ -80,7 +81,8 @@ export const DryServices = [
 		...DryComponents
 	],
 	imports: [
-		...RequireModule
+		...RequireModule,
+		...FirebaseModule
 	],
 	providers: [
 		...DryServices,

@@ -31,8 +31,8 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		private $_ngHttpClient: HttpClient,
 		private $_ngActivatedRoute: ActivatedRoute,
 		private $_ngRouter: Router,
-		public $_pp2Config: ConfigService,
-		public $_pp2Database: DatabaseService<SupirId>,
+		private $_pp2Config: ConfigService,
+		private $_pp2Database: DatabaseService<SupirId>,
 		public $_pp2Upload: UploadService
 	) {
 		this.type = $_ngActivatedRoute.data['value']['type'];
@@ -43,12 +43,12 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	ngOnInit() {
 		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.supirForm = this.$_ngFormBuilder.group(this.supirFormObject());
-		this.C_Pp2_Dry_FI.img.nativeElement.src = '/uploads/supir/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = '/assets/img/placeholder-supir.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<Supir>(this.$_pp2Config.baseUrl + '/api/db/file/supir/get/' + id)
 				.subscribe((supir: SupirId) => {
 					this.supirForm.setValue(this.supirFormObject())
-					this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Config.baseUrl + '/uploads/supir/' + supir.image;
+					this.C_Pp2_Dry_FI.img.nativeElement.src = supir.image;
 				})
 		}
 	}
@@ -61,7 +61,7 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			supir.image = this.$_pp2Upload.uploadSingle().url;
 		this.$_pp2Database.create(supir);
 	}
-	supirFormObject(supir?: SupirId){
+	supirFormObject(supir: SupirId = {}){
 		return {
 			id: supir.id || [''],
 			nama: supir.nama || [''],

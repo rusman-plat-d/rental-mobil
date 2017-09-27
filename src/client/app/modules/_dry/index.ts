@@ -24,10 +24,13 @@ export * from './directives/grid.directive';
 
 export * from './interfaces/mobil.interface';
 export * from './interfaces/Pp2-media-query.interface';
-export * from './interfaces/socket.interface';
 export * from './interfaces/supir.interface';
 export * from './interfaces/sewa.interface';
 export * from './interfaces/pengguna.interface';
+
+export * from './firebase.module';
+export * from './material.module';
+export * from './require.module';
 
 export * from './services/config.service';
 export * from './services/database.service';

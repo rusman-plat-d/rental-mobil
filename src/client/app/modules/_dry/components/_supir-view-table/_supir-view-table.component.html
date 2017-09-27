@@ -59,7 +59,6 @@
 					<mat-table #table [dataSource]="supirMatTableDataSource" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 						<mat-row *matRowDef="let row; columns: displayedColumns;" (click)='btnClose.focus();C_Mat_Drawer.open();supir = row' [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''"></mat-row>
-						<!-- <mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == supir ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row> -->
 						<!-- Detail Column -->
 						<!-- <ng-container matColumnDef="details">
 							<mat-cell *matCellDef="let row">

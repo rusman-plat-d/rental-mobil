@@ -35,8 +35,8 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		private $_ngFormBuilder: FormBuilder,
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		public $_pp2Config: ConfigService,
-		public $_pp2Database: DatabaseService<MobilId>,
+		private $_pp2Config: ConfigService,
+		private $_pp2Database: DatabaseService<MobilId>,
 		public $_pp2Upload: UploadService
 	) {
 		this.type = $_ngActivatedRoute.data['value']['type'];
@@ -47,16 +47,16 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	ngOnInit() {
 		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.mobilForm = this.$_ngFormBuilder.group(this.mobilFormObject());
-		this.C_Pp2_Dry_FI.img.nativeElement.src = '/uploads/mobil/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = '/assets/img/placeholder-mobil.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<MobilId>(this.$_pp2Config.baseUrl + '/api/db/file/mobil/get/' + id)
 				.subscribe((mobil: MobilId) => {
 					this.mobilForm.setValue(this.mobilFormObject(mobil))
-					this.C_Pp2_Dry_FI.img.nativeElement.src = '/uploads/mobil/' + mobil.image;
+					this.C_Pp2_Dry_FI.img.nativeElement.src = mobil.image;
 				})
 		}
 	}
-	mobilFormObject(mobil?: MobilId) {
+	mobilFormObject(mobil: MobilId = {}) {
 		return {
 			id: mobil.id || [''],
 			nama: mobil.nama || [''],
@@ -78,8 +78,7 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 	pp2OnSubmit(e: Event, mobil: MobilId): void {
 		e.preventDefault();
-		const type: 'tambah' | 'ubah' = this.$_ngActivatedRoute.data['value']['type'];
-		if ( type === 'tambah' || (type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
+		if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
 			mobil.image = this.$_pp2Upload.uploadSingle().url;
 		this.$_pp2Database.create(mobil);
 	}

@@ -6,7 +6,7 @@ var core_1 = require("@angular/core");
 var express = require("express");
 var bodyParser = require("body-parser");
 var index_1 = require("./routes/index");
-var Server = require('http').Server;
+var createServer = require('http').createServer;
 var join = require('path').join;
 core_1.enableProdMode();
 var app = express();
@@ -18,6 +18,7 @@ app.use(function (req, res, next) {
     });
     next();
 });
+app.use(express.static(join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', index_1.IndexRouter);
@@ -37,7 +38,7 @@ app.get('*.*', express.static(join(__dirname, 'public')));
 app.get('*', function (req, res) {
     res.render('index', { req: req, res: res });
 });
-var server = Server(app);
+var server = createServer(app);
 server.listen(PORT, function (err) {
     console.log(err, PORT);
 });

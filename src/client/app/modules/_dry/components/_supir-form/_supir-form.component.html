@@ -10,7 +10,7 @@
 						<ng-content></ng-content>
 					</div>
 					<div fxFlex [fxHide]='sembunyikan'>
-						<pp2-dry-fileImage #fi></pp2-dry-fileImage>
+						<pp2-dry-fileImage #fi (change)='$_pp2Upload.detectFiles($event)'></pp2-dry-fileImage>
 					</div>
 					<div fxFlex [fxHide]='sembunyikan'>
 						<mat-form-field class='full-width'>

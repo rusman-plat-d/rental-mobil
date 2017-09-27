@@ -9,9 +9,9 @@ import { _MobilFormComponent } from '../_mobil-form/_mobil-form.component';
 import { _PenggunaFormComponent } from '../_pengguna-form/_pengguna-form.component';
 import { _SupirFormComponent } from '../_supir-form/_supir-form.component';
 
-import { Mobil } from '../../interfaces/mobil.interface';
-import { Pengguna } from '../../interfaces/pengguna.interface';
-import { Supir } from '../../interfaces/supir.interface';
+import { MobilId } from '../../interfaces/mobil.interface';
+import { PenggunaId } from '../../interfaces/pengguna.interface';
+import { SupirId } from '../../interfaces/supir.interface';
 
 import { DatabaseService } from '../../services/database.service';
 import { ConfigService } from '../../services/config.service';
@@ -54,13 +54,11 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 	@ViewChild('C_Pp2_Dry_SupirForm') C_Pp2_Dry_SupirForm: _SupirFormComponent;
 
 	id = '';
-	jenis: 'mobil' | 'pengguna' | 'supir' | null | undefined = 'supir';
+	jenis: 'mobil' | 'pengguna' | 'supir' | null | undefined = 'mobil';
 	constructor(
 		private $_ngActivatedRoute: ActivatedRoute,
-		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		public $_pp2Config: ConfigService,
-		public $_pp2Database: DatabaseService,
+		public $_pp2Database: DatabaseService<MobilId | PenggunaId | SupirId>,
 		public $_pp2: Pp2Service
 	) {
 		try{
@@ -70,7 +68,7 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			console.log('error ', e)
 		}
 		this.jenis = this.$_ngActivatedRoute.data['value']['jenis'];
-		this.$_pp2Database.init(this.$_pp2Config.baseUrl + '/api/db/file/' + this.jenis + '/gets', this.jenis);
+		$_pp2Database.table = this.jenis;
 		setTimeout(() => {
 			console.log($_pp2Database.data)
 			console.log($_pp2Database.get(this.id))
@@ -85,7 +83,7 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			}, 10)
 			this.C_Mat_Select_Ubah_Mobil.valueChange.subscribe((mobil: string) => {
 				this.C_Pp2_Dry_MobilForm.sembunyikan = false;
-				const _mobil: Mobil = JSON.parse(mobil);
+				const _mobil: MobilId = JSON.parse(mobil);
 				this.mobilSetValue(_mobil);
 				this.$_ngRouter.navigate(['pengurus', 'mobil', 'ubah', _mobil.id])
 			})
@@ -97,7 +95,7 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			}, 10)
 			this.C_Mat_Select_Ubah_Pengguna.valueChange.subscribe((pengguna: string) => {
 				this.C_Pp2_Dry_PenggunaForm.sembunyikan = false;
-				const _pengguna: Pengguna = JSON.parse(pengguna);
+				const _pengguna: PenggunaId = JSON.parse(pengguna);
 				this.penggunaSetValue(_pengguna);
 				this.$_ngRouter.navigate(['pengurus', 'pengguna', 'ubah', _pengguna.id])
 			})
@@ -109,14 +107,14 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			}, 10)
 			this.C_Mat_Select_Ubah_Supir.valueChange.subscribe((supir: string) => {
 				this.C_Pp2_Dry_SupirForm.sembunyikan = false;
-				const _supir: Supir = JSON.parse(supir);
+				const _supir: SupirId = JSON.parse(supir);
 				this.supirSetValue(_supir);
 				this.$_ngRouter.navigate(['pengurus', 'supir', 'ubah', _supir.id])
 			})
 		}
 	}
 	ngOnInit() {}
-	mobilSetValue(mobil: Mobil){
+	mobilSetValue(mobil: MobilId){
 		this.C_Pp2_Dry_MobilForm.sembunyikan = false;
 		this.C_Pp2_Dry_MobilForm.mobilForm.setValue({
 			id: mobil.id,
@@ -133,9 +131,9 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			createdAt: mobil.createdAt,
 			updatedAt: mobil.updatedAt
 		})
-		this.C_Pp2_Dry_MobilForm.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Config.baseUrl + '/uploads/mobil/' + mobil.image;
+		this.C_Pp2_Dry_MobilForm.C_Pp2_Dry_FI.img.nativeElement.src = mobil.image;
 	}
-	penggunaSetValue(pengguna: Pengguna){
+	penggunaSetValue(pengguna: PenggunaId){
 		this.C_Pp2_Dry_PenggunaForm.sembunyikan = false;
 		this.C_Pp2_Dry_PenggunaForm.penggunaForm.setValue({
 			id: pengguna.id,
@@ -151,9 +149,9 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			createdAt: pengguna.createdAt,
 			updatedAt: pengguna.updatedAt
 		})
-		this.C_Pp2_Dry_PenggunaForm.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Config.baseUrl + '/uploads/pengguna/' + pengguna.image;
+		this.C_Pp2_Dry_PenggunaForm.C_Pp2_Dry_FI.img.nativeElement.src = pengguna.image;
 	}
-	supirSetValue(supir: Supir){
+	supirSetValue(supir: SupirId){
 		this.C_Pp2_Dry_SupirForm.sembunyikan = false;
 		this.C_Pp2_Dry_SupirForm.supirForm.setValue({
 			id: supir.id,
@@ -171,6 +169,6 @@ export class _UbahComponent implements AfterViewInit, OnInit {
 			createdAt: supir.createdAt,
 			updatedAt: supir.updatedAt
 		})
-		this.C_Pp2_Dry_SupirForm.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Config.baseUrl + '/uploads/supir/' + supir.image;
+		this.C_Pp2_Dry_SupirForm.C_Pp2_Dry_FI.img.nativeElement.src = supir.image;
 	}
 }

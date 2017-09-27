@@ -3,6 +3,8 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -13,7 +15,7 @@ import { TableExpand } from '../../animations/table-expand.animation';
 import { SewaTableDataSource } from './_sewa-view-table.datasource';
 import { DetailRow, SewaTableDetailDataSource } from './_sewa-view-table.detail.datasource';
 
-import { Sewa } from '../../interfaces/sewa.interface';
+import { Sewa, SewaId } from '../../interfaces/sewa.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -43,23 +45,23 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	expandedSewa: Sewa;
 	isDetailRow = (_index: number, row: DetailRow | Sewa) => row.hasOwnProperty('detailRow');
 	wasExpanded = new Set<Sewa>();
-	_database: DatabaseService = new DatabaseService(this.$_ngHttpClient, this.$_pp2Conf);
+	_database: DatabaseService<SewaId>;
 	level = this.$_ngActivatedRoute.data['value']['type'];
 	pengguna;
 	constructor(
+		private $_ngActivatedRoute: ActivatedRoute,
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		private $_ngActivatedRoute: ActivatedRoute,
+		private $_ngfDatabase: AngularFireDatabase,
 		public $_pp2Conf: ConfigService
 	) {
+		this._database = new DatabaseService<SewaId>($_ngfDatabase);
+		this._database.table = 'sewa';
 		try {
 			this.pengguna = JSON.parse(localStorage['ggPengguna'])
 		} catch (e) { }
-		if (this.level == 'pengguna') {
-			this._database.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa', 'id_pengguna', this.pengguna.id)
-		} else {
-			this._database.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa')
-		}
+		if (this.level == 'pengguna')
+			this._database.where = [['id_pengguna', '==', this.pengguna.id]];
 	}
 	ngAfterViewInit() {}
 	ngOnDestroy() {}

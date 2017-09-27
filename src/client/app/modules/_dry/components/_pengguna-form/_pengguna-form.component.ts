@@ -47,8 +47,8 @@ export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit 
 		private $_ngFormBuilder: FormBuilder,
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
-		public $_pp2Config: ConfigService,
-		public $_pp2Database: DatabaseService<PenggunaId>,
+		private $_pp2Config: ConfigService,
+		private $_pp2Database: DatabaseService<PenggunaId>,
 		public $_pp2Upload: UploadService
 	) {
 		this.type = $_ngActivatedRoute.data['value']['type'];
@@ -59,19 +59,19 @@ export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit 
 	ngOnInit() {
 		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.penggunaForm = this.$_ngFormBuilder.group(this.penggunaFormObject());
-		this.C_Pp2_Dry_FI.img.nativeElement.src = '/uploads/pengguna/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = '/assets/img/placeholder-pengguna.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<PenggunaId>(this.$_pp2Config.baseUrl + '/api/db/file/pengguna/get' + this.$_ngActivatedRoute.snapshot.params['id'])
 				.subscribe((pengguna: PenggunaId) => {
 					this.penggunaForm.setValue(this.penggunaFormObject(pengguna))
-					this.C_Pp2_Dry_FI.img.nativeElement.src = '/uploads/pengguna/' + pengguna.image;
+					this.C_Pp2_Dry_FI.img.nativeElement.src = pengguna.image;
 				})
 		}
 	}
 	tooltipMsg(): string {
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';
 	}
-	penggunaFormObject(pengguna?: PenggunaId){
+	penggunaFormObject(pengguna: PenggunaId = {}){
 		return {
 			id: pengguna.id || [''],
 			nama: pengguna.nama || [''],
@@ -89,8 +89,7 @@ export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit 
 	}
 	pp2OnSubmit(e: Event, pengguna: PenggunaId): void {
 		e.preventDefault();
-		const type: 'tambah' | 'ubah' = this.$_ngActivatedRoute.data['value']['type'];
-		if ( type === 'tambah' || (type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
+		if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
 			pengguna.image = this.$_pp2Upload.uploadSingle().url;
 		this.$_pp2Database.create(pengguna);
 	}

@@ -5,9 +5,6 @@ const SW = 'sw.js';
 const globPatterns = [
 	'**/*',
 	'**/**',
-	'uploads',
-	'uploads/*',
-	'uploads/**',
 	'assets',
 	'assets/*',
 	'assets/**'

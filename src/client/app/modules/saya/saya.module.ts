@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { DryModule } from '../_dry/dry.module';
+import { FirebaseModule } from '../_dry/firebase.module';
 
 import { SayaRoutingModule, SayaComponents } from './saya.routing.module';
 
@@ -16,6 +17,7 @@ export const SayaServices = [
 @NgModule({
 	imports: [
 		DryModule,
+		...FirebaseModule,
 		SayaRoutingModule
 	],
 	exports: [
