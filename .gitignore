@@ -3,16 +3,10 @@
 # compiled output
 /tmp
 /out-tsc
-dist/node_modules
-/dist/node_modules
 
 # dependencies
 /node_modules
-/node_modules4
-/node_modules5
-/node_modules500
-/node_modules55
-/node_modules502
+src/client/environments/firebase.ts
 
 # IDEs and editors
 /.idea
