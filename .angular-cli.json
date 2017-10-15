@@ -1,56 +1,79 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "project": {
-    "name": "pp2"
-  },
-  "apps": [
-    {
-      "root": "src/client",
-      "outDir": "dist/public",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "tsconfig": "tsconfig.app.json",
-      "prefix": "app",
-      "styles": [
-        "styles.scss"
-      ],
-      "scripts": [],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
-    }
-  ],
-  "defaults": {
-    "styleExt": "scss",
-    "component": {
-      "spec": false,
-      "inlineStyle": true,
-      "inlineTemplate": false
-    },
-    "directive": {
-      "spec": false
-    },
-    "class": {
-      "spec": false
-    },
-    "guard": {
-      "spec": false
-    },
-    "module": {
-      "spec": false
-    },
-    "pipe": {
-      "spec": false
-    },
-    "service": {
-      "spec": false
-    } 
-  }
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"project": {
+		"name": "pp2"
+	},
+	"apps": [
+		{
+			"root": "src/client",
+			"outDir": "dist/public",
+			"assets": [
+				"assets",
+				"favicon.ico"
+			],
+			"index": "index.html",
+			"main": "main.browser.ts",
+			"polyfills": "polyfills.ts",
+			"tsconfig": "tsconfig.app.json",
+			"prefix": "app",
+			"serviceWorker": false,
+			"styles": [
+				"styles.scss"
+			],
+			"scripts": [
+				"../../node_modules/socket.io-client/dist/socket.io.js",
+				"../../node_modules/socketio-file-upload/client.min.js"
+			],
+			"environmentSource": "environments/environment.ts",
+			"environments": {
+				"dev": "environments/environment.ts",
+				"prod": "environments/environment.prod.ts"
+			}
+		},
+		{
+			"index": "index.html",
+			"name": "server",
+			"platform": "server",
+			"root": "src/client",
+			"outDir": "src/server",
+			"main": "main.server.ts",
+			"tsconfig": "tsconfig.server.json",
+			"prefix": "app",
+			"environmentSource": "environment/environment.ts",
+			"environments": {
+				"dev": "environment.environment.ts",
+				"prod": "environment.environment.prod.ts"
+			}
+		}
+	],
+	"defaults": {
+		"styleExt": "scss",
+		"component": {
+			"spec": false,
+			"inlineStyle": true,
+			"inlineTemplate": false
+		},
+		"directive": {
+			"spec": false
+		},
+		"class": {
+			"spec": false
+		},
+		"guard": {
+			"spec": false
+		},
+		"module": {
+			"spec": false
+		},
+		"pipe": {
+			"spec": false
+		},
+		"service": {
+			"spec": false
+		},
+		"build": {
+			"deleteOutputPath": false,
+			"commonChunk": false
+		}
+	}
 }
