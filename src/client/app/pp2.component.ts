@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-	selector: 'app-root',
+	selector: 'pp2-root',
 	template: `
     <!--The content below is only a placeholder and can be replaced.-->
     <div style="text-align:center">
@@ -26,6 +26,6 @@ import { Component } from '@angular/core';
   `,
 	styles: []
 })
-export class AppComponent {
-	title = 'app';
+export class Pp2Component {
+	title = 'pp2';
 }

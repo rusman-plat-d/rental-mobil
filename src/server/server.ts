@@ -13,7 +13,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 // Import the AOT compiled factory for your AppServerModule.
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
+const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
 
 const app = express();
 const port = 8000;
@@ -21,7 +21,7 @@ const baseUrl = `http://localhost:${port}`;
 
 // Set the engine
 app.engine('html', ngExpressEngine({
-	bootstrap: AppServerModuleNgFactory,
+	bootstrap: Pp2ServerModuleNgFactory,
 	providers: [
 		provideModuleMap(LAZY_MODULE_MAP)
 	]

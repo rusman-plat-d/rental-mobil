@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
 import { RequireModule } from './require.module';
 
-import { AppComponent } from './app.component';
+import { Pp2Component } from './pp2.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		Pp2Component
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
@@ -17,6 +17,6 @@ import { AppComponent } from './app.component';
 		...RequireModule
 	],
 	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [Pp2Component]
 })
-export class AppModule { }
+export class Pp2Module { }

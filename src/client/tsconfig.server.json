@@ -6,6 +6,6 @@
 	},
 	"exclude": [],
 	"angularCompilerOptions": {
-		"entryModule": "app/app.server.module#AppServerModule"
+		"entryModule": "app/pp2.server.module#Pp2ServerModule"
 	}
 }

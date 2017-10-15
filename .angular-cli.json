@@ -15,7 +15,7 @@
 			"main": "main.browser.ts",
 			"polyfills": "polyfills.ts",
 			"tsconfig": "tsconfig.app.json",
-			"prefix": "app",
+			"prefix": "pp2",
 			"serviceWorker": false,
 			"styles": [
 				"styles.scss"
@@ -38,7 +38,7 @@
 			"outDir": "src/server",
 			"main": "main.server.ts",
 			"tsconfig": "tsconfig.server.json",
-			"prefix": "app",
+			"prefix": "pp2",
 			"environmentSource": "environment/environment.ts",
 			"environments": {
 				"dev": "environment.environment.ts",

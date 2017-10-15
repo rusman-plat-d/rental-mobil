@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { AppModule } from './app.module';
-import { AppComponent } from './app.component';
+import { Pp2Module } from './pp2.module';
+import { Pp2Component } from './pp2.component';
 
 @NgModule({
 	imports: [
-		AppModule,
+		Pp2Module,
 		ServerModule,
 	],
 	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [Pp2Component]
 })
-export class AppServerModule { }
+export class Pp2ServerModule { }
