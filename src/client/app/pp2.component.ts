@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+declare var window: any;
 
 @Component({
 	selector: 'pp2-root',
@@ -26,6 +28,10 @@ import { Component } from '@angular/core';
   `,
 	styles: []
 })
-export class Pp2Component {
+export class Pp2Component implements OnInit {
 	title = 'pp2';
+	private isSubscribed = false;
+	private registration = undefined;
+	ngOnInit() {
+	}
 }

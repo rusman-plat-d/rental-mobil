@@ -3,14 +3,10 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"ng": "ng",
-		"ngc": "ngc -p tsconfig-factory.json",
-		"prestart": "npm run build && cd src/server && tsc",
+		"prestart": "npm run build && cd src/server && tsc && npm run generate-sw",
 		"start": "node dist/server.js",
 		"build": "ng build --prod -aot && ng build --prod --app server --output-hashing=none",
-		"test": "ng test",
-		"lint": "ng lint",
-		"e2e": "ng e2e"
+		"generate-sw": "node generate-sw.js"
 	},
 	"private": true,
 	"dependencies": {
