@@ -14,7 +14,7 @@
 				"sw.js",
 				"offline.html",
 				{
-					"glob": "workbox-sw.prod.*.js",
+					"glob": "workbox-sw.prod.*",
 					"input": "../../node_modules/workbox-sw/build/importScripts/",
 					"output": "./"
 				}
