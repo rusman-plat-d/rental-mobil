@@ -59,37 +59,15 @@ button[disabled]{
 	padding: 0 255px;
 }
 
-.w20{
-	width: 20px;
-}
-.w40{
-	width: 40px;
-}
-.w60{
-	width: 60px;
-}
-.w80{
-	width: 80px;
-}
-.w100{
-	width: 100px;
-}
-.w120{
-	width: 120px;
-}
-.w140{
-	width: 140px;
-}
-.w160{
-	width: 160px;
-}
-.w180{
-	width: 180px;
-}
-.w200{
-	width: 200px;
+@for $o from 1 through 10{
+	.w#{$o*20}px {
+		width: #{$o*20}px;
+	}
 }
 
+.mat-sidenav{
+	width: 300px;
+}
 .mat-drawer-backdrop.mat-drawer-shown{
 	background-color: transparent !important;
 	z-index: -2000;
@@ -98,13 +76,19 @@ button[disabled]{
 @media (max-width:720px){
 	.mat-drawer-backdrop.mat-drawer-shown{
 		background-color: rgba(0,0,0,.6) !important;
-		z-index: 200;
+		z-index: 2000;
 		display: initial;
-		margin-left: 255px;
+		margin-left: 300px;
 	}
 }
 
 @import './assets/scss/grid.scss';
 .flex-auto{
 	flex: 1 1 auto;
+}
+.pp2-content{
+	padding: 0 24px;
+}
+.margin-l-20px{
+	margin-left: 20px;
 }

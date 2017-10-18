@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Pp2MediaQueryService } from '../../modules/_dry/services/Pp2-media-query.service';
 
 @Component({
 	selector: 'pp2-dev',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DevComponent implements OnInit {
-	constructor() { }
+	constructor(
+		public $_Pp2MQ: Pp2MediaQueryService
+	) { }
 
-	ngOnInit() { }
+	ngOnInit() {
+
+	}
 }

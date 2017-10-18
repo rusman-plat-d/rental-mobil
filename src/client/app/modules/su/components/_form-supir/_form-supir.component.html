@@ -1,0 +1,39 @@
+<p>
+	su-form works!
+</p>
+<pp2-container>
+	<h1>GG</h1>
+	<div class="pp2-content">
+		<form [formGroup]='ggForm'>
+			<mat-card>
+				<mat-card-header>
+					<mat-card-title>Tambah Supir</mat-card-title>
+				</mat-card-header>
+				<mat-card-content fxLayout>
+					<div fxFlex>
+						<mat-form-field formControlName='namas'>
+							<input mdInput type="text" placeholder="Nama">
+						</mat-form-field>
+					</div>
+					<div fxFlex>
+						<mat-form-field formControlName='noHp'>
+							<input matInput type="text" placeholder="No Telp/HP">
+						</mat-form-field>
+					</div>
+					<div fxFlex>
+						<mat-form-field>
+							<textarea formControlName='alamat' MdInput MatTextareaAutosize placeholder="Alamat"></textarea>
+						</mat-form-field>
+					</div>
+					<div fxFlex>
+						<mat-form-field>
+							<input formControlName='email' mdInput type="email" placeholder="E-mail">
+						</mat-form-field>
+					</div>
+					<div fxFlex></div>
+					<div fxFlex></div>
+				</mat-card-content>
+			</mat-card>
+		</form>
+	</div>
+</pp2-container>

@@ -1,36 +1,43 @@
-@each
-	$mediaQuery-codeName,
-	$min-width in
-	(xl:1300px, l:1100px, m:900px, s:700px, xs: 500px) {
-	@media (min-width: #{$min-width}){
-		.pp2-#{$mediaQuery-codeName}-grid{
+$media-query: (
+	"0px-600px": s,
+	"601px-991px": m,
+	"992px-1200px": l,
+	"1201px-10000px": xl
+);
+
+$pp2-grid-max-column: 12;
+$pp2-grid-gap: 20px;
+$pp2-grid-min-row: 100px;
+$pp2-grid-max-row: auto;
+
+@each $min-width, $max-width in (1201px:10000px, 992px:1200px, 601px:991px, 0px: 600px) {
+	$mq-key: #{$min-width}-#{$max-width};
+	$mq:#{map_get($media-query, $mq-key)};
+	@media (min-width: #{$min-width}) and (max-width: #{$max-width}) {
+		.grid-#{$mq}{
 			display: grid !important;
 
-			-webkit-grid-template-columns: repeat(11, 1fr);
-			-moz-grid-template-columns: repeat(11, 1fr);
-			-o-grid-template-columns: repeat(11, 1fr);
-			-ms-grid-template-columns: repeat(11, 1fr);
-			grid-template-columns: repeat(11, 1fr);
+			-webkit-grid-template-columns: repeat($pp2-grid-max-column, 1fr);
+			-moz-grid-template-columns: repeat($pp2-grid-max-column, 1fr);
+			-o-grid-template-columns: repeat($pp2-grid-max-column, 1fr);
+			-ms-grid-template-columns: repeat($pp2-grid-max-column, 1fr);
+			grid-template-columns: repeat($pp2-grid-max-column, 1fr);
 
-			-ms-grid-column-span: repeat(11, 1fr);
-			-ms-grid-row-span: repeat(11, 1fr);
-			-ms-grid-columns: repeat(11, 1fr);
+			-webkit-grid-gap:$pp2-grid-gap;
+			-moz-grid-gap:$pp2-grid-gap;
+			-o-grid-gap:$pp2-grid-gap;
+			-ms-grid-gap:$pp2-grid-gap;
+			grid-gap:$pp2-grid-gap;
 
-			-webkit-grid-gap:12px;
-			-moz-grid-gap:12px;
-			-o-grid-gap:12px;
-			-ms-grid-gap:12px;
-			grid-gap:12px;
-
-			-webkit-grid-auto-rows:minmax(100px, auto);
-			-moz-grid-auto-rows:minmax(100px, auto);
-			-o-grid-auto-rows:minmax(100px, auto);
-			-ms-grid-auto-rows:minmax(100px, auto);
-			grid-auto-rows:minmax(100px, auto);
+			-webkit-grid-auto-rows:minmax($pp2-grid-min-row, $pp2-grid-max-row);
+			-moz-grid-auto-rows:minmax($pp2-grid-min-row, $pp2-grid-max-row);
+			-o-grid-auto-rows:minmax($pp2-grid-min-row, $pp2-grid-max-row);
+			-ms-grid-auto-rows:minmax($pp2-grid-min-row, $pp2-grid-max-row);
+			grid-auto-rows:minmax($pp2-grid-min-row, $pp2-grid-max-row);
 		}
-		@for $o from 1 through 12 {
-			@for $i from 1 through 12{
-				.pp2-#{$mediaQuery-codeName}-grid-col-#{$o}-#{$i} {
+		@for $o from 1 through $pp2-grid-max-column {
+			@for $i from 2 through $pp2-grid-max-column + 1{
+				.grid-#{$mq}-col-#{$o}-#{$i} {
 					-webkit-grid-column: #{$o}/#{$i};
 					-moz-grid-column: #{$o}/#{$i};
 					-o-grid-column: #{$o}/#{$i};
@@ -38,8 +45,8 @@
 					grid-column: #{$o}/#{$i};
 				}
 			}
-			@for $i from 1 through 16{
-				.pp2-#{$mediaQuery-codeName}-grid-row-#{$o}-#{$i} {
+			@for $i from 2 through $pp2-grid-max-column - 10{
+				.grid-#{$mq}-row-#{$o}-#{$i} {
 					-webkit-grid-row: #{$o}/#{$i};
 					-moz-grid-row: #{$o}/#{$i};
 					-o-grid-row: #{$o}/#{$i};

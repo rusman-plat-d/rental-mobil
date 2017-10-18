@@ -1,36 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { MatModules, CdkModules } from './material.module';
-import { RequireModule } from './require.module';
+import { DryModule } from './modules/_dry/dry.module';
 
 import { Pp2RoutingModule } from './pp2.routing.module';
 
+import { Pp2SuModule } from './modules/su/su.module';
+
 import { Pp2Component } from './pp2.component';
-import { _NavComponent } from './components/_nav/_nav.component';
-import { _ContainerComponent } from './components/_container/_container.component';
-import { _SidenavComponent } from './components/_sidenav/_sidenav.component';
 import { HomeComponent } from './components/home/home.component';
 import { DevComponent } from './components/dev/dev.component';
 
+export const Pp2Components = [
+	Pp2Component,
+	HomeComponent,
+	DevComponent
+];
+
 @NgModule({
 	declarations: [
-		Pp2Component,
-		_NavComponent,
-		_ContainerComponent,
-		_SidenavComponent,
-		HomeComponent,
-		DevComponent
+		...Pp2Components
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
 		Pp2RoutingModule,
-
-		...MatModules,
-		...CdkModules,
-		...RequireModule
+		Pp2SuModule
 	],
-	providers: [],
 	bootstrap: [Pp2Component]
 })
 export class Pp2Module { }
