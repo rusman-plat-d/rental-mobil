@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-	selector: 'pp2-nav',
+	selector: 'pp2-dry-nav',
 	templateUrl: '_nav.component.html',
 	styles: [`
 		.mat-toolbar a {

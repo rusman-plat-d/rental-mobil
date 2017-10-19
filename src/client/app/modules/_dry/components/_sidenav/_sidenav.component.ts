@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'pp2-sidenav',
+	selector: 'pp2-dry-sidenav',
 	templateUrl: '_sidenav.component.html'
 })
 

@@ -8,13 +8,21 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 export class Pp2SuFormSupirComponent implements OnInit {
 	ggForm: FormGroup;
+	cities: string[] = [
+		'Bandung',
+		'Cirebon',
+		'Jakarta',
+		'Padang'
+	];
 	constructor(
 		public $_Mat_FBuilder: FormBuilder
 	) { }
 
 	ngOnInit() {
 		this.ggForm = this.$_Mat_FBuilder.group({
-			namas: [''],
+			noSIM: [''],
+			nama: [''],
+			jk: [''],
 			noHp: [''],
 			alamat: [''],
 			email: ['']
