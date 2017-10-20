@@ -8,13 +8,14 @@ declare var document: any;
 	styles: [`
 		.img-view{
 			background-color: yellowgreen;
-			width: 200px;
-			height: 250px;
+			width: 100%;
+			height: 100%;
 			display: flex;
 			flex-direction: column;
 		}
 		.img-view img{
-			max-height: 215px;
+			max-width: 100%;
+			max-height: 100%;
 		}
 		.img-view button{
 			background-color: transparent;

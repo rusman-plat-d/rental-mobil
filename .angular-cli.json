@@ -11,8 +11,10 @@
 				"assets",
 				"favicon.ico",
 				"manifest.json",
-				"sw.js",
+				"manifest.webapp",
 				"offline.html",
+				"robots.txt",
+				"sw.js",
 				{
 					"glob": "workbox-sw.prod.*",
 					"input": "../../node_modules/workbox-sw/build/importScripts/",

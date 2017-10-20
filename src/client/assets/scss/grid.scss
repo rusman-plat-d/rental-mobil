@@ -6,7 +6,7 @@ $media-query: (
 );
 
 $pp2-grid-max-column: 12;
-$pp2-grid-gap: 20px;
+$pp2-grid-gap: 5px;
 $pp2-grid-min-row: 100px;
 $pp2-grid-max-row: auto;
 
@@ -43,9 +43,10 @@ $pp2-grid-max-row: auto;
 					-o-grid-column: #{$o}/#{$i};
 					-ms-grid-column: #{$o}/#{$i};
 					grid-column: #{$o}/#{$i};
+					background-color: #C00;
 				}
 			}
-			@for $i from 2 through $pp2-grid-max-column - 10{
+			@for $i from 2 through $pp2-grid-max-column - 5{
 				.grid-#{$mq}-row-#{$o}-#{$i} {
 					-webkit-grid-row: #{$o}/#{$i};
 					-moz-grid-row: #{$o}/#{$i};

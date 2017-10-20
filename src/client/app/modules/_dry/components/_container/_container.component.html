@@ -1,11 +1,10 @@
 <div class="pp2-container">
-	<mat-sidenav-container fullscreen>
+	<mat-sidenav-container #C_Mat_Sidenav_Container fullscreen>
 		<mat-sidenav #C_Mat_Sidenav [mode]='$$_Pp2MQ.screen.isGT600px ? "side" : "over"' [opened]='$$_Pp2MQ.screen.isGT600px ? true : false '>
 			<pp2-dry-sidenav></pp2-dry-sidenav>
 		</mat-sidenav>
-		<mat-sidenav-content class='grey lighten-2'>
+		<mat-sidenav-content #C_Mat_Sidenav_Content class='grey lighten-2'>
 			<pp2-dry-nav ($C_Mat_Sidenav_Click$)='C_Mat_Sidenav.toggle()' class='z-depth-5'></pp2-dry-nav>
-			{{ $$_Pp2MQ.screen | json }}
 			<ng-content></ng-content>
 		</mat-sidenav-content>
 	</mat-sidenav-container>

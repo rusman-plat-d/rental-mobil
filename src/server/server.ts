@@ -1,10 +1,12 @@
-declare var __dirname: any;
-declare var require: any;
+declare var __dirname: any,
+			require: any,
+			process: any;
 
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 import * as express from 'express';
-const fs = require('fs');
+import * as io from 'socket.io';
+const { createServer } = require('http');
 const { join } = require('path');
 
 import { platformServer, renderModuleFactory } from '@angular/platform-server';
@@ -16,7 +18,7 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 const baseUrl = `http://localhost:${port}`;
 
 // Set the engine
@@ -47,7 +49,12 @@ app.get('*', (req, res) => {
 	});
 });
 
-app.listen(port, () => {
+const server = createServer(app);
+const $Socket = io(server);
+
+require('./socket.io/core')($Socket)
+
+server.listen(port, () => {
 	console.log(`Listening at ${baseUrl}`);
 	console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
 });

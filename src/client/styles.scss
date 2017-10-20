@@ -82,12 +82,20 @@ button[disabled]{
 	}
 }
 
-@import './assets/scss/grid.scss';
+// @import './assets/scss/grid.scss';
 .flex-auto{
 	flex: 1 1 auto;
 }
-.pp2-content{
+.pp2-content-24px{
 	padding: 0 24px;
+}
+.pp2-content-48px{
+	padding: 0 48px;
+}
+h1{
+	padding: 0 20px;
+	margin: 0 !important;
+	background-color: pink;
 }
 .margin-l-20px{
 	margin-left: 20px;

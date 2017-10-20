@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -15,8 +15,11 @@ export class Pp2SuFormSupirComponent implements OnInit {
 		'Padang'
 	];
 	constructor(
-		public $_Mat_FBuilder: FormBuilder
-	) { }
+		public $_Mat_FBuilder: FormBuilder,
+		cRef: ViewContainerRef
+	) {
+		console.log(ViewContainerRef)
+	}
 
 	ngOnInit() {
 		this.ggForm = this.$_Mat_FBuilder.group({
