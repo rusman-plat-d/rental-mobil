@@ -26,7 +26,7 @@ catch (e) { }
 SupirRouter
     .post('/post', upload.single('photo'), function (req, res) {
     console.log('POST: /api/db/file/supir/post');
-    var supir = req.body.data;
+    var supir = JSON.parse(req.body.data);
     supir.image = req.file.filename;
     res.json({
         data: Supir.add(supir),
@@ -44,11 +44,13 @@ SupirRouter
 })
     .put('/put', upload.single('photo'), function (req, res) {
     console.log('PUT: /api/db/file/supir/put');
-    var supir = req.body.data;
+    var supir = JSON.parse(req.body.data);
     if (req.file)
         supir.image = req.file.filename;
-    Supir.update(supir);
-    res.json({ success: true });
+    res.json({
+        data: Supir.update(supir),
+        success: true
+    });
 })
     .delete('/delete/:id', function (req, res) {
     var id = req.params.id;

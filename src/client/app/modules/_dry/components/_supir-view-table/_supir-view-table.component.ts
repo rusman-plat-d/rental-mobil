@@ -9,9 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 
-import { _ContainerComponent } from '../_container/_container.component';
 import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
-import { _NavComponent } from '../_nav/_nav.component';
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
@@ -37,7 +35,6 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatPaginator) C_mat_paginator: MatPaginator;
 	@ViewChild(MatSort) C_mat_sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	
 	dataSource: SupirTableDataSource | null;
 	dataSourceWithDetails: SupirTableDetailDataSource | null;

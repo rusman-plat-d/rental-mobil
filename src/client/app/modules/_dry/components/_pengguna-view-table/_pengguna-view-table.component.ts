@@ -8,9 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 
-import { _ContainerComponent } from '../_container/_container.component';
 import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
-import { _NavComponent } from '../_nav/_nav.component';
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
@@ -34,7 +32,6 @@ export type PenggunaProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'emai
 })
 export class _PenggunaViewTableComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('filter') filter: ElementRef;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 

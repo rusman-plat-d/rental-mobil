@@ -1,7 +1,7 @@
 <div class="pp2--nav pp2----nav">
 	<nav>
 		<mat-toolbar color='primary'>
-			<button mat-icon-button>
+			<button *ngIf='isDevMode()' mat-icon-button>
 				<mat-icon class='pointer' (click)='$C_Mat_Sidenav_Click$.next()'>menu</mat-icon>
 			</button>
 			<span class='margin-l-20px pointer' routerLink='/'>Rental Mobil</span>

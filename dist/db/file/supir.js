@@ -31,25 +31,28 @@ function get(id) {
 }
 exports.get = get;
 function add(supir) {
-    Supir$.unshift(Object.assign(supir, {
+    var _supir = Object.assign(supir, {
         id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         _status: 'Tersedia',
         _disewa: 0,
         createdAt: Date.now(),
         updatedAt: Date.now()
-    }));
+    });
+    Supir$.unshift(_supir);
     save();
+    return _supir;
 }
 exports.add = add;
 function update(supir) {
     console.log('[db]Supir: update');
+    var _supir;
     for (var i in Supir$) {
         if (Supir$[i].id == supir.id) {
-            Object.assign(Supir$[i], supir, { updatedAt: Date.now() });
+            _supir = Supir$[i] = Object.assign(supir, { updatedAt: Date.now() });
         }
     }
     save();
-    return supir;
+    return _supir;
 }
 exports.update = update;
 function remove(id) {

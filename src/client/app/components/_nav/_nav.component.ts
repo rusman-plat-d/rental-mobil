@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, isDevMode, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
 	selector: 'pp2--nav',
@@ -8,6 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class NavComponent_ implements OnInit {
 	@Output() $C_Mat_Sidenav_Click$: EventEmitter<any> = new EventEmitter();
 	saya;
+	isDevMode = isDevMode;
 	constructor(){
 		try{
 			this.saya = JSON.parse(localStorage.ggPengguna);

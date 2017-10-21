@@ -8,9 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 
-import { _ContainerComponent } from '../_container/_container.component';
-import { _NavComponent } from '../_nav/_nav.component';
-
 import { TableExpand } from '../../animations/table-expand.animation';
 
 import { SewaTableDataSource } from './_sewa-view-table.datasource';
@@ -35,7 +32,6 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 
 	changeReferences = false;
 	dataSource: SewaTableDataSource | null;
@@ -78,7 +74,6 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		this.dataSourceWithDetails = new SewaTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
-		// alert(JSON.stringify(this.$_ngActivatedRoute.data['value']['type']))
 		if (this.expandedSewa == row) {
 			this.expandedSewa = null;
 		} else {

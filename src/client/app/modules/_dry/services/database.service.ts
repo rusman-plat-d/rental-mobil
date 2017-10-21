@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, isDevMode } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -41,7 +41,7 @@ export class DatabaseService {
 		this.getData<T>()
 		setInterval(() => {
 			this.getData<T>()
-		}, 32000)
+		}, isDevMode() ? 4000 : 60000)
 	}
 	add<T>(data: T): T[] {
 		const copiedData = this.data.slice();

@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { _ContainerComponent } from '../_container/_container.component';
-
 import { Supir } from '../../interfaces/supir.interface';
 
 import { ConfigService } from '../../services/config.service';
@@ -25,7 +23,6 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 })
 export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	@ViewChild('C_Pp2_Dry_Container') C_Pp2_Dry_Container: _ContainerComponent;
 	get Supir$(): Supir[] { return this._database.dataChange.value; }
 	get cols(): number {
 		if (this.$_pp2MQ.screen.gtOE.l)

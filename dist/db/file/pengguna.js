@@ -26,27 +26,31 @@ function gets() {
 exports.gets = gets;
 function get(id) {
     console.log('[db]Pengguna: get');
-    return Pengguna$.filter(function (Pengguna) { return Pengguna.id === id; })[0];
+    return Pengguna$.filter(function (pengguna) { return pengguna.id === id; })[0];
 }
 exports.get = get;
-function add(Pengguna) {
+function add(pengguna) {
     console.log('[db]Pengguna: add');
-    Pengguna$.unshift(Object.assign(Pengguna, {
+    var _pengguna = Object.assign(pengguna, {
         id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         createdAt: Date.now(),
         updatedAt: Date.now()
-    }));
+    });
+    Pengguna$.unshift(_pengguna);
     save();
+    return _pengguna;
 }
 exports.add = add;
 function update(pengguna) {
     console.log('[db]Pengguna: update');
+    var _pengguna;
     for (var i in Pengguna$) {
         if (Pengguna$[i].id == pengguna.id) {
-            Object.assign(Pengguna$[i], pengguna, { updatedAt: Date.now() });
+            _pengguna = Pengguna$[i] = Object.assign(pengguna, { updatedAt: Date.now() });
         }
     }
     save();
+    return _pengguna;
 }
 exports.update = update;
 function remove(id) {

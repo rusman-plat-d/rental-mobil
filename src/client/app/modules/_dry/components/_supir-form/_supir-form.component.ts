@@ -3,8 +3,6 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { _ContainerComponent } from '../_container/_container.component';
-import { _NavComponent } from '../_nav/_nav.component';
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
 
 import { ConfigService } from '../../services/config.service';
@@ -19,7 +17,6 @@ import { Supir } from '../../interfaces/supir.interface';
 })
 export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 
 	type: string;
 	label: string;
@@ -49,7 +46,12 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			hargaSewa: [''],
 			alamat: [''],
 			email: [''],
-			image: ['']
+			image: [''],
+			_status: [''],
+			_disewa: [''],
+			_disewaSampai: [''],
+			createdAt: [''],
+			updatedAt: ['']
 		});
 		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/supir/placeholder.png';
 		if ( id ) {
@@ -64,7 +66,12 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 						hargaSewa: supir.hargaSewa,
 						alamat: supir.alamat,
 						email: supir.email,
-						image: supir.image
+						image: supir.image,
+						_status: supir._status,
+						_disewa: supir._disewa,
+						_disewaSampai: supir._disewaSampai,
+						createdAt: supir.createdAt,
+						updatedAt: supir.updatedAt
 					})
 					this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/supir/' + supir.image;
 				})

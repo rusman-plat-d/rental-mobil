@@ -34,6 +34,5 @@ app.get('*', function (req, res) {
     res.render('index', { req: req });
 });
 app.listen(PORT, function () {
-    console.log(LAZY_MODULE_MAP)
     console.log("Node server listening on http://localhost:" + PORT);
 });

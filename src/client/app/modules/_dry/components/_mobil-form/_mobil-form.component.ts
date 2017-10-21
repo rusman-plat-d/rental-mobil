@@ -4,8 +4,6 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
-import { _ContainerComponent } from '../_container/_container.component';
-import { _NavComponent } from '../_nav/_nav.component';
 
 import { ConfigService } from '../../services/config.service';
 
@@ -18,7 +16,6 @@ import { Mobil } from '../../interfaces/mobil.interface';
 })
 export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 
 	type: string;
 	label: string;

@@ -9,9 +9,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 
-import { _ContainerComponent } from '../_container/_container.component';
 import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
-import { _NavComponent } from '../_nav/_nav.component';
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
@@ -37,7 +35,6 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	
 	_database: DatabaseService;
 	dataSource: MobilTableDataSource | null;

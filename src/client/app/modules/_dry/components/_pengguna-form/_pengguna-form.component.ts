@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { _ContainerComponent } from '../_container/_container.component';
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
 
 import { ConfigService } from '../../services/config.service';
@@ -24,7 +23,6 @@ import { Pengguna } from '../../interfaces/pengguna.interface';
 })
 export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 
 	type: string;
 	label: string;

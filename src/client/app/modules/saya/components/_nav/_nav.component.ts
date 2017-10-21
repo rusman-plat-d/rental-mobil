@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, isDevMode, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Pengguna } from '../../../_dry/index';
@@ -11,6 +11,7 @@ import { Pengguna } from '../../../_dry/index';
 export class NavComponent_ implements OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
 	saya: Pengguna;
+	isDevMode = isDevMode;
 	constructor(
 		public $_ngRouter: Router
 	){}

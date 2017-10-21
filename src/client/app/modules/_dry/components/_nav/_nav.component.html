@@ -9,7 +9,14 @@
 			<button mat-button [matMenuTriggerFor]='C_Mat_Supir'>Supir</button>
 			<button mat-button [matMenuTriggerFor]='C_Mat_Mobil'>Mobil</button>
 			<button mat-button [matMenuTriggerFor]='C_Mat_User'>Pengguna</button>
+			<button mat-button [matMenuTriggerFor]='C_Mat__Nav'>Dimana<mat-icon>more_vert</mat-icon></button>
 		</mat-toolbar>
+
+		<mat-menu #C_Mat__Nav='matMenu' [overlapTrigger]='false'>
+			<button mat-menu-item [matMenuTriggerFor]='C_Mat_Supir'>Supir</button>
+			<button mat-menu-item [matMenuTriggerFor]='C_Mat_Mobil'>Mobil</button>
+			<button mat-menu-item [matMenuTriggerFor]='C_Mat_User'>Pengguna</button>
+		</mat-menu>
 
 		<mat-menu #C_Mat_Supir='matMenu' [overlapTrigger]='false'>
 			<button mat-menu-item routerLink='/su/supir/tambah'><a>Tambah</a></button>
