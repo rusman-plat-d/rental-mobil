@@ -30,26 +30,28 @@ function get(id) {
 }
 exports.get = get;
 function add(mobil) {
-    Mobil$.unshift(Object.assign(mobil, {
+    var _mobil = Object.assign(mobil, {
         id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         _status: 'Tersedia',
         _disewa: 0,
         createdAt: Date.now(),
         updatedAt: Date.now()
-    }));
+    });
+    Mobil$.unshift(_mobil);
     save();
-    return mobil;
+    return _mobil;
 }
 exports.add = add;
 function update(mobil) {
     console.log('[db]Mobil: update');
+    var _mobil;
     for (var i in Mobil$) {
         if (Mobil$[i].id == mobil.id) {
-            Object.assign(Mobil$[i], mobil, { updatedAt: Date.now() });
+            _mobil = Mobil$[i] = Object.assign(mobil, { updatedAt: Date.now() });
         }
     }
     save();
-    return mobil;
+    return _mobil;
 }
 exports.update = update;
 function remove(id) {

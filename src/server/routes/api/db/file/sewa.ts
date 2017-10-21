@@ -10,10 +10,10 @@ declare var module: any,
 const SewaRouter: Router = Router();
 
 SewaRouter
-	.use((req, res, next) => {
-		res.set('Access-Control-Allow-Origin', '*')
-		next()
-	})
+	// .use((req, res, next) => {
+	// 	res.set('Access-Control-Allow-Origin', '*')
+	// 	next()
+	// })
 	.post('/post', (req, res) => {
 		console.log('POST: /api/db/file/sewa/post')
 		const sewa: Sewa.Sewa = req.body.data;

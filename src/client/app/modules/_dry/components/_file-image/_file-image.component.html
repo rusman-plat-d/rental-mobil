@@ -1,9 +1,9 @@
 <div class='pp2-dry-fileImage'>
-	<div (click)='chooseFile()' class='img-view' fxLayout='column' fxLayoutAlign='center center'>
-		<div fxFlex='80%'>
+	<div class='img-view' fxLayout='column' fxLayoutAlign='center center'>
+		<div (click)='chooseFile()' class='pointer' fxFlex='80%'>
 			<img #preview>
 		</div>
-		<div fxFlex>
+		<div (click)='chooseFile()' fxFlex>
 			<button mat-button color='primary' type='button'>
 				{{ label }} Foto
 			</button>

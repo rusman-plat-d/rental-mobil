@@ -24,13 +24,6 @@ try {
 }
 catch (e) { }
 PenggunaRouter
-    .use(function (req, res, next) {
-    res.set({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE'
-    });
-    next();
-})
     .post('/post', upload.single('photo'), function (req, res) {
     console.log('POST: /api/db/file/pengguna/post');
     var pengguna = req.body.pengguna;
@@ -50,9 +43,8 @@ PenggunaRouter
     .put('/put', upload.single('photo'), function (req, res) {
     console.log('PUT: /api/db/file/pengguna/put');
     var pengguna = req.body.data;
-    if (req.file) {
+    if (req.file)
         pengguna.image = req.file.filename;
-    }
     Pengguna.update(pengguna);
     res.json({ success: true });
 })

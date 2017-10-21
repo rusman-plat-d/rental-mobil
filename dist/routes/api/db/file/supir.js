@@ -24,16 +24,14 @@ try {
 }
 catch (e) { }
 SupirRouter
-    .use(function (req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
-    next();
-})
     .post('/post', upload.single('photo'), function (req, res) {
     console.log('POST: /api/db/file/supir/post');
     var supir = req.body.data;
     supir.image = req.file.filename;
-    Supir.add(supir);
-    res.json({ success: true });
+    res.json({
+        data: Supir.add(supir),
+        success: true
+    });
 })
     .get('/get/:id', function (req, res) {
     var id = req.params.id;
@@ -47,9 +45,8 @@ SupirRouter
     .put('/put', upload.single('photo'), function (req, res) {
     console.log('PUT: /api/db/file/supir/put');
     var supir = req.body.data;
-    if (req.file) {
+    if (req.file)
         supir.image = req.file.filename;
-    }
     Supir.update(supir);
     res.json({ success: true });
 })

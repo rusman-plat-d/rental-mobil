@@ -1,4 +1,5 @@
 export * from './components/_container/_container.component';
+export * from './components/_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 export * from './components/_file-image/_file-image.component';
 export * from './components/_mobil-form/_mobil-form.component';
 export * from './components/_mobil-view-grid/_mobil-view-grid.component';

@@ -4,6 +4,7 @@ import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { RequireModule } from './require.module';
 
 import { _ContainerComponent } from './components/_container/_container.component';
+import { _KonfirmasiHapusDialogComponent } from './components/_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 import { _NavComponent } from './components/_nav/_nav.component';
 import { _SidenavComponent } from './components/_sidenav/_sidenav.component';
 import { _FileImageComponent } from './components/_file-image/_file-image.component';
@@ -28,6 +29,7 @@ import { Pp2Service } from './services/pp2.service';
 
 export const DryComponents = [
 	_ContainerComponent,
+	_KonfirmasiHapusDialogComponent,
 	_NavComponent,
 	_SidenavComponent,
 	_FileImageComponent,
@@ -61,16 +63,19 @@ export const DryServices = [
 ];
 
 @NgModule({
-	imports: [
-		...RequireModule
+	declarations: [
+		...DryComponents,
+		...DryDirectives
+	],
+	entryComponents:[
+		...DryComponents
 	],
 	exports: [
 		...RequireModule,
 		...DryComponents
 	],
-	declarations: [
-		...DryComponents,
-		...DryDirectives
+	imports: [
+		...RequireModule
 	],
 	providers: [
 		...DryServices,

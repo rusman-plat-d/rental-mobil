@@ -13,7 +13,7 @@
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''" (click)="expandedSupir = row; wasExpanded.add(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSupir ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
@@ -119,10 +119,13 @@
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
+								<button (click)="rowClick(row)" color='primary' mat-raised-button mat-icon-button matTooltip='Detail Supir'>
+									<mat-icon>details</mat-icon>
+								</button>
 								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Supir' [routerLink]='"/pengurus/supir/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
-								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Supir' (click)='remove(row.id)'>
+								<button (click)='remove(row.id)' color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Supir'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>

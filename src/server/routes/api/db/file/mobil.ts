@@ -30,16 +30,18 @@ try{
 }catch(e){}
 
 MobilRouter
-	.use((req, res, next) => {
-		res.set('Access-Control-Allow-Origin', '*')
-		next()
-	})
+	// .use((req, res, next) => {
+	// 	res.set('Access-Control-Allow-Origin', '*')
+	// 	next()
+	// })
 	.post('/post', upload.single('photo'), (req, res) => {
 		console.log('POST: /api/db/file/mobil/post')
 		const mobil: Mobil.Mobil = JSON.parse(req.body.data);
 		mobil.image = req.file.filename;
-		Mobil.add(mobil);
-		res.json({success: true})
+		res.json({
+			data: Mobil.add(mobil),
+			success: true
+		})
 	})
 	.get('/get/:id', (req, res) => {
 		const id = req.params.id;
@@ -53,11 +55,11 @@ MobilRouter
 	.put('/put', upload.single('photo'), (req, res) => {
 		console.log('PUT: /api/db/file/mobil/put')
 		const mobil: Mobil.Mobil = JSON.parse(req.body.data);
-		if ( req.file ) {
-			mobil.image = req.file.filename;
-		}
-		Mobil.update(mobil)
-		res.json({success: true})
+		if ( req.file ) mobil.image = req.file.filename
+		res.json({
+			data: Mobil.update(mobil),
+			success: true
+		})
 	})
 	.delete('/delete/:id', (req, res) => {
 		const id = req.params.id;

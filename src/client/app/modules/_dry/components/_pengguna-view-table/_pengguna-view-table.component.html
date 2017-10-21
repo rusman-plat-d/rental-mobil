@@ -13,7 +13,7 @@
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedPengguna == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" [style.borderBottomColor]="expandedPengguna == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedPengguna ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
@@ -101,6 +101,9 @@
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
+								<button (click)="rowClick(row)" color='primary' mat-raised-button mat-icon-button matTooltip='Detail Pengguna'>
+									<mat-icon>details</mat-icon>
+								</button>
 								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>

@@ -24,16 +24,14 @@ try {
 }
 catch (e) { }
 MobilRouter
-    .use(function (req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
-    next();
-})
     .post('/post', upload.single('photo'), function (req, res) {
     console.log('POST: /api/db/file/mobil/post');
     var mobil = JSON.parse(req.body.data);
     mobil.image = req.file.filename;
-    Mobil.add(mobil);
-    res.json({ success: true });
+    res.json({
+        data: Mobil.add(mobil),
+        success: true
+    });
 })
     .get('/get/:id', function (req, res) {
     var id = req.params.id;
@@ -47,11 +45,12 @@ MobilRouter
     .put('/put', upload.single('photo'), function (req, res) {
     console.log('PUT: /api/db/file/mobil/put');
     var mobil = JSON.parse(req.body.data);
-    if (req.file) {
+    if (req.file)
         mobil.image = req.file.filename;
-    }
-    Mobil.update(mobil);
-    res.json({ success: true });
+    res.json({
+        data: Mobil.update(mobil),
+        success: true
+    });
 })
     .delete('/delete/:id', function (req, res) {
     var id = req.params.id;

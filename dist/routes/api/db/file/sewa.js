@@ -5,10 +5,6 @@ var Sewa = require("../../../../db/file/sewa");
 var SewaRouter = express_1.Router();
 exports.SewaRouter = SewaRouter;
 SewaRouter
-    .use(function (req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
-    next();
-})
     .post('/post', function (req, res) {
     console.log('POST: /api/db/file/sewa/post');
     var sewa = req.body.data;

@@ -42,25 +42,29 @@ export function gets(): Pengguna[] {
 }
 export function get(id: string): Pengguna {
 	console.log('[db]Pengguna: get');
-	return Pengguna$.filter((Pengguna: Pengguna) => Pengguna.id === id)[0];
+	return Pengguna$.filter((pengguna: Pengguna) => pengguna.id === id)[0];
 }
-export function add(Pengguna: Pengguna): void {
+export function add(pengguna: Pengguna): Pengguna {
 	console.log('[db]Pengguna: add');
-	Pengguna$.unshift(Object.assign(Pengguna, {
+	const _pengguna = Object.assign(pengguna, {
 		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
 		createdAt: Date.now(),
 		updatedAt: Date.now()
-	}));
+	});
+	Pengguna$.unshift(_pengguna);
 	save();
+	return _pengguna;
 }
 export function update(pengguna: Pengguna): void {
 	console.log('[db]Pengguna: update');
+	let _pengguna;
 	for(let i in Pengguna$){
 		if( Pengguna$[i].id == pengguna.id ){
-			Object.assign(Pengguna$[i], pengguna, { updatedAt: Date.now() })
+			_pengguna = Pengguna$[i] = Object.assign(pengguna, { updatedAt: Date.now() })
 		}
 	}
 	save();
+	return _pengguna;
 }
 export function remove(id: string): void {
 	console.log('[db]Pengguna: remove');

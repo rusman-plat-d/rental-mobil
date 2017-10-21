@@ -52,24 +52,39 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		this.i_file.dispatchEvent(new MouseEvent('click'))
 	}
 	save(url: string, data, type: 'tambah' | 'ubah', navigateTo?: string[]) {
+		let retVal = false;
 		const formData = new FormData();
 		formData.append('data', JSON.stringify(data))
 		if (this.i_file.files.length >= 1) { formData.append('photo', this.i_file.files[0]) }
 		if (type === 'tambah')
 			this.$_ngHttpClient.post(url, formData)
-				.subscribe((res) => {
+				.subscribe((res: any) => {
 					console.log(res)
+					if (res.success) retVal = true;
+					localStorage[navigateTo[1]] = JSON.stringify(
+						JSON.parse(localStorage[navigateTo[1]])
+							.unshift(res.data)
+						)
 				})
 		else
 			this.$_ngHttpClient.put(url, formData)
-				.subscribe((res) => {
+				.subscribe((res: any) => {
 					console.log(res)
+					if (res.success) retVal = true;
+					localStorage[navigateTo[1]] = JSON.stringify(
+						JSON.parse(localStorage[navigateTo[1]])
+							.map((_data: any) => _data.id === res.data.id ? res.data : _data)
+						)
 				})
-		if (navigateTo)
-			this.$_ngRouter.navigate(navigateTo);
+		if (navigateTo) {
+			setTimeout(() => {
+				this.$_ngRouter.navigate(navigateTo);
+			}, 500)
+		}
 		this.$_matSnackBar.open('Data Berhasil ' + (type == 'tambah' ? 'Ditambahkan' : 'Perbarui'))
 		setTimeout(() => {
 			this.$_matSnackBar.dismiss();
 		}, 4000)
+		return retVal;
 	}
 }

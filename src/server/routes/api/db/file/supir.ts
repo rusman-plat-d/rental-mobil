@@ -30,16 +30,18 @@ try{
 }catch(e){}
 
 SupirRouter
-	.use((req, res, next) => {
-		res.set('Access-Control-Allow-Origin', '*')
-		next()
-	})
+	// .use((req, res, next) => {
+	// 	res.set('Access-Control-Allow-Origin', '*')
+	// 	next()
+	// })
 	.post('/post', upload.single('photo'), (req, res) => {
 		console.log('POST: /api/db/file/supir/post')
-		const supir: Supir.Supir = req.body.data;
+		const supir: Supir.Supir = JSON.parse(req.body.data);
 		supir.image = req.file.filename;
-		Supir.add(supir);
-		res.json({success: true})
+		res.json({
+			data: Supir.add(supir),
+			success: true
+		})
 	})
 	.get('/get/:id', (req, res) => {
 		const id = req.params.id;
@@ -52,12 +54,12 @@ SupirRouter
 	})
 	.put('/put', upload.single('photo'), (req, res) => {
 		console.log('PUT: /api/db/file/supir/put')
-		const supir: Supir.Supir = req.body.data;
-		if ( req.file ) {
-			supir.image = req.file.filename;
-		}
-		Supir.update(supir)
-		res.json({success: true})
+		const supir: Supir.Supir = JSON.parse(req.body.data);
+		if ( req.file ) supir.image = req.file.filename;
+		res.json({
+			data: Supir.update(supir),
+			success: true
+		})
 	})
 	.delete('/delete/:id', (req, res) => {
 		const id = req.params.id;

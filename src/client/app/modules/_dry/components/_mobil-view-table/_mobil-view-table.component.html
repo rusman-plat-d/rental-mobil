@@ -110,13 +110,13 @@
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<button color='primary' mat-raised-button mat-icon-button matTooltip='Detail Mobil' (click)="rowClick(row)">
+								<button (click)="rowClick(row)" color='primary' mat-raised-button mat-icon-button matTooltip='Detail Mobil'>
 									<mat-icon>details</mat-icon>
 								</button>
 								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Mobil' [routerLink]='"/pengurus/mobil/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
-								<button color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Mobil' (click)='remove(row.id)'>
+								<button (click)='remove(row.id)' color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Mobil'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>
