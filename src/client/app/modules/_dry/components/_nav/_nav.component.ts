@@ -7,6 +7,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 		.mat-toolbar a {
 			margin: none 10px !important;
 		}
+		.pp2-dry-nav{
+			position: fixed;
+			z-index: 50000 !important;
+			top: 0;
+			left: 0;
+			width: 100vw;
+		}
 	`]
 })
 
