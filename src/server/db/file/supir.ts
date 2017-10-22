@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -49,7 +51,7 @@ export function get(id: string): Supir {
 }
 export function add(supir: Supir): Supir {
 	const _supir = Object.assign(supir, {
-		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+		id: v4(),
 		_status: 'Tersedia',
 		_disewa: 0,
 		createdAt: Date.now(),

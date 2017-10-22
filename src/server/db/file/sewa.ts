@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -68,7 +70,7 @@ export function get(id: string): Sewa {
 export function add(sewa: Sewa): void {
 	console.log('[db]Sewa: add');
 	Sewa$.unshift(Object.assign(sewa, {
-		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+		id: v4(),
 		createdAt: Date.now(),
 		updatedAt: Date.now()
 	}));

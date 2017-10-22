@@ -40,11 +40,9 @@ export class _PenggunaViewTableComponent implements AfterViewInit, OnDestroy, On
 	dataSourceWithDetails: PenggunaTableDetailDataSource | null;
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: PenggunaProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	displayedColumns: PenggunaProperties[] = ['image', 'nama', 'noHP', 'action'];
-
-	dynamicColumnDefs: any[] = [];
-	dynamicColumnIds: string[] = [];
+	displayedColumns: PenggunaProperties[] = ['image', 'nama', 'noHP'];
 	expandedPengguna: Pengguna;
+	pengguna: Pengguna = {id: ''};
 	wasExpanded = new Set<Pengguna>();
 
 	isDetailRow = (_index: number, row: DetailRow | Pengguna) => row.hasOwnProperty('detailRow');

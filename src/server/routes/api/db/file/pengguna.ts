@@ -39,10 +39,12 @@ PenggunaRouter
 	// })
 	.post('/post', upload.single('photo'), (req, res) => {
 		console.log('POST: /api/db/file/pengguna/post')
-		const { pengguna } = req.body;
+		const pengguna: Pengguna.Pengguna = JSON.parse(req.body.data);
 		pengguna.image = req.file.filename;
-		Pengguna.add(pengguna);
-		res.json({success: true})
+		res.json({
+			data: Pengguna.add(pengguna),
+			success: true
+		})
 	})
 	.get('/get/:id', (req, res) => {
 		const id = req.params.id;
@@ -55,10 +57,12 @@ PenggunaRouter
 	})
 	.put('/put', upload.single('photo'), (req, res) => {
 		console.log('PUT: /api/db/file/pengguna/put')
-		const pengguna = req.body.data;
+		const pengguna: Pengguna.Pengguna = JSON.parse(req.body.data);
 		if ( req.file ) pengguna.image = req.file.filename
-		Pengguna.update(pengguna)
-		res.json({success: true})
+		res.json({
+			data: Pengguna.update(pengguna),
+			success: true
+		})
 	})
 	.delete('/delete/:id', (req, res) => {
 		const id = req.params.id;

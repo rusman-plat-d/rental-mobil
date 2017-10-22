@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -47,7 +49,7 @@ export function get(id: string): Pengguna {
 export function add(pengguna: Pengguna): Pengguna {
 	console.log('[db]Pengguna: add');
 	const _pengguna = Object.assign(pengguna, {
-		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+		id: v4(),
 		createdAt: Date.now(),
 		updatedAt: Date.now()
 	});

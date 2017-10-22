@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
@@ -47,7 +49,7 @@ export function get(id: string): Mobil {
 }
 export function add(mobil: Mobil): Mobil {
 	const _mobil = Object.assign(mobil, {
-		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+		id: v4(),
 		_status: 'Tersedia',
 		_disewa: 0,
 		createdAt: Date.now(),

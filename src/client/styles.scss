@@ -37,9 +37,10 @@ button a {
 		box-sizing: border-box !important;
 	}
 }
-.mat-toolbar {
+.mat-drawer, .mat-toolbar, {
 	border-radius: 0 !important;
 	margin: 0 !important;
+	padding: 0 !important;
 }
 .mat-dialog-container {
 	padding: 0 !important;
@@ -66,14 +67,12 @@ button a {
 	}
 }
 
-.mat-sidenav,
-.mat-drawer {
+.mat-sidenav{
 	width: 300px;
 	padding-top: 64px;
 }
 @media (max-width: 750px) {
-	.mat-sidenav,
-	.mat-drawer {
+	.mat-sidenav {
 		width: 80vw;
 	}
 }
@@ -164,4 +163,9 @@ h1 {
 }
 @media (min-width: 600px) {
 	.dm-container{ height: calc(100vh - 64px - 48px) }
+}
+tr, td{
+	height: auto !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }

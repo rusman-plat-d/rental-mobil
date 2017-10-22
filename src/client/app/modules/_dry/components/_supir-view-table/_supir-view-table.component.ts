@@ -40,7 +40,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	dataSourceWithDetails: SupirTableDetailDataSource | null;
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'noHP', 'jk', 'hargaSewa', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
-	displayedColumns: SupirProperties[] = ['image', 'nama', '_status', 'action'];
+	displayedColumns: SupirProperties[] = ['image', 'nama', '_status'];
 	changeReferences = false;
 	wasExpanded = new Set<Supir>();
 
