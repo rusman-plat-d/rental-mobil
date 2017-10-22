@@ -5,28 +5,31 @@ import { MatTabGroup } from '@angular/material';
 import { _ContainerComponent } from '../../../_dry/index';
 
 import { NavComponent_ } from '../_nav/_nav.component';
+// doa menjenguk orang sakit
 // alhamdulillahi afani mimaktalakabihi // menit 1:08
 @Component({
 	selector: 'pp2-pengurus-supir',
 	styleUrls: [`supir.component.scss`],
 	template: `
-		<pp2-pengurus-nav #C_Pp2_Pengurus__Nav></pp2-pengurus-nav>
-		<pp2-dry-container #C_Pp2_Dry_Container>
-			<mat-tab-group #C_Mat_TabGroup backgroundColor="primary" color="accent" mat-stretch-tabs>
-				<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "lihat"])'>
-					<ng-template mat-tab-label>Lihat</ng-template>
-				</mat-tab>
-				<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "tambah"])'>
-					<ng-template mat-tab-label>Tambah</ng-template>
-				</mat-tab>
-				<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "ubah"])'>
-					<ng-template mat-tab-label>Ubah (Coming Soon)</ng-template>
-				</mat-tab>
-			</mat-tab-group>
-			<div class='dm-container' tabindex='2'>
-				<router-outlet></router-outlet>
-			</div>
-		</pp2-dry-container>
+		<div class='pp2-pengurus-supir'>
+			<pp2-pengurus-nav #C_Pp2_Pengurus__Nav></pp2-pengurus-nav>
+			<pp2-dry-container #C_Pp2_Dry_Container>
+				<mat-tab-group #C_Mat_TabGroup backgroundColor="primary" color="accent" mat-stretch-tabs>
+					<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "lihat"])'>
+						<ng-template mat-tab-label>Lihat</ng-template>
+					</mat-tab>
+					<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "tambah"])'>
+						<ng-template mat-tab-label>Tambah</ng-template>
+					</mat-tab>
+					<mat-tab (click)='$_ngRouter.navigate(["pengurus", "supir", "ubah"])'>
+						<ng-template mat-tab-label>Ubah</ng-template>
+					</mat-tab>
+				</mat-tab-group>
+				<div class='dm-container' tabindex='2'>
+					<router-outlet></router-outlet>
+				</div>
+			</pp2-dry-container>
+		</div>
 	`
 })
 export class SupirComponent implements OnInit, AfterViewInit {

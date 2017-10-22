@@ -12,16 +12,22 @@ import { Mobil } from '../../interfaces/mobil.interface';
 @Component({
 	selector: "pp2-dry-mobilForm",
 	templateUrl: "_mobil-form.component.html",
-	styles: [``]
+	styles: [`
+		.pp2-dry-mobilForm-container{
+			height: 100%;
+			width: 100%;
+		}
+	`]
 })
 export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 
-	type: string;
-	label: string;
-	disable: boolean = false;
-	mobilForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
+	disable: boolean = false;
+	label: string;
+	mobilForm: FormGroup;
+	sembunyikan = false;
+	type: string;
 	constructor(
 		private $_ngActivatedRoute: ActivatedRoute,
 		private $_ngFormBuilder: FormBuilder,

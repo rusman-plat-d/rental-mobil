@@ -59,7 +59,6 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		if (type === 'tambah')
 			this.$_ngHttpClient.post(url, formData)
 				.subscribe((res: any) => {
-					console.log(res)
 					if (res.success) retVal = true;
 					localStorage[navigateTo[1]] = JSON.stringify(
 						JSON.parse(localStorage[navigateTo[1]])
@@ -69,7 +68,6 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		else
 			this.$_ngHttpClient.put(url, formData)
 				.subscribe((res: any) => {
-					console.log(res)
 					if (res.success) retVal = true;
 					localStorage[navigateTo[1]] = JSON.stringify(
 						JSON.parse(localStorage[navigateTo[1]])

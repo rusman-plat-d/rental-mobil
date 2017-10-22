@@ -19,6 +19,7 @@ import { _PengembalianFormComponent } from './components/_pengembalian-form/_pen
 import { _SewaFormComponent } from './components/_sewa-form/_sewa-form.component';
 import { _SewaViewTableComponent } from './components/_sewa-view-table/_sewa-view-table.component';
 import { _SupirViewGridComponent } from './components/_supir-view-grid/_supir-view-grid.component';
+import { _UbahComponent } from './components/_ubah/_ubah.component';
 
 import { GridDirective } from './directives/grid.directive';
 
@@ -48,7 +49,9 @@ export const DryComponents = [
 	_SupirViewGridComponent,
 
 	_PenggunaFormComponent,
-	_PenggunaViewTableComponent
+	_PenggunaViewTableComponent,
+
+	_UbahComponent
 ];
 
 export const DryDirectives = [
@@ -56,9 +59,9 @@ export const DryDirectives = [
 ];
 
 export const DryServices = [
-	Pp2MediaQueryService,
-	DatabaseService,
 	ConfigService,
+	DatabaseService,
+	Pp2MediaQueryService,
 	Pp2Service
 ];
 

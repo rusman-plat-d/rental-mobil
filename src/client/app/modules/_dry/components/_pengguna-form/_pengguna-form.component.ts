@@ -24,11 +24,12 @@ import { Pengguna } from '../../interfaces/pengguna.interface';
 export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 
-	type: string;
-	label: string;
-	disable: boolean = false;
-	penggunaForm: FormGroup;
 	cities: string[] = ['Bandung', 'Cirebon', 'Jakarta', 'Padang'];
+	disable: boolean = false;
+	label: string;
+	penggunaForm: FormGroup;
+	sembunyikan = false;
+	type: string;
 	private _pt = 'password';
 	get pt() {
 		return this._pt;

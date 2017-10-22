@@ -41,7 +41,7 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	dataSourceWithDetails: MobilTableDetailDataSource | null;
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: MobilProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt', 'action'];
-	displayedColumns: MobilTableProperties[] = ['image', 'nama', 'hargaSewa', '_status', 'action'];
+	displayedColumns: MobilTableProperties[] = ['image', 'nama', '_status', 'action'];
 	wasExpanded = new Set<Mobil>();
 
 	expandedMobil: Mobil;

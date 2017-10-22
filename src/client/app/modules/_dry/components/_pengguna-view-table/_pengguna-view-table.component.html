@@ -105,7 +105,7 @@
 						<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + row.id'>
 							<mat-icon>mode_edit</mat-icon>
 						</button>
-						<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Pengguna' (click)='remove(row.id)'>
+						<button (click)='remove(row.id)' color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Pengguna'>
 							<mat-icon>delete</mat-icon>
 						</button>
 					</mat-cell>

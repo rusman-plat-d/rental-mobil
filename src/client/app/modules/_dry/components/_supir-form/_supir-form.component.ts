@@ -18,11 +18,12 @@ import { Supir } from '../../interfaces/supir.interface';
 export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 
-	type: string;
-	label: string;
-	disable: boolean = false;
-	supirForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
+	disable: boolean = false;
+	label: string;
+	sembunyikan = false;
+	supirForm: FormGroup;
+	type: string;
 	constructor(
 		private $_ngFormBuilder: FormBuilder,
 		private $_ngHttpClient: HttpClient,

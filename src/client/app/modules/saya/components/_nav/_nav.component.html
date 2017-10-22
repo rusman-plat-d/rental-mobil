@@ -6,12 +6,11 @@
 			</button>
 			<span class='margin-l-20px pointer' routerLink='/'>Rental Mobil</span>
 			<span class='flex-auto'></span>
-			<button mat-button routerLink='/'><a>Beranda</a></button>
 			<button mat-button routerLink='/saya'><a>Dashboard</a></button>
 			<button mat-button routerLink='/mobil'><a>Mobil</a></button>
 			<button mat-button routerLink='/supir'><a>Supir</a></button>
 			<button mat-button routerLink='/saya/sewa'><a>Sewa</a></button>
-			<button (click)='keluar()' mat-button [matTooltip]='saya.nama'><a>Keluar</a></button>
+			<button (click)='keluar()' mat-button mat-icon-button [matTooltip]='saya.nama'><a>Keluar</a></button>
 		</mat-toolbar>
 
 	</nav>

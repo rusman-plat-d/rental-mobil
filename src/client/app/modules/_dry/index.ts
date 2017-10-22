@@ -1,6 +1,7 @@
 export * from './components/_container/_container.component';
 export * from './components/_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 export * from './components/_file-image/_file-image.component';
+export * from './components/_konfirmasi-hapus-dialog/_konfirmasi-hapus-dialog.component';
 export * from './components/_mobil-form/_mobil-form.component';
 export * from './components/_mobil-view-grid/_mobil-view-grid.component';
 export * from './components/_mobil-view-table/_mobil-view-table.component';
@@ -14,6 +15,8 @@ export * from './components/_supir-view-grid/_supir-view-grid.component';
 export * from './components/_supir-view-table/_supir-view-table.component';
 export * from './components/_pengguna-form/_pengguna-form.component';
 export * from './components/_pengguna-view-table/_pengguna-view-table.component';
+export * from './components/_ubah/_ubah.component';
+
 
 export * from './directives/grid.directive';
 

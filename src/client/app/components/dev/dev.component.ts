@@ -14,6 +14,7 @@ import { NavComponent_ } from '../_nav/_nav.component';
 export class DevComponent implements AfterViewInit, OnInit {
 	@ViewChild('C_Pp2_Dry_Container') C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild('C_Pp2__Nav') C_Pp2__Nav: NavComponent_;
+	sembunyikan = false;
 	constructor(
 		public $_Pp2MQ: Pp2MediaQueryService,
 		public $_ngRouter: Router,
@@ -21,9 +22,9 @@ export class DevComponent implements AfterViewInit, OnInit {
 	) {}
 	ngAfterViewInit(){
 		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();})
-		for (let i in this.$_ngDOCUMENT) {
-			console.log(i, this.$_ngDOCUMENT[ i ])
-		}
+		setInterval(() => {
+			this.sembunyikan = !this.sembunyikan
+		}, 4000)
 	}
 	ngOnInit() {}
 }

@@ -41,7 +41,7 @@ export class DatabaseService {
 		this.getData<T>()
 		setInterval(() => {
 			this.getData<T>()
-		}, isDevMode() ? 4000 : 60000)
+		}, isDevMode() ? 8000 : 60000)
 	}
 	add<T>(data: T): T[] {
 		const copiedData = this.data.slice();
