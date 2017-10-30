@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { PLATFORM_ID, APP_ID, Inject, NgModule } from '@angular/core';
+import { PLATFORM_ID, APP_ID, Inject, isDevMode, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -46,8 +46,9 @@ export class Pp2Module {
 		@Inject(APP_ID) private appId: string
 	) {
 		const platform = isPlatformBrowser(platformId) ? 'on the browser' : 'in the server';
+		console.log(platformId)
 		console.log(`Running ${platform} with appId=${appId}`);
-		if ( platform == 'on the browser' ) {
+		if ( platform == 'on the browser' && !isDevMode()) {
 			const swRegister = document.createElement('script');
 			swRegister.src = 'assets/sw-register.js';
 			document.body.appendChild(swRegister);

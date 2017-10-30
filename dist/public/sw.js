@@ -33,7 +33,7 @@ const workboxSW = new WorkboxSW({ clientsClaim: true });
 workboxSW.precache([
   {
     "url": "3rdpartylicenses.txt",
-    "revision": "9214d95b0da842a0fa798ed28773a3c3"
+    "revision": "9e65b162e8990afab4d07c8cd9275860"
   },
   {
     "url": "assets/angular144.png",
@@ -86,18 +86,6 @@ workboxSW.precache([
   {
     "url": "assets/idb-keyval-min.js",
     "revision": "81dfde4d837c26e0aad2d73a373c239a"
-  },
-  {
-    "url": "assets/img/placeholder-mobil.png",
-    "revision": "7cb70ded6cd1ea367c7d5bb118886093"
-  },
-  {
-    "url": "assets/img/placeholder-pengguna.png",
-    "revision": "7cb70ded6cd1ea367c7d5bb118886093"
-  },
-  {
-    "url": "assets/img/placeholder-supir.png",
-    "revision": "7cb70ded6cd1ea367c7d5bb118886093"
   },
   {
     "url": "assets/js/jquery-3.2.1.min.js",
@@ -317,7 +305,7 @@ workboxSW.precache([
   },
   {
     "url": "styles.bundle.css",
-    "revision": "6162fa7473411e19af9e8ab8b201aa4f"
+    "revision": "7fb1d2095362a6cc7b9fc29ba41840b8"
   },
   {
     "url": "workbox-sw.prod.v2.1.2.js",

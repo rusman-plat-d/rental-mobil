@@ -6,10 +6,9 @@
 					<input matInput #filter placeholder="Cari Penyewaan">
 				</mat-form-field>
 			</mat-toolbar>
-			<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
+			<mat-table #table [dataSource]="sewaMatTableDataSource" matSort>
 				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 				<mat-row *matRowDef="let row; columns: displayedColumns;" [style.borderBottomColor]="expandedSewa == row ? 'transparent' : ''"></mat-row>
-				<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSewa ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 				<!-- Detail Column -->
 				<ng-container matColumnDef="details">
 					<mat-cell *matCellDef="let row">

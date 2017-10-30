@@ -6,7 +6,7 @@
 	"apps": [
 		{
 			"root": "src/client",
-			"outDir": "dist/public",
+			"outDir": "functions/views",
 			"assets": [
 				"assets",
 				"favicon.ico",
@@ -44,7 +44,7 @@
 			"name": "server",
 			"platform": "server",
 			"root": "src/client",
-			"outDir": "src/server",
+			"outDir": "functions/src",
 			"main": "main.server.ts",
 			"tsconfig": "tsconfig.server.json",
 			"prefix": "pp2",
