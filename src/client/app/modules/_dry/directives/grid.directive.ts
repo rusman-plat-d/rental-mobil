@@ -16,6 +16,5 @@ export class GridDirective {
 		el: ElementRef,
 		MQ: Pp2MediaQueryService
 	) {
-		// MQ.screen.isLTOE600px ?
 	}
 }

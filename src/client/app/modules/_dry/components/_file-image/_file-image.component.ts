@@ -1,46 +1,34 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-declare var document: any;
+declare var document: any,
+			SocketIOFileUpload: any;
 
 @Component({
 	selector: 'pp2-dry-fileImage',
 	templateUrl: '_file-image.component.html',
-	styles: [`
-		.img-view{
-			background-color: yellowgreen;
-			width: 100%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-		.img-view img{
-			max-width: 100%;
-			max-height: 100%;
-		}
-		.img-view button{
-			background-color: transparent;
-			font-size: 20px;
-			width: 100%;
-		}
-	`]
+	styleUrls:['_file-image.component.scss']
 })
 
-export class _FileImageComponent implements OnInit {
+export class _FileImageComponent implements OnDestroy, OnInit {
 	@Input() size: { height: string, width: string } = { height: '200px', width: '250px' };
 	@ViewChild('preview') img;
 	fileExist: boolean = false;
+	i_file: any;
+	SIOFU: any;
 	get label() {
 		return this.fileExist ? 'Ganti' : 'Upload';
 	}
 	constructor() { }
-
+	ngOnDestroy() {
+		this.SIOFU = null;
+	}
 	ngOnInit() { }
 	chooseFile() {
-		const i_file: HTMLInputElement = document.createElement('input');
+		this.i_file = document.createElement('input');
 		const img = this.img.nativeElement;
-		i_file.type = 'file';
-		i_file.onchange = () => {
-			let fileSelected = i_file.files
+		this.i_file.type = 'file';
+		this.i_file.onchange = () => {
+			let fileSelected = this.i_file.files
 			if (fileSelected.length > 0) {
 				let fileToLoad = fileSelected[0]
 				let fileReader = new FileReader()
@@ -53,6 +41,16 @@ export class _FileImageComponent implements OnInit {
 				fileReader.readAsDataURL(fileToLoad);
 			}
 		}
-		i_file.dispatchEvent(new MouseEvent('click'))
+		this.i_file.dispatchEvent(new MouseEvent('click'))
+	}
+	save($Socket, data) {
+		alert('fi submitted');
+		const btn: HTMLButtonElement = document.createElement('button');
+		this.SIOFU = new SocketIOFileUpload($Socket);
+		this.SIOFU.listenOnSubmit(btn, this.i_file);
+		this.SIOFU.addEventListener('start', function (event) {
+			event.file.meta = data;
+		});
+		btn.dispatchEvent(new MouseEvent('click'));
 	}
 }

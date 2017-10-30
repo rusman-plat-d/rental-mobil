@@ -1,26 +1,46 @@
 import { Server } from '../../../interfaces/socket.io';
 import * as Supir from '../../../db/file/supir/supir';
-declare var module: any;
-
+declare var module: any,
+			__dirname: any,
+			require: any;
+const $SIOFU = require('socketio-file-upload');
+const { join } = require('path');
+const { mkdir } = require('fs');
+const filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'supir');
+mkdir(filepath);
 module.exports = function($Socket: Server) {
-	$Socket.on('connection', _Socket => {
-		_Socket.on('gets', cb => {
+	const _Socket = $Socket.of('/db/supir');
+	_Socket.on('connection', Socket => {
+		const _SIOFU = new $SIOFU();
+		_SIOFU.dir = filepath;
+		_SIOFU.listen(Socket)
+		_SIOFU.on('saved', e => {
+			const ext = e.file.name.split('.');
+			const filename = e.file.base + '.' + ext[ ext.length - 1 ];
+			const $Supir: Supir.Supir = e.file.meta;
+			console.log('filename => ', filename);
+			console.log('$supir => ', $Supir);
+			$Supir.image = filename;
+			Supir.add($Supir);
+			_Socket.emit('add', $Supir);
+		})
+		Socket.on('gets', cb => {
 			cb(Supir.gets());
 		})
-		_Socket.on('add', (supir: Supir.Supir) => {
+		Socket.on('add', (supir: Supir.Supir) => {
 			Supir.add(supir);
-			_Socket.emit('add', supir);
+			Socket.emit('add', supir);
 		});
-		_Socket.on('get', (id: string, cb) => {
+		Socket.on('get', (id: string, cb) => {
 			cb(Supir.get(id))
 		})
-		_Socket.on('update', (supir: Supir.Supir) => {
+		Socket.on('update', (supir: Supir.Supir) => {
 			Supir.update(supir);
-			$Socket.emit('update', supir);
+			_Socket.emit('update', supir);
 		})
-		_Socket.on('remove', (id: string) => {
+		Socket.on('remove', (id: string) => {
 			Supir.remove(id);
-			$Socket.emit('remove', id);
+			_Socket.emit('remove', id);
 		})
 	})
 }

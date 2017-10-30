@@ -18,7 +18,7 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 4136;
 const baseUrl = `http://localhost:${port}`;
 
 // Set the engine
@@ -50,6 +50,10 @@ app.get('*', (req, res) => {
 });
 
 const server = createServer(app);
+
+const SocketIOFileUpload = require('socketio-file-upload');
+app.use(SocketIOFileUpload.router)
+
 const $Socket = io(server);
 
 require('./socket.io/core')($Socket)

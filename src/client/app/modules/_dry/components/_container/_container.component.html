@@ -5,15 +5,6 @@
 		</mat-sidenav>
 		<mat-sidenav-content #C_Mat_Sidenav_Content class='grey lighten-2'>
 			<pp2-dry-nav ($C_Mat_Sidenav_Click$)='C_Mat_Sidenav.toggle()' class='z-depth-5'></pp2-dry-nav>
-			{{ $_Pp2MQ.size | json }}
-			<br>
-			<br>
-			<br>
-			{{ $_Pp2MQ.screen | json }}
-			<br>
-			<br>
-			<br>
-			{{ gg() }}
 			<ng-content></ng-content>
 		</mat-sidenav-content>
 	</mat-sidenav-container>
