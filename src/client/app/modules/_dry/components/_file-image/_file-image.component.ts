@@ -1,4 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CONFIG } from '../../consts/config.const';
+
 
 declare var document: any,
 			SocketIOFileUpload: any;
@@ -10,8 +12,9 @@ declare var document: any,
 })
 
 export class _FileImageComponent implements OnDestroy, OnInit {
-	@Input() size: { height: string, width: string } = { height: '200px', width: '250px' };
 	@ViewChild('preview') img;
+	CONFIG = CONFIG;
+	imageSrc: string = '';
 	fileExist: boolean = false;
 	i_file: any;
 	SIOFU: any;

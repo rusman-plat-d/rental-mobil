@@ -1,6 +1,7 @@
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
-import { Supir } from './_supir-view.database';
+import {Supir} from '../../interfaces/supir.interface';
+
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 import { SupirDataSource } from './_supir-view.datasource';

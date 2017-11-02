@@ -9,6 +9,7 @@
 			"outDir": "dist/public",
 			"assets": [
 				"assets",
+				"uploads",
 				"favicon.ico",
 				"manifest.json",
 				"manifest.webapp",
@@ -31,7 +32,7 @@
 				"styles.scss"
 			],
 			"scripts": [
-				"../../node_modules/socket.io-client/dist/socket.io.js",
+				"../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js",
 				"../../node_modules/socketio-file-upload/client.min.js"
 			],
 			"environmentSource": "environments/environment.ts",

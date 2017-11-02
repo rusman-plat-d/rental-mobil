@@ -1,29 +1,28 @@
 <div class='pp2-su-supirForm'>
 	<pp2-dry-container>
-		<h1>GGGGG</h1>
-		<div class="pp2-content-24px">
-			<form [formGroup]='ggForm' fxLayout='column' (submit)='pp2OnSubmit(ggForm.value)' fxLayoutAlign='center center'>
-				<mat-card class='container-60 padding-10 grey lighten-4'>
+		<div class="container pp2-content asc">
+			<form [formGroup]='supirForm' fxLayout='column' (submit)='pp2OnSubmit(supirForm.value)' fxLayoutAlign='center center'>
+				<mat-card style="width: 800px">
 					<mat-card-header>
 						<mat-card-title>Tambah Supir</mat-card-title>
 					</mat-card-header>
 					<mat-card-content fxLayoutAlign='center center'>
-						<div class="pp2-su-supir-form-container" fxLayout='column' style='height: 100%;'>
+						<div class="pp2-dry-supirForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
 							<div fxFlex>
 								<pp2-dry-fileImage #fi></pp2-dry-fileImage>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<input formControlName='noSIM' matInput type="text" placeholder="No SIM">
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<input formControlName='nama' matInput type="text" placeholder="Nama">
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<mat-select formControlName='jk' placeholder='Jenis Kelamin'>
 										<mat-option value='L'>Laki-Laki</mat-option>
 										<mat-option value='P'>Perempuan</mat-option>
@@ -31,24 +30,24 @@
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat"></textarea>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<mat-select placeholder='Kota'>
 										<mat-option *ngFor='let kota of cities' [value]='kota'>{{ kota }}</mat-option>
 									</mat-select>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
-									<input formControlName='noHp' matInput type="text" placeholder="No Telp/HP">
+								<mat-form-field class='full-width'>
+									<input formControlName='noHP' matInput type="text" placeholder="No Telp/HP">
 								</mat-form-field>
 							</div>
 							<div fxFlex>
-								<mat-form-field class='container-100'>
+								<mat-form-field class='full-width'>
 									<input formControlName='email' matInput type="email" placeholder="E-mail">
 								</mat-form-field>
 							</div>
@@ -62,9 +61,3 @@
 		</div>
 	</pp2-dry-container>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

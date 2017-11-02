@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import 'assets/scss/custom-theme.scss';
-
+// @import 'assets/scss/custom-theme.scss';
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 @import '~font-awesome/css/font-awesome.min.css';
 @import 'assets/materialize/materialize.min.css';
 @import './assets/iconfont/material-icons.css';
@@ -37,6 +36,7 @@ button[disabled] {
 }
 .mat-toolbar {
 	border-radius: 0 !important;
+	margin: 0 !important;
 }
 .mat-dialog-container {
 	padding: 0 !important;
@@ -67,26 +67,32 @@ button[disabled] {
 .mat-drawer {
 	width: 300px;
 }
-.mat-drawer-backdrop.mat-drawer-shown {
-	background-color: transparent !important;
-	z-index: -2000;
-	display: none;
-}
-@media (max-width: 720px) {
-	.mat-drawer-backdrop.mat-drawer-shown {
-		background-color: rgba(0, 0, 0, 0.6) !important;
-		z-index: 2000;
-		display: initial;
-		margin-left: 300px;
+@media (max-width: 750px) {
+	.mat-sidenav,
+	.mat-drawer {
+		width: 80vw;
 	}
 }
+// .mat-drawer-backdrop.mat-drawer-shown {
+// 	background-color: transparent !important;
+// 	z-index: -2000;
+// 	display: none;
+// }
+// @media (max-width: 750px) {
+// 	.mat-drawer-backdrop.mat-drawer-shown {
+// 		background-color: rgba(0, 0, 0, 0.6) !important;
+// 		z-index: 2000;
+// 		display: initial;
+// 		margin-left: 300px;
+// 	}
+// }
 
-// @import './assets/scss/grid.scss';
 .flex-auto {
 	flex: 1 1 auto;
 }
 .pp2-content {
-	padding: 64px 24px 0;
+	margin: 64px 0;
+	padding: 0 24px;
 }
 h1 {
 	padding: 0 20px;
@@ -109,4 +115,21 @@ h1 {
 }
 .ac-center {
 	align-content: center;
+}
+.full-width {
+	width: calc(100% - 50px) !important;
+	padding: 0 25px;
+}
+
+// .container {
+// 	width: 650px !important;
+// }
+// @media (max-width: 800px) {
+// 	.container {
+// 		width: 90% !important;
+// 	}
+// }
+
+.asc{
+	margin: 64px auto;
 }

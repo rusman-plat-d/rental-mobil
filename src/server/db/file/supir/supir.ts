@@ -23,7 +23,7 @@ function save() {
 export interface Supir{
 	id?: string;
 	nama?: string;
-	noSim?: string;
+	noSIM?: string;
 	jk?: string;
 	noHP?: string;
 	alamat?: string;

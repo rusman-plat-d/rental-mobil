@@ -6,12 +6,14 @@ import { Pp2SuRoutingModule } from './su.routing.module';
 
 
 import { Pp2SuComponent } from './su.component';
-import { Pp2SuSupirFormComponent } from './components/_supir-form/_supir-form.component';
+import { SupirFormComponent } from './components/supir-form/supir-form.component';
+import { SupirViewComponent } from './components/supir-view/supir-view.component';
 
 
 export const Pp2SuComponents = [
 	Pp2SuComponent,
-	Pp2SuSupirFormComponent
+	SupirFormComponent,
+	SupirViewComponent
 ];
 
 export const Pp2SuDirectives = [

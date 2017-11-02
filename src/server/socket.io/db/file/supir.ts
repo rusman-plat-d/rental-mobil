@@ -7,7 +7,9 @@ const $SIOFU = require('socketio-file-upload');
 const { join } = require('path');
 const { mkdir } = require('fs');
 const filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'supir');
-mkdir(filepath);
+mkdir(filepath, (e) => {
+	console.log('[db][supir](mkdir)<ERROR>')
+});
 module.exports = function($Socket: Server) {
 	const _Socket = $Socket.of('/db/supir');
 	_Socket.on('connection', Socket => {
@@ -24,6 +26,10 @@ module.exports = function($Socket: Server) {
 			Supir.add($Supir);
 			_Socket.emit('add', $Supir);
 		})
+		_SIOFU.on('error', e => {
+			console.log('[db][supir](SIOFU)<ERROR> ', e);
+		})
+
 		Socket.on('gets', cb => {
 			cb(Supir.gets());
 		})
@@ -39,6 +45,7 @@ module.exports = function($Socket: Server) {
 			_Socket.emit('update', supir);
 		})
 		Socket.on('remove', (id: string) => {
+			console.log('supir remove')
 			Supir.remove(id);
 			_Socket.emit('remove', id);
 		})

@@ -1,28 +1,42 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-export let LATEST_ID: number = 0;
+import { Supir } from '../../interfaces/supir.interface';
 
-export interface Supir{
-	id?: string;
-	nama?: string;
-	noSim?: string;
-	jk?: string;
-	noHP?: string;
-	alamat?: string;
-	email?: string;
-	image?: string;
-};
+import { CONFIG } from '../../consts/config.const';
+import { SocketIOStatic, Server } from '../../interfaces/socket.interface';
+import { $Socket } from './_supir-view.socketio';
+
+declare var io: any;
 
 @Injectable()
 export class SupirDatabase {
+	$Socket: Server = io(CONFIG.socket + '/db/supir');
 	dataChange: BehaviorSubject<Supir[]> = new BehaviorSubject<Supir[]>([]);
 	get data(): Supir[] { return this.dataChange.value; }
-	constructor() {}
-
-	addPerson($Supir) {
+	constructor() {
+		this.$Socket = io(CONFIG.socket + '/db/supir');
+		$Socket(this);
+	}
+	add(Supir: Supir) {
 		const copiedData = this.data.slice();
-		copiedData.push($Supir);
+		copiedData.unshift(Supir);
+		this.dataChange.next(copiedData);
+	}
+	update(Supir: Supir) {
+		const copiedData = this.data.slice();
+		Object.keys(copiedData).map(($key) => {
+			if (Supir.id === copiedData[$key]._id) {
+				copiedData[$key] = Supir;
+			}
+		});
+		this.dataChange.next(copiedData);
+	}
+	remove(id: string) {
+		let copiedData = this.data.slice();
+		copiedData = copiedData.filter((_Item: Supir) => {
+			return id !== _Item.id;
+		});
 		this.dataChange.next(copiedData);
 	}
 }

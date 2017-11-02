@@ -1,12 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { animate, transition, trigger, state, style, } from '@angular/animations';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
 
-import { Supir, SupirDatabase } from './_supir-view.database';
+import { Supir } from '../../interfaces/supir.interface';
+import { SupirDatabase } from './_supir-view.database';
+
 import { SupirDataSource } from './_supir-view.datasource';
 import { DetailRow, SupirDetailDataSource } from './_supir-view.detail.datasource';
+import { CONFIG } from '../../consts/config.const';
 
-export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | undefined;
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
+
+export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | 'action' | undefined;
 export type TrackByStrategy = 'id' | 'reference' | 'index';
 
 @Component({
@@ -17,16 +26,18 @@ export type TrackByStrategy = 'id' | 'reference' | 'index';
 	trigger('detailExpand', [
 		state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
 		state('expanded', style({height: '*', visibility: 'visible'})),
-		transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+		transition('expanded <=> collapsed', animate('2000ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
 	]),
 	]
 })
 
-export class _SupirViewComponent implements OnInit {
-	dataSource: SupirDatabase | null;
+export class _SupirViewComponent implements OnDestroy, OnInit {
+	CONFIG = CONFIG;
+	supirDatabase = new SupirDatabase();
+	dataSource: SupirDataSource | null;
 	dataSourceWithDetails: SupirDetailDataSource | null;
-	matTableDataSource = new MatTableDataSource<Supir>();
-	displayedColumns: SupirProperties[] = [];
+	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image'];
+	displayedColumns: SupirProperties[] = ['image', 'nama', 'jk', 'action'];
 	trackByStrategy: TrackByStrategy = 'reference';
 	changeReferences = false;
 	highlights = new Set<string>();
@@ -37,25 +48,37 @@ export class _SupirViewComponent implements OnInit {
 	expandedSupir: Supir;
 
 	isDetailRow = (row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
+	@ViewChild(MatPaginator) C_mat_paginator: MatPaginator;
+	@ViewChild(MatSort) C_mat_sort: MatSort;
+	@ViewChild('filter') filter: ElementRef;
 	constructor(
-		_supirDatabase: SupirDatabase
-	) {
-		this.matTableDataSource.sortingDataAccessor = (data: Supir, property: string) => {
-			switch (property) {
-				case 'id': return data.id;
-				case 'nama': return data.nama;
-				case 'noSim': return data.noSim;
-				case 'jk': return data.jk;
-				case 'noHP': return data.noHP;
-				case 'alamat': return data.alamat;
-				case 'email': return data.email;
-				case 'image': return data.image;
-				default: return '';
-			}
-		};
-		this.matTableDataSource.filterTermAccessor = (data: Supir) => data.nama;
-		// this.filter.valueChanges.subscribe(filter => this.matTableDataSource!.filter = filter);
+		public _supirDatabase: SupirDatabase,
+		public $_ngRouter: Router
+	) {}
+	ngOnDestroy(){
+		this._supirDatabase.$Socket = null;
 	}
-
-	ngOnInit() { }
+	ngOnInit() {
+		this.dataSource = new SupirDataSource(this._supirDatabase, this.C_mat_paginator, this.C_mat_sort)
+		Observable.fromEvent(this.filter.nativeElement, 'keyup')
+			.debounceTime(150)
+			.distinctUntilChanged()
+			.subscribe(() => {
+				if (!this.dataSource) { return; }
+				this.dataSource.filter = this.filter.nativeElement.value;
+			});
+		this.dataSourceWithDetails = new SupirDetailDataSource(this.dataSource);
+	}
+	rowClick(row) {
+		if (this.expandedSupir == row) {
+			this.expandedSupir = null;
+		} else {
+			this.expandedSupir = row;
+		}
+		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
+	}
+	remove(id) {
+		alert('delete')
+		this._supirDatabase.$Socket.emit('remove', id)
+	}
 }

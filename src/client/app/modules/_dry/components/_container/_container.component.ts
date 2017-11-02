@@ -10,6 +10,13 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 			height: calc(100vh - 64px);
 			overflow-y: scroll;
 		}
+		@media (max-width: 600px) {
+			.mat-sidenav-content{
+				padding-top: 56px;
+				height: calc(100vh - 56px);
+				overflow-y: scroll;
+			}
+		}
 	`]
 })
 

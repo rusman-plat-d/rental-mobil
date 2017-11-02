@@ -1,19 +1,24 @@
 import {
+	MatButtonModule,
+	MatCardModule,
 	MatDatepickerModule,
 	MatMenuModule,
-	MatButtonModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
 	MatNativeDateModule,
+	MatPaginatorModule,
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSortModule,
 	MatStepperModule,
-	MatToolbarModule
+	MatToolbarModule,
+	MatTableModule
 } from '@angular/material';
 
 export const MatModules: any[] = [
+	MatCardModule,
 	MatDatepickerModule,
 	MatMenuModule,
 	MatButtonModule,
@@ -21,10 +26,13 @@ export const MatModules: any[] = [
 	MatInputModule,
 	MatListModule,
 	MatNativeDateModule,
+	MatPaginatorModule,
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSortModule,
 	MatStepperModule,
+	MatTableModule,
 	MatToolbarModule
 ];
 
