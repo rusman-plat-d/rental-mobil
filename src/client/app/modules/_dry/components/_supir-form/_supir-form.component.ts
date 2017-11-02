@@ -19,12 +19,12 @@ declare var io: any;
 	`]
 })
 export class _SupirFormComponent implements OnDestroy, OnInit {
-	@ViewChild('fi') _Pp2_dry_fi: _FileImageComponent;
+	@ViewChild('fi') C_Pp2_dry_fi: _FileImageComponent;
 	$Socket: Server;
 	supirForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
 	constructor(
-		public $_Mat_FBuilder: FormBuilder,
+		public $_ngFormBuilder: FormBuilder,
 		public $_Pp2_MQ: Pp2MediaQueryService,
 		public $_ngRoute: ActivatedRoute
 	) {
@@ -37,15 +37,16 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 		this.$Socket = null;
 	}
 	ngOnInit() {
-		this.supirForm = this.$_Mat_FBuilder.group({
+		this.supirForm = this.$_ngFormBuilder.group({
 			noSIM: [""],
 			nama: [""],
 			jk: [""],
 			noHP: [""],
 			alamat: [""],
-			email: [""]
+			email: [""],
+			image: [""]
 		});
-		this._Pp2_dry_fi.imageSrc = 'gg.png';
+		this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/gg.png';
 		if ( this.$_ngRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngRoute.snapshot.params['id'], (Supir: Supir) => {
 				this.supirForm.setValue({
@@ -54,20 +55,25 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 					jk: Supir.jk,
 					noHP: Supir.noHP,
 					alamat: Supir.alamat,
-					email: Supir.email
+					email: Supir.email,
+					image: Supir.image
 				})
-				this._Pp2_dry_fi.imageSrc = Supir.image;
+				this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/' + Supir.image;
 			})
 		}
 		
 	}
 	pp2OnSubmit(val) {
-		this._Pp2_dry_fi.save(this.$Socket, Object.assign(val, {
-			id: ((Math.random() * Math.random() * 1000).toString()
-					+(Math.random() * Math.random() * 1000).toString()
-					+Date.now()
-					+(Math.random() * Math.random() * 1000).toString())
-					.replace('.', '').replace('.', '').replace('.', '')
-		}))
+		if ( this.C_Pp2_dry_fi.i_file.files.length > 0 ) {
+			this.C_Pp2_dry_fi.save(this.$Socket, Object.assign(val, {
+				id: ((Math.random() * Math.random() * 1000).toString()
+						+(Math.random() * Math.random() * 1000).toString()
+						+Date.now()
+						+(Math.random() * Math.random() * 1000).toString())
+						.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
+			}), this.$_ngRoute.data['value']['type'])
+		} else {
+			this.$Socket.emit('update', val);
+		}
 	}
 }

@@ -57,7 +57,6 @@ export class SupirDataSource extends DataSource<Supir> {
 				case 'noHP': [propertyA, propertyB] = [a.noHP, b.noHP]; break;
 				case 'alamat': [propertyA, propertyB] = [a.alamat, b.alamat]; break;
 				case 'email': [propertyA, propertyB] = [a.email, b.email]; break;
-				case 'image': [propertyA, propertyB] = [a.image, b.image]; break;
 			}
 			let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
 			let valueB = isNaN(+propertyB) ? propertyB : +propertyB;

@@ -11,6 +11,7 @@ import {
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSnackBarModule,
 	MatSortModule,
 	MatStepperModule,
 	MatToolbarModule,
@@ -30,10 +31,15 @@ export const MatModules: any[] = [
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSnackBarModule,
 	MatSortModule,
 	MatStepperModule,
 	MatTableModule,
 	MatToolbarModule
+];
+
+export const MatServices: any = [
+
 ];
 
 import { A11yModule } from '@angular/cdk/a11y';

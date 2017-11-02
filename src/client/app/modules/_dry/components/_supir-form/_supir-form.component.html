@@ -1,8 +1,8 @@
 <div class='pp2-su-supirForm'>
 	<pp2-dry-container>
-		<div class="container pp2-content asc">
+		<div class="container pp2-content margin-auto">
 			<form [formGroup]='supirForm' fxLayout='column' (submit)='pp2OnSubmit(supirForm.value)' fxLayoutAlign='center center'>
-				<mat-card style="width: 800px">
+				<mat-card class='full-width'>
 					<mat-card-header>
 						<mat-card-title>Tambah Supir</mat-card-title>
 					</mat-card-header>
@@ -24,21 +24,14 @@
 							<div fxFlex>
 								<mat-form-field class='full-width'>
 									<mat-select formControlName='jk' placeholder='Jenis Kelamin'>
-										<mat-option value='L'>Laki-Laki</mat-option>
-										<mat-option value='P'>Perempuan</mat-option>
+										<mat-option value='Laki-Laki'>Laki-Laki</mat-option>
+										<mat-option value='Perempuan'>Perempuan</mat-option>
 									</mat-select>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
 									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat"></textarea>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<mat-select placeholder='Kota'>
-										<mat-option *ngFor='let kota of cities' [value]='kota'>{{ kota }}</mat-option>
-									</mat-select>
 								</mat-form-field>
 							</div>
 							<div fxFlex>

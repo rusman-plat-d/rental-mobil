@@ -7,9 +7,7 @@ const $SIOFU = require('socketio-file-upload');
 const { join } = require('path');
 const { mkdir } = require('fs');
 const filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'supir');
-mkdir(filepath, (e) => {
-	console.log('[db][supir](mkdir)<ERROR>')
-});
+
 module.exports = function($Socket: Server) {
 	const _Socket = $Socket.of('/db/supir');
 	_Socket.on('connection', Socket => {
@@ -19,12 +17,18 @@ module.exports = function($Socket: Server) {
 		_SIOFU.on('saved', e => {
 			const ext = e.file.name.split('.');
 			const filename = e.file.base + '.' + ext[ ext.length - 1 ];
-			const $Supir: Supir.Supir = e.file.meta;
+			const $Supir: Supir.Supir = e.file.meta.Supir;
 			console.log('filename => ', filename);
 			console.log('$supir => ', $Supir);
+			console.log('meta => ', e.file.meta);
 			$Supir.image = filename;
-			Supir.add($Supir);
-			_Socket.emit('add', $Supir);
+			if ( e.file.meta._type === 'tambah' ) {
+				Supir.add($Supir);
+				_Socket.emit('add', $Supir);
+			} else {
+				Supir.update($Supir);
+				_Socket.emit('update', $Supir);
+			}
 		})
 		_SIOFU.on('error', e => {
 			console.log('[db][supir](SIOFU)<ERROR> ', e);

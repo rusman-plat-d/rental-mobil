@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 import { CONFIG } from '../../consts/config.const';
-
 
 declare var document: any,
 			SocketIOFileUpload: any;
@@ -16,12 +17,15 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 	CONFIG = CONFIG;
 	imageSrc: string = '';
 	fileExist: boolean = false;
-	i_file: any;
+	i_file: HTMLInputElement;
 	SIOFU: any;
 	get label() {
 		return this.fileExist ? 'Ganti' : 'Upload';
 	}
-	constructor() { }
+	constructor(
+		private $_ngRouter: Router,
+		private $_matSnackBar: MatSnackBar
+	) { }
 	ngOnDestroy() {
 		this.SIOFU = null;
 	}
@@ -46,14 +50,28 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		}
 		this.i_file.dispatchEvent(new MouseEvent('click'))
 	}
-	save($Socket, data) {
-		alert('fi submitted');
+	save($Socket, data, type, url?: string) {
 		const btn: HTMLButtonElement = document.createElement('button');
 		this.SIOFU = new SocketIOFileUpload($Socket);
 		this.SIOFU.listenOnSubmit(btn, this.i_file);
-		this.SIOFU.addEventListener('start', function (event) {
-			event.file.meta = data;
-		});
+		if ( type === 'tambah' ) {
+			this.SIOFU.addEventListener('start', e => {
+				e.file.meta.Supir = data;
+				e.file.meta._type = 'tambah';
+			});
+		} else {
+			this.SIOFU.addEventListener('start', e => {
+				e.file.meta.Supir = data;
+				e.file.meta._type = 'ubah';
+			});
+		}
 		btn.dispatchEvent(new MouseEvent('click'));
+		this.SIOFU.addEventListener('complete', e => {
+			this.$_ngRouter.navigate(['su','supir','lihat']);
+			this.$_matSnackBar.open('Data Berhasil Disimpan')
+			setTimeout(() => {
+				this.$_matSnackBar.dismiss();
+			}, 4000)
+		})
 	}
 }
