@@ -2,30 +2,10 @@ import {
 	MatButtonModule,
 	MatCardModule,
 	MatDatepickerModule,
-	MatMenuModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
-	MatNativeDateModule,
-	MatPaginatorModule,
-	MatRippleModule,
-	MatSelectModule,
-	MatSidenavModule,
-	MatSnackBarModule,
-	MatSortModule,
-	MatStepperModule,
-	MatToolbarModule,
-	MatTableModule
-} from '@angular/material';
-
-export const MatModules: any[] = [
-	MatCardModule,
-	MatDatepickerModule,
 	MatMenuModule,
-	MatButtonModule,
-	MatIconModule,
-	MatInputModule,
-	MatListModule,
 	MatNativeDateModule,
 	MatPaginatorModule,
 	MatRippleModule,
@@ -35,7 +15,29 @@ export const MatModules: any[] = [
 	MatSortModule,
 	MatStepperModule,
 	MatTableModule,
-	MatToolbarModule
+	MatToolbarModule,
+	MatTooltipModule
+} from '@angular/material';
+
+export const MatModules: any[] = [
+	MatButtonModule,
+	MatCardModule,
+	MatDatepickerModule,
+	MatIconModule,
+	MatInputModule,
+	MatListModule,
+	MatMenuModule,
+	MatNativeDateModule,
+	MatPaginatorModule,
+	MatRippleModule,
+	MatSelectModule,
+	MatSidenavModule,
+	MatSnackBarModule,
+	MatSortModule,
+	MatStepperModule,
+	MatTableModule,
+	MatToolbarModule,
+	MatTooltipModule
 ];
 
 export const MatServices: any = [

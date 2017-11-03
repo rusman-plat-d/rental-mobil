@@ -7,7 +7,7 @@ declare var io: SocketIOStatic;
 export function $Socket($this: SupirDatabase) {
 	$this.$Socket.on('connect', () => {
 		$this.$Socket.emit('gets', (Supir$: Supir[]) => {
-			Supir$.map((_Supir) => {
+			Supir$.map((_Supir, i) => {
 				$this.add(_Supir);
 			})
 		})

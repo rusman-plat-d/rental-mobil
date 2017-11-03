@@ -21,13 +21,13 @@ export type TrackByStrategy = 'id' | 'reference' | 'index';
 @Component({
 	selector: 'pp2-dry-supirView',
 	templateUrl: './_supir-view.component.html',
-	styleUrls: [`./_supir-view.component.scss`],
+	styleUrls: ['./_supir-view.component.scss'],
 	animations: [
-	trigger('detailExpand', [
-		state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
-		state('expanded', style({height: '*', visibility: 'visible'})),
-		transition('expanded <=> collapsed', animate('2000ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-	]),
+		trigger('detailExpand', [
+			state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+			state('expanded', style({height: '*', visibility: 'visible'})),
+			transition('expanded <=> collapsed', animate('2000ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+		]),
 	]
 })
 
@@ -40,7 +40,6 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 	displayedColumns: SupirProperties[] = ['image', 'nama', 'jk', 'action'];
 	trackByStrategy: TrackByStrategy = 'reference';
 	changeReferences = false;
-	highlights = new Set<string>();
 	wasExpanded = new Set<Supir>();
 
 	dynamicColumnDefs: any[] = [];
@@ -52,14 +51,13 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 	@ViewChild(MatSort) C_mat_sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	constructor(
-		public _supirDatabase: SupirDatabase,
 		public $_ngRouter: Router
 	) {}
 	ngOnDestroy(){
-		this._supirDatabase.$Socket = null;
+		this.supirDatabase.$Socket = null;
 	}
 	ngOnInit() {
-		this.dataSource = new SupirDataSource(this._supirDatabase, this.C_mat_paginator, this.C_mat_sort)
+		this.dataSource = new SupirDataSource(this.supirDatabase, this.C_mat_paginator, this.C_mat_sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.debounceTime(150)
 			.distinctUntilChanged()
@@ -78,7 +76,10 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id) {
-		alert('delete')
-		this._supirDatabase.$Socket.emit('remove', id)
+		alert('delete');
+		this.supirDatabase.$Socket.emit('remove', id)
+	}
+	gg(msg){
+		alert('gg => ' + msg);
 	}
 }

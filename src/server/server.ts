@@ -22,14 +22,14 @@ const port = process.env.PORT || 4136;
 const baseUrl = `http://localhost:${port}`;
 
 // Set the engine
-app.engine('html', ngExpressEngine({
-	bootstrap: Pp2ServerModuleNgFactory,
-	providers: [
-		provideModuleMap(LAZY_MODULE_MAP)
-	]
-}));
+// app.engine('html', ngExpressEngine({
+// 	bootstrap: Pp2ServerModuleNgFactory,
+// 	providers: [
+// 		provideModuleMap(LAZY_MODULE_MAP)
+// 	]
+// }));
 
-app.set('view engine', 'html');
+// app.set('view engine', 'html');
 
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
@@ -38,16 +38,16 @@ app.get('/api', (req, res) => {
 	res.json({ data: 'Content from HTTP request.' });
 });
 
-app.get('*', (req, res) => {
-	res.render('index', {
-		req,
-		res,
-		providers: [{
-			provide: 'serverUrl',
-			useValue: `${req.protocol}://${req.get('host')}`
-		}]
-	});
-});
+// app.get('*', (req, res) => {
+// 	res.render('index', {
+// 		req,
+// 		res,
+// 		providers: [{
+// 			provide: 'serverUrl',
+// 			useValue: `${req.protocol}://${req.get('host')}`
+// 		}]
+// 	});
+// });
 
 const server = createServer(app);
 

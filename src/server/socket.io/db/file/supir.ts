@@ -17,11 +17,9 @@ module.exports = function($Socket: Server) {
 		_SIOFU.on('saved', e => {
 			const ext = e.file.name.split('.');
 			const filename = e.file.base + '.' + ext[ ext.length - 1 ];
-			const $Supir: Supir.Supir = e.file.meta.Supir;
-			console.log('filename => ', filename);
-			console.log('$supir => ', $Supir);
-			console.log('meta => ', e.file.meta);
-			$Supir.image = filename;
+			let $Supir: Supir.Supir = Object.assign(JSON.parse(JSON.stringify(e.file.meta.Supir)), {
+				image: filename
+			});
 			if ( e.file.meta._type === 'tambah' ) {
 				Supir.add($Supir);
 				_Socket.emit('add', $Supir);
@@ -49,7 +47,6 @@ module.exports = function($Socket: Server) {
 			_Socket.emit('update', supir);
 		})
 		Socket.on('remove', (id: string) => {
-			console.log('supir remove')
 			Supir.remove(id);
 			_Socket.emit('remove', id);
 		})

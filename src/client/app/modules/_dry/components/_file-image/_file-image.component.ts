@@ -50,7 +50,7 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		}
 		this.i_file.dispatchEvent(new MouseEvent('click'))
 	}
-	save($Socket, data, type, url?: string) {
+	save($Socket, data, type, url?: string[]) {
 		const btn: HTMLButtonElement = document.createElement('button');
 		this.SIOFU = new SocketIOFileUpload($Socket);
 		this.SIOFU.listenOnSubmit(btn, this.i_file);
@@ -67,7 +67,9 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		}
 		btn.dispatchEvent(new MouseEvent('click'));
 		this.SIOFU.addEventListener('complete', e => {
-			this.$_ngRouter.navigate(['su','supir','lihat']);
+			if (url) {
+				this.$_ngRouter.navigate(url);
+			}
 			this.$_matSnackBar.open('Data Berhasil Disimpan')
 			setTimeout(() => {
 				this.$_matSnackBar.dismiss();

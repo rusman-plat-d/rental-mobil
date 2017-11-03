@@ -26,16 +26,16 @@ export class SupirDatabase {
 	update(Supir: Supir) {
 		const copiedData = this.data.slice();
 		Object.keys(copiedData).map(($key) => {
-			if (Supir.id === copiedData[$key]._id) {
-				copiedData[$key] = Supir;
+			if (Supir.id === copiedData[$key].id) {
+				Object.assign(copiedData[$key], Supir);
 			}
 		});
 		this.dataChange.next(copiedData);
 	}
 	remove(id: string) {
 		let copiedData = this.data.slice();
-		copiedData = copiedData.filter((_Item: Supir) => {
-			return id !== _Item.id;
+		copiedData = copiedData.filter((Supir: Supir) => {
+			return id !== Supir.id;
 		});
 		this.dataChange.next(copiedData);
 	}

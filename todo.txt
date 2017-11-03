@@ -1,2 +1,5 @@
 2017-11-02
-hapus gambar sebelumnya ketika update supir
+[]	hapus gambar sebelumnya ketika update supir
+
+2017-11-03
+[]	wrong supir-form label

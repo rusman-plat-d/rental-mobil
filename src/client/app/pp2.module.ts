@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+// import { TransferHttpCacheModule } from '@nguniversal/common';
 
 import { DryModule } from './modules/_dry/dry.module';
 
@@ -23,6 +24,7 @@ export const Pp2Components = [
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
+		// TransferHttpCacheModule,
 		Pp2RoutingModule,
 		Pp2SuModule
 	],
