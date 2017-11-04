@@ -35,6 +35,7 @@
 		"hammerjs": "^2.0.8",
 		"idb-keyval": "latest",
 		"intl": "^1.2.5",
+		"express": "*",
 		"materialize-css": "^0.100.2",
 		"moment": "^2.18.1",
 		"rxjs": "^5.5.2",
