@@ -11,11 +11,11 @@ declare var io: any;
 
 @Injectable()
 export class SupirDatabase {
-	$Socket: Server = io(CONFIG.socket + '/db/supir');
+	$Socket: Server = io('/db/supir');
 	dataChange: BehaviorSubject<Supir[]> = new BehaviorSubject<Supir[]>([]);
 	get data(): Supir[] { return this.dataChange.value; }
 	constructor() {
-		this.$Socket = io(CONFIG.socket + '/db/supir');
+		this.$Socket = io('/db/supir');
 		$Socket(this);
 	}
 	add(Supir: Supir) {
