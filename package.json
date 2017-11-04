@@ -38,6 +38,7 @@
 		"materialize-css": "^0.100.2",
 		"moment": "^2.18.1",
 		"rxjs": "^5.5.2",
+		"reflect-metadata": "*",
 		"socket.io": "^2.0.4",
 		"socketio-file-upload": "^0.6.0",
 		"sse": "0.0.6",
