@@ -58,7 +58,7 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 					email: Supir.email,
 					image: Supir.image
 				})
-				this.C_Pp2_dry_fi.img.nativeElement.src = /uploads/supir/' + Supir.image;
+				this.C_Pp2_dry_fi.img.nativeElement.src = '/uploads/supir/' + Supir.image;
 			})
 		}
 		this.supirForm.valueChanges.subscribe(() => {
