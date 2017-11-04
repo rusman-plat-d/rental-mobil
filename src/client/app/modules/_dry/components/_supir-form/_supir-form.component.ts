@@ -28,7 +28,7 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 		public $_ngActivatedRoute: ActivatedRoute,
 		public $_ngRouter: Router
 	) {
-		this.$Socket = io(CONFIG.socket+'/db/supir');
+		this.$Socket = io('/db/supir');
 		this.disableForm();
 	}
 	ngOnDestroy() {
@@ -45,7 +45,7 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 			email: [""],
 			image: [""]
 		});
-		this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/gg.png';
+		this.C_Pp2_dry_fi.img.nativeElement.src = '/uploads/supir/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Supir: Supir) => {
 				this.supirForm.setValue({
@@ -58,7 +58,7 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 					email: Supir.email,
 					image: Supir.image
 				})
-				this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/' + Supir.image;
+				this.C_Pp2_dry_fi.img.nativeElement.src = /uploads/supir/' + Supir.image;
 			})
 		}
 		this.supirForm.valueChanges.subscribe(() => {
