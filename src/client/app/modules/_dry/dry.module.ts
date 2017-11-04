@@ -13,6 +13,7 @@ import { GridDirective } from './directives/grid.directive';
 
 import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
 import { SupirDatabase } from './components/_supir-view/_supir-view.database';
+import { ConfigService } from './services/config.service';
 
 export const DryComponents = [
 	_ContainerComponent,
@@ -27,7 +28,8 @@ export const DryDirectives = [
 ];
 export const DryServices = [
 	Pp2MediaQueryService,
-	SupirDatabase
+	SupirDatabase,
+	ConfigService
 ];
 
 @NgModule({
@@ -42,6 +44,9 @@ export const DryServices = [
 		...DryComponents,
 		...DryDirectives
 	],
-	providers: DryServices,
+	providers: [
+		...DryServices,
+	]
+
 })
 export class DryModule { }

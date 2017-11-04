@@ -1,13 +1,14 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, InjectionToken, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { animate, transition, trigger, state, style, } from '@angular/animations';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Supir } from '../../interfaces/supir.interface';
 import { SupirDatabase } from './_supir-view.database';
-
 import { SupirDataSource } from './_supir-view.datasource';
 import { DetailRow, SupirDetailDataSource } from './_supir-view.detail.datasource';
+
+import { ConfigService } from '../../services/config.service';
 import { CONFIG } from '../../consts/config.const';
 
 import {Observable} from 'rxjs/Observable';
@@ -33,7 +34,7 @@ export type TrackByStrategy = 'id' | 'reference' | 'index';
 
 export class _SupirViewComponent implements OnDestroy, OnInit {
 	CONFIG = CONFIG;
-	supirDatabase = new SupirDatabase();
+	// supirDatabase = new SupirDatabase();
 	dataSource: SupirDataSource | null;
 	dataSourceWithDetails: SupirDetailDataSource | null;
 	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image'];
@@ -51,7 +52,9 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 	@ViewChild(MatSort) C_mat_sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	constructor(
-		public $_ngRouter: Router
+		public $_ngRouter: Router,
+		public supirDatabase: SupirDatabase,
+		public $_pp2Conf: ConfigService
 	) {}
 	ngOnDestroy(){
 		this.supirDatabase.$Socket = null;

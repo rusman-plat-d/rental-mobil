@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
+import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
 import { Supir } from '../../interfaces/supir.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
@@ -26,9 +27,10 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 		public $_ngFormBuilder: FormBuilder,
 		public $_Pp2_MQ: Pp2MediaQueryService,
 		public $_ngActivatedRoute: ActivatedRoute,
-		public $_ngRouter: Router
+		public $_ngRouter: Router,
+		public $_pp2Conf: ConfigService
 	) {
-		this.$Socket = io(CONFIG.socket+'/db/supir');
+		this.$Socket = io(this.$_pp2Conf.socket+'/db/supir');
 		this.disableForm();
 	}
 	ngOnDestroy() {
