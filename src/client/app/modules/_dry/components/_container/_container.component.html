@@ -3,7 +3,7 @@
 		<mat-sidenav #C_Mat_Sidenav [mode]='$_Pp2MQ.screen.xl ? "side" : "over"' [opened]='$_Pp2MQ.screen.xl ? true : false '>
 			<pp2-dry-sidenav></pp2-dry-sidenav>
 		</mat-sidenav>
-		<mat-sidenav-content #C_Mat_Sidenav_Content>
+		<mat-sidenav-content #C_Mat_Sidenav_Content tabindex='1'>
 			<pp2-dry-nav ($C_Mat_Sidenav_Click$)='C_Mat_Sidenav.toggle()'></pp2-dry-nav>
 			<ng-content></ng-content>
 		</mat-sidenav-content>

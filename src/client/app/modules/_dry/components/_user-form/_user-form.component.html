@@ -1,24 +1,29 @@
-<div class='pp2-su-supirForm'>
+<div class='pp2-su-userForm'>
 	<pp2-dry-container>
 		<div class="container pp2-content margin-auto">
-			<form [formGroup]='supirForm' fxLayout='column' (submit)='pp2OnSubmit($event, supirForm.value)' fxLayoutAlign='center center'>
+			<form [formGroup]='userForm' fxLayout='column' (submit)='pp2OnSubmit($event, userForm.value)' fxLayoutAlign='center center'>
 				<mat-card class='full-width'>
 					<mat-card-header>
-						<mat-card-title>Tambah Supir</mat-card-title>
+						<mat-card-title>Daftar Akun Baru</mat-card-title>
 					</mat-card-header>
 					<mat-card-content fxLayoutAlign='center center'>
-						<div class="pp2-dry-supirForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
+						<div class="pp2-dry-userForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
 							<div fxFlex>
 								<pp2-dry-fileImage #fi></pp2-dry-fileImage>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='noSIM' matInput type="text" placeholder="No. SIM" required>
+									<input formControlName='nama' matInput type="text" placeholder="Nama" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='nama' matInput type="text" placeholder="Nama" required>
+									<input formControlName='noKTP' matInput type="text" placeholder="Nomor KTP" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='noHP' matInput type="text" placeholder="Nomor Seluler" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
@@ -31,17 +36,12 @@
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
+									<input formControlName='email' matInput type="email" placeholder="E-Mail" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
 									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat" required></textarea>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input formControlName='noHP' matInput type="text" placeholder="No Telp/HP" required>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input formControlName='email' matInput type="email" placeholder="E-mail" required>
 								</mat-form-field>
 							</div>
 						</div>

@@ -1,12 +1,12 @@
 import { Server } from '../../../interfaces/socket.io';
-import * as Supir from '../../../db/file/supir';
+import * as Mobil from '../../../db/file/mobil';
 declare var module: any,
 			__dirname: any,
 			require: any;
 const $SIOFU = require('socketio-file-upload');
 const { join } = require('path');
 const { mkdir, unlink } = require('fs');
-const filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'supir');
+const filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'mobil');
 
 function remove_image(name: string) {
 	unlink(join(filepath,name), (err) => {
@@ -17,42 +17,46 @@ function remove_image(name: string) {
 }
 
 module.exports = function($Socket: Server) {
-	const _Socket = $Socket.of('/db/supir');
+	const _Socket = $Socket.of('/db/mobil');
 	_Socket.on('connection', Socket => {
 		const _SIOFU = new $SIOFU();
 		_SIOFU.dir = filepath;
 		_SIOFU.listen(Socket)
+		_SIOFU.on('start', e => {
+			console.log('[db][mobil](SIOFU)<START> ', e);
+		})
 		_SIOFU.on('saved', e => {
 			const ext = e.file.name.split('.');
 			const filename = e.file.base + '.' + ext[ ext.length - 1 ];
-			let $Supir: Supir.Supir = Object.assign(JSON.parse(JSON.stringify(e.file.meta.data)), {
+			console.log('saved => ', e.file.meta)
+			let $Mobil: Mobil.Mobil = Object.assign(e.file.meta.data, {
 				image: filename
 			});
 			if ( e.file.meta._type === 'tambah' ) {
-				Supir.add($Supir);
-				_Socket.emit('add', $Supir);
+				Mobil.add($Mobil);
+				_Socket.emit('add', $Mobil);
 			} else {
-				remove_image(Supir.get($Supir.id).image);
-				Supir.update($Supir);
-				_Socket.emit('update', $Supir);
+				remove_image(Mobil.get($Mobil.id).image);
+				Mobil.update($Mobil);
+				_Socket.emit('update', $Mobil);
 			}
 		})
 		_SIOFU.on('error', e => {
-			console.log('[db][supir](SIOFU)<ERROR> ', e);
+			console.log('[db][mobil](SIOFU)<ERROR> ', e);
 		})
 		//-----------------------------------------------
 		Socket.on('gets', cb => {
-			cb(Supir.gets());
+			cb(Mobil.gets());
 		})
 		Socket.on('get', (id: string, cb) => {
-			cb(Supir.get(id))
+			cb(Mobil.get(id))
 		})
-		Socket.on('update', (supir: Supir.Supir) => {
-			Supir.update(supir);
-			_Socket.emit('update', supir);
+		Socket.on('update', (mobil: Mobil.Mobil) => {
+			Mobil.update(mobil);
+			_Socket.emit('update', Mobil);
 		})
 		Socket.on('remove', (id: string) => {
-			Supir.remove(id);
+			Mobil.remove(id);
 			_Socket.emit('remove', id);
 		})
 	})

@@ -9,14 +9,12 @@ import { SupirDataSource } from './_supir-view.datasource';
 import { DetailRow, SupirDetailDataSource } from './_supir-view.detail.datasource';
 
 import { ConfigService } from '../../services/config.service';
-import { CONFIG } from '../../consts/config.const';
 
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 
-export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | 'action' | undefined;
+export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 export type TrackByStrategy = 'id' | 'reference' | 'index';
 
 @Component({
@@ -31,14 +29,11 @@ export type TrackByStrategy = 'id' | 'reference' | 'index';
 		]),
 	]
 })
-
 export class _SupirViewComponent implements OnDestroy, OnInit {
-	CONFIG = CONFIG;
-	// supirDatabase = new SupirDatabase();
 	dataSource: SupirDataSource | null;
 	dataSourceWithDetails: SupirDetailDataSource | null;
-	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image'];
-	displayedColumns: SupirProperties[] = ['image', 'nama', 'jk', 'action'];
+	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
+	displayedColumns: SupirProperties[] = ['image', 'nama', 'jk', '_status', 'action'];
 	trackByStrategy: TrackByStrategy = 'reference';
 	changeReferences = false;
 	wasExpanded = new Set<Supir>();
@@ -62,7 +57,6 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 	ngOnInit() {
 		this.dataSource = new SupirDataSource(this.supirDatabase, this.C_mat_paginator, this.C_mat_sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
-			.debounceTime(150)
 			.distinctUntilChanged()
 			.subscribe(() => {
 				if (!this.dataSource) { return; }
@@ -79,10 +73,6 @@ export class _SupirViewComponent implements OnDestroy, OnInit {
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id) {
-		alert('delete');
 		this.supirDatabase.$Socket.emit('remove', id)
-	}
-	gg(msg){
-		alert('gg => ' + msg);
 	}
 }

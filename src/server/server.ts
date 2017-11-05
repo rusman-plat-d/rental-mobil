@@ -2,8 +2,8 @@ declare var __dirname: any,
 			require: any,
 			process: any;
 
-import 'zone.js/dist/zone-node';
-import 'reflect-metadata';
+// import 'zone.js/dist/zone-node';
+// import 'reflect-metadata';
 import * as express from 'express';
 import * as io from 'socket.io';
 const { createServer } = require('http');

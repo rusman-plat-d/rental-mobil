@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
 import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
-import { Supir } from '../../interfaces/supir.interface';
+import { User } from '../../interfaces/user.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
 import { CONFIG } from '../../../_dry/consts/config.const';
 
@@ -13,15 +13,15 @@ import { CONFIG } from '../../../_dry/consts/config.const';
 declare var io: any;
 
 @Component({
-	selector: "pp2-dry-supirForm",
-	templateUrl: "_supir-form.component.html",
+	selector: "pp2-dry-userForm",
+	templateUrl: "_user-form.component.html",
 	styles: [``]
 })
-export class _SupirFormComponent implements OnDestroy, OnInit {
+export class _UserFormComponent implements OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_dry_fi: _FileImageComponent;
 	disable: boolean = false;
 	$Socket: Server;
-	supirForm: FormGroup;
+	userForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
 	constructor(
 		public $_ngFormBuilder: FormBuilder,
@@ -30,56 +30,60 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 		public $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		this.$Socket = io(this.$_pp2Conf.socket+'/db/supir');
-		this.disableForm();
+		this.$Socket = io(this.$_pp2Conf.socket+'/db/user');
+		setTimeout(() => {
+			this.disableForm();
+		},1000)
 	}
 	ngOnDestroy() {
 		this.$Socket = null;
 	}
 	ngOnInit() {
-		this.supirForm = this.$_ngFormBuilder.group({
-			id: [""],
-			noSIM: [""],
-			nama: [""],
-			jk: [""],
-			noHP: [""],
-			alamat: [""],
-			email: [""],
-			image: [""]
+		this.userForm = this.$_ngFormBuilder.group({
+			id: [''],
+			nama: [''],
+			noKTP: [''],
+			noHP: [''],
+			jk: [''],
+			email: [''],
+			alamat: [''],
+			image: [''],
+			createdAt: [''],
+			updatedAt: ['']
 		});
-		this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/gg.png';
+		this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/user/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
-			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Supir: Supir) => {
-				this.supirForm.setValue({
-					id: Supir.id,
-					noSIM: Supir.noSIM,
-					nama: Supir.nama,
-					jk: Supir.jk,
-					noHP: Supir.noHP,
-					alamat: Supir.alamat,
-					email: Supir.email,
-					image: Supir.image
+			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (user: User) => {
+				this.userForm.setValue({
+					id: user.id,
+					nama: user.nama,
+					noKTP: user.noKTP,
+					noHP: user.noHP,
+					jk: user.jk,
+					email: user.email,
+					alamat: user.alamat,
+					image: user.image
 				})
-				this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/supir/' + Supir.image;
+				this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/User/' + user.image;
 			})
 		}
-		this.supirForm.valueChanges.subscribe(() => {
+		this.userForm.valueChanges.subscribe(() => {
 			this.disableForm();
 		})
 	}
 	disableForm(): void {
 		if ( this.$_ngActivatedRoute.data['value']['type'] === 'ubah' ) {
-			this.disable = false || !this.supirForm.valid;
+			this.disable = false || !this.userForm.valid;
 		}
 		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
 			try{
 				if ( this.C_Pp2_dry_fi.i_file.files ) {
-					this.disable = false || !this.supirForm.valid;
+					this.disable = false || !this.userForm.valid;
 				}
 			}catch(e){
-				this.disable = true || !this.supirForm.valid;
+				this.disable = true || !this.userForm.valid;
 			}
-		}else{ this.disable = false || !this.supirForm.valid; }
+		}else{ this.disable = false || !this.userForm.valid; }
 	}
 	tooltipMsg(): string {
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';
@@ -96,11 +100,11 @@ export class _SupirFormComponent implements OnDestroy, OnInit {
 								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
 					})
 				}
-				this.C_Pp2_dry_fi.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','supir','lihat'])
+				this.C_Pp2_dry_fi.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','user','lihat'])
 			}
 		}catch(e){
 			this.$Socket.emit('update', val);
-			this.$_ngRouter.navigate(['su','supir','lihat'])
+			this.$_ngRouter.navigate(['su','user','lihat'])
 		}
 	}
 }

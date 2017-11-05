@@ -56,12 +56,12 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 		this.SIOFU.listenOnSubmit(btn, this.i_file);
 		if ( type === 'tambah' ) {
 			this.SIOFU.addEventListener('start', e => {
-				e.file.meta.Supir = data;
+				e.file.meta.data = data;
 				e.file.meta._type = 'tambah';
 			});
 		} else {
 			this.SIOFU.addEventListener('start', e => {
-				e.file.meta.Supir = data;
+				e.file.meta.data = data;
 				e.file.meta._type = 'ubah';
 			});
 		}

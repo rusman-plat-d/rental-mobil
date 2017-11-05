@@ -1,20 +1,20 @@
-<div class="pp2-dry-supirView">
+<div class="pp2-dry-UserView">
 	<pp2-dry-container>
 		<div class='container pp2-content margin-auto'>
 			<mat-card>
 				<mat-card-content>
 					<mat-toolbar color='primary'>
-						<button mat-icon-button matTooltip='Tambah Supir' [routerLink]="['/su/supir/tambah']">
+						<button mat-icon-button matTooltip='Tambah User' [routerLink]="['/su/user/tambah']">
 							<mat-icon>add</mat-icon>
 						</button>
 						<mat-form-field class='full-width' color='accent' floatPlaceholder="never">
-							<input matInput #filter placeholder="Cari Supir">
+							<input matInput #filter placeholder="Cari User">
 						</mat-form-field>
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
-						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSupir ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedUser == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedUser ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
 							<mat-cell *matCellDef="let row">
@@ -23,7 +23,7 @@
 										<colgroup width='33%'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.socket + '/uploads/supir/' + row.data.image" style='max-width: 400px;align-self: center; justify-self: center;'>
+												<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.data.image" style='max-width: 400px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
@@ -31,28 +31,24 @@
 											<td>{{ row.data.nama }}</td>
 										</tr>
 										<tr>
-											<td>No. SIM</td>
-											<td>{{ row.data.noSIM }}</td>
+											<td>Nomor KTP</td>
+											<td>{{ row.data.noKTP }}</td>
+										</tr>
+										<tr>
+											<td>Nomor Seluler</td>
+											<td>{{ row.data.noHP }}</td>
 										</tr>
 										<tr>
 											<td>Jenis Kelamin</td>
 											<td>{{ row.data.jk }}</td>
 										</tr>
 										<tr>
-											<td>No. HP</td>
-											<td>{{ row.data.noHP }}</td>
-										</tr>
-										<tr>
-											<td>Email</td>
+											<td>E-Mail</td>
 											<td>{{ row.data.email }}</td>
 										</tr>
 										<tr>
 											<td>Alamat</td>
 											<td>{{ row.data.alamat }}</td>
-										</tr>
-										<tr>
-											<td>Status</td>
-											<td>{{ row.data._status }}</td>
 										</tr>
 									</table>
 								</ng-container>
@@ -69,52 +65,52 @@
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Nama </mat-header-cell>
 							<mat-cell *matCellDef="let row;"> {{row.nama}} </mat-cell>
 						</ng-container>
-						<!-- Column Definition: noSim -->
-						<ng-container matColumnDef="noSim">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> No.SIM </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.noSIM}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: jk -->
-						<ng-container matColumnDef="jk">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> JK </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.jk}} </mat-cell>
+						<!-- Column Definition: noKTP -->
+						<ng-container matColumnDef="noKTP">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Nomor KTP </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.noKTP}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: noHP -->
 						<ng-container matColumnDef="noHP">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> No.HP </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.noHP}} </mat-cell>
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Nomor Seluler </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.noHP}} </mat-cell>
 						</ng-container>
-						<!-- Column Definition: alamat -->
-						<ng-container matColumnDef="alamat">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Alamat </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.alamat}} </mat-cell>
+						<!-- Column Definition: jk -->
+						<ng-container matColumnDef="jk">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Jenis Kelamin </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.jk}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: email -->
 						<ng-container matColumnDef="email">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+							<mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.email}} </mat-cell>
+						</ng-container>
+						<!-- Column Definition: alamat -->
+						<ng-container matColumnDef="alamat">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.alamat}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: image -->
 						<ng-container matColumnDef="image">
 							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.socket + '/uploads/supir/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: action -->
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Supir' [routerLink]='"/su/supir/ubah/" + row.id'>
+								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data User' [routerLink]='"/su/user/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
-								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Supir' (click)='remove(row.id)'>
+								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus User' (click)='remove(row.id)'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>
 						</ng-container>
 					</mat-table>
-					<mat-paginator color='accent' #paginator [length]="supirDatabase.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+					<mat-paginator color='accent' #paginator [length]="UserDatabase.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 				</mat-card-content>
 			</mat-card>	
 		</div>
