@@ -11,6 +11,7 @@
 				"assets",
 				"uploads",
 				"favicon.ico",
+				"manifest.appcache",
 				"manifest.json",
 				"manifest.webapp",
 				"offline.html",

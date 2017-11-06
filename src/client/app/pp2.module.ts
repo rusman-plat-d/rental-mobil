@@ -9,7 +9,7 @@ import { Pp2RoutingModule, Pp2Components } from './pp2.routing.module';
 import { Pp2SuModule } from './modules/su/su.module';
 
 import { Pp2Component } from './pp2.component';
-
+import { NavComponent_ } from './components/_nav/_nav.component';
 
 @NgModule({
 	imports: [
@@ -20,6 +20,7 @@ import { Pp2Component } from './pp2.component';
 	],
 	declarations: [
 		Pp2Component,
+		NavComponent_,
 		...Pp2Components
 	],
 	bootstrap: [Pp2Component]

@@ -3,20 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Pp2SuComponent } from './su.component';
 import { SupirFormComponent } from './components/supir-form/supir-form.component';
-import { SupirViewComponent } from './components/supir-view/supir-view.component';
+import { SupirViewTableComponent } from './components/supir-view-table/supir-view-table.component';
 import { MobilFormComponent } from './components/mobil-form/mobil-form.component';
-import { MobilViewComponent } from './components/mobil-view/mobil-view.component';
+import { MobilViewTableComponent } from './components/mobil-view-table/mobil-view-table.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserViewComponent } from './components/user-view/user-view.component';
+import { UserViewTableComponent } from './components/user-view-table/user-view-table.component';
 
 export const Pp2SuComponents: any[] = [
 	Pp2SuComponent,
 	SupirFormComponent,
-	SupirViewComponent,
+	SupirViewTableComponent,
 	MobilFormComponent,
-	MobilViewComponent,
+	MobilViewTableComponent,
 	UserFormComponent,
-	UserViewComponent
+	UserViewTableComponent
 ];
 
 const routes: Routes = [
@@ -24,21 +24,21 @@ const routes: Routes = [
 		path: 'su', component: Pp2SuComponent, children: [
 			{ path: 'supir', children:[
 				{ path: 'tambah', component: SupirFormComponent, data: {type: 'tambah'} },
-				{ path: 'lihat', component: SupirViewComponent },
+				{ path: 'lihat', component: SupirViewTableComponent },
 				{ path: 'ubah/:id', component: SupirFormComponent, data: {type: 'ubah'} },
 				{ path: '**', pathMatch: 'full', redirectTo: '/su/supir/lihat' }
 			] },
 			{ path: 'mobil', children: [
 				{ path: 'tambah', component: MobilFormComponent, data: {type: 'tambah'} },
-				{ path: 'lihat', component: MobilViewComponent },
+				{ path: 'lihat', component: MobilViewTableComponent },
 				{ path: 'ubah/:id', component: MobilFormComponent, data: {type: 'ubah'} },
 				{ path: '**', pathMatch: 'full', redirectTo: '/su/mobil/lihat' }
 			] },
-			{ path: 'user', children: [
+			{ path: 'pengguna', children: [
 				{ path: 'tambah', component: UserFormComponent, data: {type: 'tambah'} },
-				{ path: 'lihat', component: UserViewComponent },
+				{ path: 'lihat', component: UserViewTableComponent },
 				{ path: 'ubah/:id', component: UserFormComponent, data: {type: 'ubah'} },
-				{ path: '**', pathMatch: 'full', redirectTo: '/su/user/lihat' }
+				{ path: '**', pathMatch: 'full', redirectTo: '/su/pengguna/lihat' }
 			] },
 			{ path: '**', pathMatch: 'full', redirectTo: '/su/supir/lihat' }
 		]

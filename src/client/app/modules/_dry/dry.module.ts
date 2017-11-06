@@ -7,19 +7,18 @@ import { _NavComponent } from './components/_nav/_nav.component';
 import { _SidenavComponent } from './components/_sidenav/_sidenav.component';
 import { _FileImageComponent } from './components/_file-image/_file-image.component';
 import { _SupirFormComponent } from './components/_supir-form/_supir-form.component';
-import { _SupirViewComponent } from './components/_supir-view/_supir-view.component';
+import { _SupirViewTableComponent } from './components/_supir-view-table/_supir-view-table.component';
 import { _MobilFormComponent } from './components/_mobil-form/_mobil-form.component';
-import { _MobilViewComponent } from './components/_mobil-view/_mobil-view.component';
+import { _MobilViewTableComponent } from './components/_mobil-view-table/_mobil-view-table.component';
 import { _UserFormComponent } from './components/_user-form/_user-form.component';
-import { _UserViewComponent } from './components/_user-view/_user-view.component';
-
+import { _UserViewComponent } from './components/_user-view-table/_user-view-table.component';
 
 import { GridDirective } from './directives/grid.directive';
 
 import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
-import { SupirDatabase } from './components/_supir-view/_supir-view.database';
-import { MobilDatabase } from './components/_mobil-view/_mobil-view.database';
-import { UserDatabase } from './components/_user-view/_user-view.database';
+import { SupirTableDatabase } from './components/_supir-view-table/_supir-view-table.database';
+import { MobilTableDatabase } from './components/_mobil-view-table/_mobil-view-table.database';
+import { UserTableDatabase } from './components/_user-view-table/_user-view-table.database';
 import { ConfigService } from './services/config.service';
 
 export const DryComponents = [
@@ -28,9 +27,9 @@ export const DryComponents = [
 	_SidenavComponent,
 	_FileImageComponent,
 	_SupirFormComponent,
-	_SupirViewComponent,
+	_SupirViewTableComponent,
 	_MobilFormComponent,
-	_MobilViewComponent,
+	_MobilViewTableComponent,
 	_UserFormComponent,
 	_UserViewComponent
 ];
@@ -39,9 +38,9 @@ export const DryDirectives = [
 ];
 export const DryServices = [
 	Pp2MediaQueryService,
-	SupirDatabase,
-	MobilDatabase,
-	UserDatabase,
+	SupirTableDatabase,
+	MobilTableDatabase,
+	UserTableDatabase,
 	ConfigService
 ];
 

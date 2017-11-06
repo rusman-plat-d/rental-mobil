@@ -15,9 +15,9 @@ export const Pp2Components = [
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'dev', component: DevComponent },
-	{ path: 'register', children: [
-		{ path: 'user', component: UserRegisterComponent, data: {type: 'tambah'} },
-		{ path: '**', pathMatch: 'full', redirectTo: '/register/user' }
+	{ path: 'daftar', children: [
+		{ path: 'pengguna', component: UserRegisterComponent, data: {type: 'tambah'} },
+		{ path: '**', pathMatch: 'full', redirectTo: '/daftar/pengguna' }
 	]},
 	{ path: '**', pathMatch: 'full', redirectTo: '/' }
 ];

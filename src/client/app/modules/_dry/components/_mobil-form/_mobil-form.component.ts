@@ -1,10 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
+import { _ContainerComponent } from '../_container/_container.component';
+import { _NavComponent } from '../_nav/_nav.component';
+
 import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
+
 import { Mobil } from '../../interfaces/mobil.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
 
@@ -15,8 +19,11 @@ declare var io: any;
 	templateUrl: "_mobil-form.component.html",
 	styles: [``]
 })
-export class _MobilFormComponent implements OnDestroy, OnInit {
-	@ViewChild('fi') C_Pp2_dry_fi: _FileImageComponent;
+export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
+	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
+	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
+	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
+
 	disable: boolean = false;
 	$Socket: Server;
 	mobilForm: FormGroup;
@@ -30,6 +37,11 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 	) {
 		this.$Socket = io(this.$_pp2Conf.socket+'/db/mobil');
 		this.disableForm();
+	}
+	ngAfterViewInit(){
+		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
+			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
+		})
 	}
 	ngOnDestroy() {
 		this.$Socket = null;
@@ -50,7 +62,7 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: [''],
 		});
-		this.C_Pp2_dry_fi.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/gg.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Mobil: Mobil) => {
 				this.mobilForm.setValue({
@@ -68,7 +80,7 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 					createdAt: Mobil.createdAt,
 					updatedAt: Mobil.updatedAt
 				})
-				this.C_Pp2_dry_fi.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/' + Mobil.image;
+				this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/' + Mobil.image;
 			})
 		}
 		this.mobilForm.valueChanges.subscribe(() => {
@@ -81,7 +93,7 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 		}
 		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
 			try{
-				if ( this.C_Pp2_dry_fi.i_file.files ) {
+				if ( this.C_Pp2_Dry_FI.i_file.files ) {
 					this.disable = false || !this.mobilForm.valid;
 				}
 			}catch(e){
@@ -96,7 +108,7 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 		e.preventDefault();
 		console.log(val)
 		try{
-			if ( this.C_Pp2_dry_fi.i_file['files'] ) {
+			if ( this.C_Pp2_Dry_FI.i_file['files'] ) {
 				if ( this.$_ngActivatedRoute.data['value']['type'] === 'tambah' ) {
 					Object.assign(val, {
 						id: ((Math.random() * Math.random() * 1000).toString()
@@ -105,7 +117,7 @@ export class _MobilFormComponent implements OnDestroy, OnInit {
 								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
 					})
 				}
-				this.C_Pp2_dry_fi.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','mobil','lihat'])
+				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','mobil','lihat'])
 			}
 		}catch(e){
 			this.$Socket.emit('update', val);

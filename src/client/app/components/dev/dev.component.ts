@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Pp2MediaQueryService } from '../../modules/_dry/services/Pp2-media-query.service';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { _ContainerComponent, Pp2MediaQueryService } from '../../modules/_dry/index';
+import { NavComponent_ } from '../_nav/_nav.component';
 
 @Component({
 	selector: 'pp2-dev',
@@ -7,12 +10,17 @@ import { Pp2MediaQueryService } from '../../modules/_dry/services/Pp2-media-quer
 	styleUrls: ['dev.component.scss']
 })
 
-export class DevComponent implements OnInit {
+export class DevComponent implements AfterViewInit, OnInit {
+	@ViewChild('C_Pp2_Dry_Container') C_Pp2_Dry_Container: _ContainerComponent;
+	@ViewChild('C_Pp2__Nav') C_Pp2__Nav: NavComponent_;
 	constructor(
-		public $_Pp2MQ: Pp2MediaQueryService
-	) { }
-
-	ngOnInit() {
-
+		public $_Pp2MQ: Pp2MediaQueryService,
+		public $_ngRouter: Router
+	) {}
+	ngAfterViewInit(){
+		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
+			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
+		})
 	}
+	ngOnInit() {}
 }

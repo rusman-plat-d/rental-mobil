@@ -1,14 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { _ContainerComponent } from '../_container/_container.component';
+import { _NavComponent } from '../_nav/_nav.component';
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
+
 import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
+
 import { User } from '../../interfaces/user.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
 import { CONFIG } from '../../../_dry/consts/config.const';
-
 
 declare var io: any;
 
@@ -17,8 +20,11 @@ declare var io: any;
 	templateUrl: "_user-form.component.html",
 	styles: [``]
 })
-export class _UserFormComponent implements OnDestroy, OnInit {
-	@ViewChild('fi') C_Pp2_dry_fi: _FileImageComponent;
+export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
+	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
+	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
+	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
+
 	disable: boolean = false;
 	$Socket: Server;
 	userForm: FormGroup;
@@ -34,6 +40,11 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 		setTimeout(() => {
 			this.disableForm();
 		},1000)
+	}
+	ngAfterViewInit(){
+		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
+			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
+		})
 	}
 	ngOnDestroy() {
 		this.$Socket = null;
@@ -51,7 +62,7 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: ['']
 		});
-		this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/user/gg.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/user/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (user: User) => {
 				this.userForm.setValue({
@@ -62,9 +73,11 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 					jk: user.jk,
 					email: user.email,
 					alamat: user.alamat,
-					image: user.image
+					image: user.image,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt
 				})
-				this.C_Pp2_dry_fi.img.nativeElement.src = CONFIG.socket + '/uploads/User/' + user.image;
+				this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/user/' + user.image;
 			})
 		}
 		this.userForm.valueChanges.subscribe(() => {
@@ -77,7 +90,7 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 		}
 		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
 			try{
-				if ( this.C_Pp2_dry_fi.i_file.files ) {
+				if ( this.C_Pp2_Dry_FI.i_file.files ) {
 					this.disable = false || !this.userForm.valid;
 				}
 			}catch(e){
@@ -91,7 +104,7 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 	pp2OnSubmit(e: Event,val): void {
 		e.preventDefault();
 		try{
-			if ( this.C_Pp2_dry_fi.i_file['files'] ) {
+			if ( this.C_Pp2_Dry_FI.i_file['files'] ) {
 				if ( this.$_ngActivatedRoute.data['value']['type'] === 'tambah' ) {
 					Object.assign(val, {
 						id: ((Math.random() * Math.random() * 1000).toString()
@@ -100,7 +113,7 @@ export class _UserFormComponent implements OnDestroy, OnInit {
 								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
 					})
 				}
-				this.C_Pp2_dry_fi.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','user','lihat'])
+				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','user','lihat'])
 			}
 		}catch(e){
 			this.$Socket.emit('update', val);
