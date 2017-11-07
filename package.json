@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "node dist/server.js",
-		"build": "ng build --prod -aot && ng build --prod --app server --output-hashing=none",
+		"build": "ng build --prod -aot --output-hashing=none && ng build --prod --app server --output-hashing=none",
 		"generate-sw": "node generate-sw.js"
 	},
 	"private": true,
