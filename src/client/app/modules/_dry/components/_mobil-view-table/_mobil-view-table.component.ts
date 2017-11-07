@@ -2,20 +2,22 @@ import { AfterViewInit, Component, ElementRef, Inject, InjectionToken, OnDestroy
 import { MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
+
 import { _ContainerComponent } from '../_container/_container.component';
 import { _NavComponent } from '../_nav/_nav.component';
 
-import { Mobil } from '../../interfaces/mobil.interface';
-import { MobilTableDatabase } from './_mobil-view-table.database';
+import { TableExpand } from '../../animations/table-expand.animation';
+
 import { MobilTableDataSource } from './_mobil-view-table.datasource';
 import { DetailRow, MobilTableDetailDataSource } from './_mobil-view-table.detail.datasource';
 
-import { ConfigService } from '../../services/config.service';
-import { TableExpand } from '../../animations/table-expand.animation';
+import { Mobil } from '../../interfaces/mobil.interface';
 
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
+import { ConfigService } from '../../services/config.service';
+import { DatabaseService } from '../../services/database.service';
 
 export type MobilTableProperties = 'id' | 'nama' | 'platNo' | 'kursi' | 'bensin' | 'hargaSewa' | 'image' | 'kondisi' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
@@ -48,9 +50,11 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	isDetailRow = (row: DetailRow|Mobil) => row.hasOwnProperty('detailRow');
 	constructor(
 		public $_ngRouter: Router,
-		public MobilDatabase: MobilTableDatabase,
+		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
-	) {}
+	){
+		_database.init<Mobil>('/db/mobil');
+	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
 			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
@@ -58,7 +62,7 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	}
 	ngOnDestroy(){}
 	ngOnInit() {
-		this.dataSource = new MobilTableDataSource(this.MobilDatabase, this.C_Mat_Paginator, this.C_Mat_Sort)
+		this.dataSource = new MobilTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
@@ -77,6 +81,6 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	}
 	remove(id) {
 		alert('delete');
-		this.MobilDatabase.$Socket.emit('remove', id)
+		this._database.$Socket.emit('remove', id);
 	}
 }

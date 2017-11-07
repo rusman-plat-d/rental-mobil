@@ -7,14 +7,15 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 
 import {User} from '../../interfaces/user.interface';
-import {UserTableDatabase} from './_user-view-table.database';
+
+import { DatabaseService } from '../../services/database.service';
 
 export class UserTableDataSource extends DataSource<User> {
 	 _filterChange = new BehaviorSubject('');
 	get filter(): string { return this._filterChange.value; }
 	set filter(filter: string) { this._filterChange.next(filter); }
 	constructor(
-		private _UserDatabase: UserTableDatabase,
+		private _UserDatabase: DatabaseService,
 		private _paginator: MatPaginator
 		,private _sort: MatSort
 	) {

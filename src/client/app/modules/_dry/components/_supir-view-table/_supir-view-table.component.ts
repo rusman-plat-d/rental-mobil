@@ -3,7 +3,7 @@ import { animate, transition, trigger, state, style, } from '@angular/animations
 import { MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 
@@ -13,11 +13,12 @@ import { _NavComponent } from '../_nav/_nav.component';
 import { TableExpand } from '../../animations/table-expand.animation';
 
 import { Supir } from '../../interfaces/supir.interface';
-import { SupirTableDatabase } from './_supir-view-table.database';
+
 import { SupirTableDataSource } from './_supir-view-table.datasource';
 import { DetailRow, SupirTableDetailDataSource } from './_supir-view-table.detail.datasource';
 
 import { ConfigService } from '../../services/config.service';
+import { DatabaseService } from '../../services/database.service';
 
 export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
@@ -50,9 +51,11 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	isDetailRow = (row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
 	constructor(
 		public $_ngRouter: Router,
-		public supirDatabase: SupirTableDatabase,
+		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
-	) {}
+	) {
+		_database.init<Supir>('/db/supir');
+	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
 			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
@@ -60,7 +63,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	}
 	ngOnDestroy(){}
 	ngOnInit() {
-		this.dataSource = new SupirTableDataSource(this.supirDatabase, this.C_mat_paginator, this.C_mat_sort)
+		this.dataSource = new SupirTableDataSource(this._database, this.C_mat_paginator, this.C_mat_sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
@@ -78,6 +81,6 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id) {
-		this.supirDatabase.$Socket.emit('remove', id)
+		this._database.$Socket.emit('remove', id)
 	}
 }

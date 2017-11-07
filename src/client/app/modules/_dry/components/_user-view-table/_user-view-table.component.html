@@ -111,7 +111,7 @@
 							</mat-cell>
 						</ng-container>
 					</mat-table>
-					<mat-paginator color='accent' #paginator [length]="UserDatabase.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+					<mat-paginator color='accent' #paginator [length]="_database.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 				</mat-card-content>
 			</mat-card>	
 		</div>

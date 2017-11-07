@@ -4,6 +4,7 @@ import {Supir} from '../../interfaces/supir.interface';
 
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+
 import { SupirTableDataSource } from './_supir-view-table.datasource';
 
 export interface DetailRow {

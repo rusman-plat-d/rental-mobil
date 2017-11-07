@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Pp2SuComponent } from './su.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SupirFormComponent } from './components/supir-form/supir-form.component';
 import { SupirViewTableComponent } from './components/supir-view-table/supir-view-table.component';
 import { MobilFormComponent } from './components/mobil-form/mobil-form.component';
@@ -11,6 +12,7 @@ import { UserViewTableComponent } from './components/user-view-table/user-view-t
 
 export const Pp2SuComponents: any[] = [
 	Pp2SuComponent,
+	DashboardComponent,
 	SupirFormComponent,
 	SupirViewTableComponent,
 	MobilFormComponent,

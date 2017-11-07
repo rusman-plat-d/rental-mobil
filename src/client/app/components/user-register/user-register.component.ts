@@ -6,9 +6,7 @@ import { Component, OnInit } from '@angular/core';
 		<pp2-dry-userForm></pp2-dry-userForm>
 	`
 })
-
 export class UserRegisterComponent implements OnInit {
 	constructor() { }
-
 	ngOnInit() { }
 }

@@ -1,9 +1,11 @@
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
-import {Mobil} from '../../interfaces/mobil.interface';
 
 import 'rxjs/add/operator/map';
+
 import { MobilTableDataSource } from './_mobil-view-table.datasource';
+
+import {Mobil} from '../../interfaces/mobil.interface';
 
 export interface DetailRow {
   detailRow: boolean;

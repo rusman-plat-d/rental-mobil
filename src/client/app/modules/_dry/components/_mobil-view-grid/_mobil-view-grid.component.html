@@ -1,0 +1,48 @@
+<div class='pp2-dry-mobilViewGrid'>
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Mobil</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<mat-grid-list #C_Mat_GridList [cols]='cols' gutterSize='4px' rowHeight="400px">
+				<mat-grid-tile *ngFor='let mobil of data' class='light-blue'>
+					<mat-grid-tile-header>
+						<mat-icon mat-grid-avatar>info_outline</mat-icon>
+						{{ mobil.nama }}
+					</mat-grid-tile-header>
+					<div class='mat-grid-tile-content' style="padding: 10px;">
+						<table>
+							<colgroup width="100px"></colgroup>
+							<tr>
+								<td colspan="2">
+									<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" style="max-height: 200px; max-width: 200px; justify-self: center;align-self: center">
+								</td>
+							</tr>
+							<tr>
+								<td>Kursi</td>
+								<td>{{ mobil.kursi }}</td>
+							</tr>
+							<tr>
+								<td>Bahan Bakar</td>
+								<td>{{ mobil.bensin }}</td>
+							</tr>
+							<tr>
+								<td>Plat Nomor</td>
+								<td>{{ mobil.platNo }}</td>
+							</tr>
+							<tr>
+								<td>Kondisi</td>
+								<td>{{ mobil.kondisi }}</td>
+							</tr>
+						</table>
+					</div>
+					<mat-grid-tile-footer>
+						<h3 mat-line>nama</h3>
+						<span mat-line>Harga Sewa: {{ mobil.hargaSewa }}</span>
+						<mat-icon>star_borderstar_borderstar_borderstar_border</mat-icon>
+					</mat-grid-tile-footer>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</mat-card-content>
+	</mat-card>
+</div>

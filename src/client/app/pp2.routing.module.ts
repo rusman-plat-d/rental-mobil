@@ -5,20 +5,23 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { DevComponent } from './components/dev/dev.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { MobilViewGridComponent } from './components/mobil-view-grid/mobil-view-grid.component';
 
 export const Pp2Components = [
 	HomeComponent,
 	DevComponent,
-	UserRegisterComponent
+	UserRegisterComponent,
+	MobilViewGridComponent
 ];
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
-	{ path: 'dev', component: DevComponent },
 	{ path: 'daftar', children: [
 		{ path: 'pengguna', component: UserRegisterComponent, data: {type: 'tambah'} },
 		{ path: '**', pathMatch: 'full', redirectTo: '/daftar/pengguna' }
 	]},
+	{ path: 'dev', component: DevComponent },
+	{ path: 'mobil', component: MobilViewGridComponent },
 	{ path: '**', pathMatch: 'full', redirectTo: '/' }
 ];
 

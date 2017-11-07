@@ -12,7 +12,4 @@ export * from './components/_user-view-table/_user-view-table.component';
 export * from './directives/grid.directive';
 
 export * from './services/Pp2-media-query.service';
-export * from './components/_supir-view-table/_supir-view-table.database';
-export * from './components/_mobil-view-table/_mobil-view-table.database';
-export * from './components/_user-view-table/_user-view-table.database';
 export * from './services/config.service';

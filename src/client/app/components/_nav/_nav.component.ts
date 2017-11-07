@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-	selector: 'pp2-nav-',
+	selector: 'pp2--nav',
 	templateUrl: '_nav.component.html',
 	styles: [`
 		.mat-toolbar a {
 			margin: none 10px !important;
 		}
-		.pp2-nav-{
+		.pp2--nav{
 			position: fixed;
 			z-index: 50000 !important;
 			top: 0;

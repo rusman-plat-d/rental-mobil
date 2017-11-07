@@ -7,14 +7,15 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 
 import {Mobil} from '../../interfaces/mobil.interface';
-import {MobilTableDatabase} from './_mobil-view-table.database';
+
+import { DatabaseService } from '../../services/database.service';
 
 export class MobilTableDataSource extends DataSource<Mobil> {
 	 _filterChange = new BehaviorSubject('');
 	get filter(): string { return this._filterChange.value; }
 	set filter(filter: string) { this._filterChange.next(filter); }
 	constructor(
-		private _MobilDatabase: MobilTableDatabase,
+		private _MobilDatabase: DatabaseService,
 		private _paginator: MatPaginator,
 		private _sort: MatSort
 	) {

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Pp2SayaComponent } from './saya.component';
 
 export const Pp2SayaComponents: any[] = [
-
+	Pp2SayaComponent
 ];
 
 const routes: Routes = [

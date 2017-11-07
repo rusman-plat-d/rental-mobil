@@ -1,19 +1,21 @@
 import {MatPaginator, MatSort} from '@angular/material';
 import {DataSource} from '@angular/cdk/collections';
-import {Supir} from '../../interfaces/supir.interface';
-import {SupirTableDatabase} from './_supir-view-table.database';
 
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 
+import {Supir} from '../../interfaces/supir.interface';
+
+import { DatabaseService } from '../../services/database.service';
+
 export class SupirTableDataSource extends DataSource<Supir> {
 	 _filterChange = new BehaviorSubject('');
 	get filter(): string { return this._filterChange.value; }
 	set filter(filter: string) { this._filterChange.next(filter); }
 	constructor(
-		private _supirDatabase: SupirTableDatabase,
+		private _supirDatabase: DatabaseService,
 		private _paginator: MatPaginator
 		,private _sort: MatSort
 	) {

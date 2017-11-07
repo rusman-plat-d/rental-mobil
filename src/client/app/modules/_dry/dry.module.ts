@@ -12,13 +12,12 @@ import { _MobilFormComponent } from './components/_mobil-form/_mobil-form.compon
 import { _MobilViewTableComponent } from './components/_mobil-view-table/_mobil-view-table.component';
 import { _UserFormComponent } from './components/_user-form/_user-form.component';
 import { _UserViewComponent } from './components/_user-view-table/_user-view-table.component';
+import { _MobilViewGridComponent } from './components/_mobil-view-grid/_mobil-view-grid.component';
 
 import { GridDirective } from './directives/grid.directive';
 
 import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
-import { SupirTableDatabase } from './components/_supir-view-table/_supir-view-table.database';
-import { MobilTableDatabase } from './components/_mobil-view-table/_mobil-view-table.database';
-import { UserTableDatabase } from './components/_user-view-table/_user-view-table.database';
+import { DatabaseService } from './services/database.service';
 import { ConfigService } from './services/config.service';
 
 export const DryComponents = [
@@ -31,16 +30,16 @@ export const DryComponents = [
 	_MobilFormComponent,
 	_MobilViewTableComponent,
 	_UserFormComponent,
-	_UserViewComponent
+	_UserViewComponent,
+	_MobilViewGridComponent
 ];
 export const DryDirectives = [
 	GridDirective
 ];
+
 export const DryServices = [
 	Pp2MediaQueryService,
-	SupirTableDatabase,
-	MobilTableDatabase,
-	UserTableDatabase,
+	DatabaseService,
 	ConfigService
 ];
 

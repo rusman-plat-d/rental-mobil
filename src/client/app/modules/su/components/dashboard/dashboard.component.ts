@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 		<pp2-dry-nav></pp2-dry-nav>
 	`
 })
-export class MobilFormComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 	constructor() {}
 	ngOnInit() {}
 }
