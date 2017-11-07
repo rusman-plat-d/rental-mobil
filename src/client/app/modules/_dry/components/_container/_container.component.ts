@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+
 import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 
 @Component({
@@ -6,21 +8,22 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 	templateUrl: '_container.component.html',
 	styles: [`
 		.mat-sidenav-content{
-			padding-top: 64px;
 			height: calc(100vh - 64px);
-			overflow-y: scroll;
+			overflow-y: auto;
+			position: fixed;
+			top:64px;
+			width:100vw;
 		}
 		@media (max-width: 600px) {
 			.mat-sidenav-content{
-				padding-top: 56px;
 				height: calc(100vh - 56px);
-				overflow-y: scroll;
+				top:56px;
 			}
 		}
 	`]
 })
-
 export class _ContainerComponent implements OnInit {
+	@ViewChild('C_Mat_Sidenav') C_Mat_Sidenav: MatSidenav;
 	constructor(
 		public $_Pp2MQ: Pp2MediaQueryService
 	) {}

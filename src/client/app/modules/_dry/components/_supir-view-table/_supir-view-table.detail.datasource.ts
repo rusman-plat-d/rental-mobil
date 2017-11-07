@@ -4,15 +4,16 @@ import {Supir} from '../../interfaces/supir.interface';
 
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
-import { SupirDataSource } from './_supir-view.datasource';
+
+import { SupirTableDataSource } from './_supir-view-table.datasource';
 
 export interface DetailRow {
   detailRow: boolean;
   data: Supir;
 }
 
-export class SupirDetailDataSource extends DataSource<any> {
-	constructor(private _supirDataSource: SupirDataSource) {
+export class SupirTableDetailDataSource extends DataSource<Supir|DetailRow> {
+	constructor(private _supirDataSource: SupirTableDataSource) {
 		super();
 	}
 	connect(): Observable<(Supir|DetailRow)[]> {

@@ -110,7 +110,7 @@ workboxSW.router.registerNavigationRoute('/index.html');
 // -------------------------------------------------------
 // background sync
 // -------------------------------------------------------
-self.importScripts('assets/idb-keyval-min.js');
+// self.importScripts('assets/idb-keyval-min.js');
 
 // self.addEventListener('sync', event => {
 //   swLog('I heard a sync event!', event);
@@ -123,49 +123,49 @@ self.importScripts('assets/idb-keyval-min.js');
 //   }
 // });
 
-function getMessagesFromOutbox() {
-	const key = 'pwa-messages';
-	return idbKeyval.get(key).then(values => {
-		values = values || '[]';
-		const messages = JSON.parse(values) || [];
-		return messages;
-	});
-}
+// function getMessagesFromOutbox() {
+// 	const key = 'pwa-messages';
+// 	return idbKeyval.get(key).then(values => {
+// 		values = values || '[]';
+// 		const messages = JSON.parse(values) || [];
+// 		return messages;
+// 	});
+// }
 
-function mapAndSendMessages(messages) {
-	return messages.map(
-		message => sendMessage(message)
-			.then(response => response.json())
-			.catch(err => swLog('server unable to handle the message', message, err))
-	);
-}
+// function mapAndSendMessages(messages) {
+// 	return messages.map(
+// 		message => sendMessage(message)
+// 			.then(response => response.json())
+// 			.catch(err => swLog('server unable to handle the message', message, err))
+// 	);
+// }
 
-function sendMessage(message) {
-	const headers = {
-		'Accept': 'application/json',
-		'X-Requested-With': 'XMLHttpRequest',
-		'Content-Type': 'application/json'
-	};
-	const msg = {
-		method: 'POST',
-		body: JSON.stringify(message),
-		headers: headers
-	};
-	return fetch('/messages', msg).then((response) => {
-		swLog('message sent!', message);
-		return response;
-	});
-}
+// function sendMessage(message) {
+// 	const headers = {
+// 		'Accept': 'application/json',
+// 		'X-Requested-With': 'XMLHttpRequest',
+// 		'Content-Type': 'application/json'
+// 	};
+// 	const msg = {
+// 		method: 'POST',
+// 		body: JSON.stringify(message),
+// 		headers: headers
+// 	};
+// 	return fetch('/messages', msg).then((response) => {
+// 		swLog('message sent!', message);
+// 		return response;
+// 	});
+// }
 
-function removeMessagesFromOutBox(response) {
-	// If the first worked,let's assume for now they all did
-	if (response && response.length && response[0] && response[0].result === 'success') {
-		return idbKeyval.clear()
-			.then(() => swLog('messages removed from outbox'))
-			.catch(err => swLog('unable to remove messages from outbox', err));
-	}
-	return Promise.resolve(true);
-}
+// function removeMessagesFromOutBox(response) {
+// 	// If the first worked,let's assume for now they all did
+// 	if (response && response.length && response[0] && response[0].result === 'success') {
+// 		return idbKeyval.clear()
+// 			.then(() => swLog('messages removed from outbox'))
+// 			.catch(err => swLog('unable to remove messages from outbox', err));
+// 	}
+// 	return Promise.resolve(true);
+// }
 
 
 // -------------------------------------------------------
@@ -194,7 +194,7 @@ self.addEventListener('notificationclick', event => {
 	// We are calling event.waitUntil() again
 	// to ensure the browser doesn't terminate
 	// our service worker before our new window has been displayed.
-	event.waitUntil(clients.openWindow('https://johnpapa.net'));
+	event.waitUntil(clients.openWindow('https://github.com/hwalyonglance'));
 });
 
 // const applicationServerPublicKey = 'BMZuj1Uek9SeT0myecw8TQxr4dB6Vl4X7c4abMzAA4KR72DsKnVcSpZr6svYgkwNSerKsz7vdZ1kfzwFc0TmH3o';
