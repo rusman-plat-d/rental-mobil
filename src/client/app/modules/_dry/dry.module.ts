@@ -13,6 +13,7 @@ import { _MobilViewTableComponent } from './components/_mobil-view-table/_mobil-
 import { _UserFormComponent } from './components/_user-form/_user-form.component';
 import { _UserViewComponent } from './components/_user-view-table/_user-view-table.component';
 import { _MobilViewGridComponent } from './components/_mobil-view-grid/_mobil-view-grid.component';
+import { _SewaFormComponent } from './components/_sewa-form/_sewa-form.component';
 
 import { GridDirective } from './directives/grid.directive';
 
@@ -31,7 +32,8 @@ export const DryComponents = [
 	_MobilViewTableComponent,
 	_UserFormComponent,
 	_UserViewComponent,
-	_MobilViewGridComponent
+	_MobilViewGridComponent,
+	_SewaFormComponent
 ];
 export const DryDirectives = [
 	GridDirective

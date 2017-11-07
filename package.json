@@ -3,9 +3,17 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
+<<<<<<< HEAD
 		"start": "node dist/server.js",
 		"build": "ng build --prod -aot --output-hashing=none && ng build --prod --app server --output-hashing=none",
 		"generate-sw": "node generate-sw.js"
+=======
+		"build": "ng build --prod -aot --output-hashing=none && ng build --prod --app server --output-hashing=none",
+		"generate-sw": "node generate-sw.js",
+		"prestart": "npm run build && npm run tsc-server && npm run generate-sw",
+		"start": "node dist/server.js",
+		"tsc-server": "cd src/server && tsc"
+>>>>>>> master
 	},
 	"private": true,
 	"dependencies": {
