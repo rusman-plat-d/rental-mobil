@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 
 import { RequireModule } from './require.module';
 
@@ -20,6 +21,7 @@ import { GridDirective } from './directives/grid.directive';
 import { Pp2MediaQueryService } from './services/Pp2-media-query.service';
 import { DatabaseService } from './services/database.service';
 import { ConfigService } from './services/config.service';
+import { Pp2Service } from './services/pp2.service';
 
 export const DryComponents = [
 	_ContainerComponent,
@@ -42,7 +44,8 @@ export const DryDirectives = [
 export const DryServices = [
 	Pp2MediaQueryService,
 	DatabaseService,
-	ConfigService
+	ConfigService,
+	Pp2Service
 ];
 
 @NgModule({
@@ -58,7 +61,7 @@ export const DryServices = [
 		...DryDirectives
 	],
 	providers: [
-		...DryServices,
+		...DryServices
 	]
 
 })

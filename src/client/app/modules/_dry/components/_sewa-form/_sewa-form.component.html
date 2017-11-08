@@ -1,7 +1,7 @@
 <div class="pp2-dry-sewaForm">
 	<pp2-dry-container #C_Pp2_Dry_Container>
 		<div class="container pp2-content margin-auto">
-			<form fxLayout='column' fxLayoutAlign='center center'>
+			<form [formGroup]='sewaForm' fxLayout='column' fxLayoutAlign='center center'>
 				<mat-card class='full-width'>
 					<mat-card-header>
 						<mat-card-title>Sewa Mobil</mat-card-title>
@@ -9,9 +9,39 @@
 					<mat-card-content fxLayoutAlign='center center'>
 						<div class="pp2-dry-sewaForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
 							<div fxFlex>
-								<mat-select>
-									<mat-option></mat-option>
-								</mat-select>
+								<mat-form-field class='full-width'>
+									<mat-select formControlName='mobil' placeholder='Mobil'>
+										<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
+											<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" class='iil'>
+											<span class="owit">{{ mobil.nama }}</span>
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<mat-select formControlName='supir' placeholder='Supir'>
+										<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
+											<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
+											<span class="owit">{{ supir.nama }}</span>
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="picker" placeholder="Choose a date">
+									<mat-datepicker-toggle #toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input matInput disabled value='gggggggg' type="text">
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								{{ sewaForm.value | json }}
 							</div>
 						</div>
 					</mat-card-content>

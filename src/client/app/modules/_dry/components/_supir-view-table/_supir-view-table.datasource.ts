@@ -39,11 +39,9 @@ export class SupirTableDataSource extends DataSource<Supir> {
 				})
 		});
 	}
-
 	disconnect() {
 		// No-op
 	}
-
 	/** Returns a sorted copy of the database data. */
 	getSortedData(): Supir[] {
 		const data = this._supirDatabase.data.slice();

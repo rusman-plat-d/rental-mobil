@@ -36,7 +36,6 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_pp2Conf: ConfigService
 	) {
 		this.$Socket = io(this.$_pp2Conf.socket+'/db/mobil');
-		this.disableForm();
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
@@ -83,13 +82,14 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 				this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/' + Mobil.image;
 			})
 		}
+		this.disableForm();
 		this.mobilForm.valueChanges.subscribe(() => {
 			this.disableForm();
 		})
 	}
 	disableForm(): void {
 		if ( this.$_ngActivatedRoute.data['value']['type'] === 'ubah' ) {
-			this.disable = false || !this.mobilForm.valid;
+			this.disable = false || !this.mobilForm['valid'];
 		}
 		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
 			try{
@@ -97,9 +97,9 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 					this.disable = false || !this.mobilForm.valid;
 				}
 			}catch(e){
-				this.disable = true || !this.mobilForm.valid;
+				this.disable = true || !this.mobilForm['valid'];
 			}
-		}else{ this.disable = false || !this.mobilForm.valid }
+		}else{ this.disable = false || !this.mobilForm['valid'] }
 	}
 	tooltipMsg(): string{
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';

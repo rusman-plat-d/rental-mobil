@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { _ContainerComponent } from '../_container/_container.component';
@@ -34,12 +35,10 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_Pp2_MQ: Pp2MediaQueryService,
 		public $_ngActivatedRoute: ActivatedRoute,
 		public $_ngRouter: Router,
-		public $_pp2Conf: ConfigService
+		public $_pp2Conf: ConfigService,
+		private $_matSnackBar: MatSnackBar
 	) {
 		this.$Socket = io(this.$_pp2Conf.socket+'/db/user');
-		setTimeout(() => {
-			this.disableForm();
-		},1000)
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
@@ -80,6 +79,7 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 				this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/user/' + user.image;
 			})
 		}
+		this.disableForm();
 		this.userForm.valueChanges.subscribe(() => {
 			this.disableForm();
 		})
@@ -113,11 +113,16 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
 					})
 				}
-				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','user','lihat'])
+				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], [''])
 			}
 		}catch(e){
 			this.$Socket.emit('update', val);
-			this.$_ngRouter.navigate(['su','user','lihat'])
+			// this.$_ngRouter.navigate(['su','user','lihat'])
+			this.$_ngRouter.navigate([''])
+			this.$_matSnackBar.open('Akun Berhasil Didaftarkan')
+			setTimeout(() => {
+				this.$_matSnackBar.dismiss();
+			}, 4000)
 		}
 	}
 }

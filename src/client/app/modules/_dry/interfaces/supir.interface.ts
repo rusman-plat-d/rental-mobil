@@ -7,7 +7,7 @@ export interface Supir {
 	alamat?: string;
 	email?: string;
 	image?: string;
-	_status?: 'tersedia' | 'disewa';
+	_status?: 'Tersedia' | 'Disewa';
 	_disewa?: number;
 	_disewaSampai?: string;
 	createdAt?: string;

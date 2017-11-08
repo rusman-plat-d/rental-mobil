@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-// @import 'assets/scss/custom-theme.scss';
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import 'assets/scss/custom-theme.scss';
+// @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 @import '~font-awesome/css/font-awesome.min.css';
 @import 'assets/materialize/materialize.min.css';
 @import './assets/iconfont/material-icons.css';
@@ -132,4 +132,14 @@ h1 {
 
 .margin-auto{
 	margin: 64px auto;
+}
+
+.iil{
+	margin: 2px 8px 2px 0;
+	height: 40px;
+	width: 40px;
+	float: left;
+}
+.owit{
+	float: left;
 }

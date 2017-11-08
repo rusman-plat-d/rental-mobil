@@ -7,16 +7,11 @@
 			<span class='margin-l-20px'>Rental Mobil</span>
 			<span class='flex-auto'></span>
 			<button mat-button routerLink='/'><a>Home</a></button>
-			<button mat-button routerLink='/dev'><a>Dev</a></button>
-			<button class='!auth.signedIn' mat-button routerLink='/daftar/pengguna'><a>Sign Up</a></button>
-			<button class='!auth.signedIn' mat-button routerLink='/masuk/pengguna'><a>Sign In</a></button>
-			<button class='auth.signedIn' mat-button log-out><a>Sign Out</a></button>
-			<button mat-button [matMenuTriggerFor]='C_Mat_gg'> Pengguna </button>
+			<!-- <button mat-button routerLink='/dev'><a>Dev</a></button> -->
+			<button mat-button routerLink='/sewa'><a>Sewa</a></button>
+			<button class='!auth.signedIn' mat-button routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
+			<button class='!auth.signedIn' mat-button routerLink='/masuk/pengguna'><a>Masuk</a></button>
+			<!-- <button class='auth.signedIn' mat-button log-out><a>Sign Out</a></button> -->
 		</mat-toolbar>
-
-		<mat-menu #C_Mat_gg='matMenu' [overlapTrigger]='false'>
-			<button mat-menu-item routerLink="/daftar/pengguna"><a>Daftar</a></button>
-			<button mat-menu-item routerLink="/su/pengguna/lihat"><a>Lihat</a></button>
-		</mat-menu>	
 	</nav>
 </div>

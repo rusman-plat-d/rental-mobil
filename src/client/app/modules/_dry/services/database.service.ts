@@ -22,6 +22,11 @@ export class DatabaseService{
 	init <T>(namespace: string){
 		this.dataChange = new BehaviorSubject<T[]>([]);
 		this.$Socket = io(this.$_pp2Conf.socket + namespace);
+		this.$Socket.emit('gets', (data$: T[]) => {
+			setTimeout(() => {
+				this.dataChange.next(data$)
+			},10)
+		})
 		$Socket<T>(this);
 	}
 	add <T>(data: T): T[] {

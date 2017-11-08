@@ -38,7 +38,6 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_pp2Conf: ConfigService
 	) {
 		this.$Socket = io(this.$_pp2Conf.socket+'/db/supir');
-		this.disableForm();
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
@@ -75,6 +74,7 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 				this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/supir/' + Supir.image;
 			})
 		}
+		this.disableForm();
 		this.supirForm.valueChanges.subscribe(() => {
 			this.disableForm();
 		})
