@@ -20,6 +20,31 @@
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
+									<input disabled matInput placeholder='Nama Mobil' [value]='$_pp2.parse(sewaForm.value.mobil)?.nama ? $_pp2.parse(sewaForm.value.mobil).nama : ""'>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input disabled matInput placeholder='Plat Nomor' [value]='$_pp2.parse(sewaForm.value.mobil)?.platNo ? $_pp2.parse(sewaForm.value.mobil).platNo : ""'>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input disabled matInput placeholder='Jumlah Kursi' [value]='$_pp2.parse(sewaForm.value.mobil)?.kursi ? $_pp2.parse(sewaForm.value.mobil).kursi : ""'>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input disabled matInput placeholder='Bahan Bakar' [value]='$_pp2.parse(sewaForm.value.mobil)?.bensin ? $_pp2.parse(sewaForm.value.mobil).bensin : ""'>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input disabled matInput placeholder='Harga Sewa per hari' value='{{ ($_pp2.parse(sewaForm.value.mobil)?.hargaSewa ? $_pp2.parse(sewaForm.value.mobil).hargaSewa : "") | currency:"IDR" }}'>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
 									<mat-select formControlName='supir' placeholder='Supir'>
 										<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
 											<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>

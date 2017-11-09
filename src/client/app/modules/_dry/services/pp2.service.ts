@@ -7,9 +7,17 @@ declare var JSON: JSON;
 export class Pp2Service {
 	constructor() {}
 	parse(str){
-		return JSON.parse(str)
+		try{
+			return JSON.parse(str)
+		}catch(e){
+			return {};
+		}
 	}
 	stringify(obj){
-		return JSON.stringify(obj)
+		try{
+			return JSON.stringify(obj)
+		}catch(e){
+			return '';
+		}
 	}
 }

@@ -61,7 +61,7 @@ export const DryServices = [
 		...DryDirectives
 	],
 	providers: [
-		...DryServices
+		...DryServices,
 	]
 
 })

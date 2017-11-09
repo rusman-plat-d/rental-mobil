@@ -19,14 +19,16 @@ import { Pp2Service } from '../../services/pp2.service';
 export class _SewaFormComponent implements AfterViewInit, OnInit {
 	minDate = new Date();
 	Mobil$: Mobil[] = [];
-	Mobil: Mobil;
 	Supir$: Supir[] = [];
-	Supir: Supir;
+	private tgl_mulai_val;
 	private id_mobil: string;
 	private id_supir: string;
 	_mobilDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	_supirDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	sewaForm: FormGroup;
+	get Mobil(): Mobil | {} {
+		return this.$_pp2.parse(this.sewaForm.value.mobil)
+	}
 	constructor(
 		public $_pp2Conf: ConfigService,
 		public $_pp2: Pp2Service,
@@ -54,13 +56,6 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			this._supirDatabase.dataChange.subscribe((supir: Supir[]) => {
 				this.Supir$ = supir;
 			})
-		}, 10)
-		this.sewaForm.valueChanges.subscribe((val) => {
-			console.log(val.tgl_mulai.valueOf())
-			// this.sewaForm.setValue({
-			// 	tgl_mulai: val.tgl_mulai.substr(0, 10)
-			// })
-			alert(val.tgl_mulai.valueOf())
-		})
+		}, 10);
 	}
 }
