@@ -1,72 +1,178 @@
 <div class="pp2-dry-sewaForm">
 	<pp2-dry-container #C_Pp2_Dry_Container>
 		<div class="container pp2-content margin-auto">
-			<form [formGroup]='sewaForm' fxLayout='column' fxLayoutAlign='center center'>
+			<form [formGroup]='sewaForm' fxLayout='column'>
 				<mat-card class='full-width'>
 					<mat-card-header>
 						<mat-card-title>Sewa Mobil</mat-card-title>
 					</mat-card-header>
-					<mat-card-content fxLayoutAlign='center center'>
-						<div class="pp2-dry-sewaForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<mat-select formControlName='mobil' placeholder='Mobil'>
-										<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
-											<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" class='iil'>
-											<span class="owit">{{ mobil.nama }}</span>
-										</mat-option>
-									</mat-select>
-								</mat-form-field>
+					<mat-card-content>
+						<div class="pp2-dry-sewaForm-container">
+							<div [fxLayout]='$_pp2MQ.screen.gt.s ? "row" : "column"'>
+								<div fxFlex='50' fxLayout='column'>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder="Nama">
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder="Nomor KTP.">
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder="Nomor Seluler">
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder="Jenis Kelamin">
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder="E-Mail">
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<textarea matInput matAutosizeMaxRows='4' matTextareaAutosize placeholder='Alamat'></textarea>
+										</mat-form-field>
+									</div>
+								</div>
+								<div fxFlex='50' fxLayout='column'>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<mat-select formControlName='mobil' placeholder='Mobil'>
+												<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
+													<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" class='iil'>
+													<span class="owit">{{ mobil.nama }}</span>
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Nama Mobil' [value]='Mobil?.nama ? Mobil.nama : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Plat Nomor' [value]='Mobil?.platNo ? Mobil.platNo : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Jumlah Kursi' [value]='Mobil?.kursi ? Mobil.kursi : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Bahan Bakar' [value]='Mobil?.bensin ? Mobil.bensin : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<mat-select formControlName='supir' placeholder='Supir'>
+												<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
+													<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
+													<span class="owit">{{ supir.nama }}</span>
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
 							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input disabled matInput placeholder='Nama Mobil' [value]='$_pp2.parse(sewaForm.value.mobil)?.nama ? $_pp2.parse(sewaForm.value.mobil).nama : ""'>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input disabled matInput placeholder='Plat Nomor' [value]='$_pp2.parse(sewaForm.value.mobil)?.platNo ? $_pp2.parse(sewaForm.value.mobil).platNo : ""'>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input disabled matInput placeholder='Jumlah Kursi' [value]='$_pp2.parse(sewaForm.value.mobil)?.kursi ? $_pp2.parse(sewaForm.value.mobil).kursi : ""'>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input disabled matInput placeholder='Bahan Bakar' [value]='$_pp2.parse(sewaForm.value.mobil)?.bensin ? $_pp2.parse(sewaForm.value.mobil).bensin : ""'>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input disabled matInput placeholder='Harga Sewa per hari' value='{{ ($_pp2.parse(sewaForm.value.mobil)?.hargaSewa ? $_pp2.parse(sewaForm.value.mobil).hargaSewa : "") | currency:"IDR" }}'>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<mat-select formControlName='supir' placeholder='Supir'>
-										<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
-											<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
-											<span class="owit">{{ supir.nama }}</span>
-										</mat-option>
-									</mat-select>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="picker" placeholder="Choose a date">
-									<mat-datepicker-toggle #toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-									<mat-datepicker #picker></mat-datepicker>
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								<mat-form-field class='full-width'>
-									<input matInput disabled value='gggggggg' type="text">
-								</mat-form-field>
-							</div>
-							<div fxFlex>
-								{{ sewaForm.value | json }}
+							<div [fxLayout]='$_pp2MQ.screen.gt.s ? "row" : "column"'>
+								<div fxFlex='50' fxLayout='column'>
+									<div fxFlex class='full-width'>
+										<section>
+											<mat-checkbox class="example-margin" color='primary'>Supir</mat-checkbox>
+										</section>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<mat-select formControlName='supir' placeholder='Supir'>
+												<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
+													<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
+													<span class="owit">{{ supir.nama }}</span>
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Nama Supir' [value]='Supir?.nama ? Supir.nama : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Nomor SIM' [value]='Supir?.noSIM ? Supir.noSIM : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Jenis Kelamin' [value]='Supir?.jk ? Supir.jk : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Nomor Seluler' [value]='Supir?.noHP ? Supir.noHP : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='E-Mail' [value]='Supir?.email ? Supir.email : ""'>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<textarea disabled matInput matAutosizeMaxRows='4' matTextareaAutosize placeholder="Alamat Supir" [value]='Supir?.alamat ? Supir.alamat : ""'></textarea>
+										</mat-form-field>
+									</div>
+								</div>
+								<div fxFlex='50' fxLayout='column'>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
+											<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
+											<mat-datepicker #mulai></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input formControlName='tgl_selesai' [min]='sewaForm.value.tgl_mulai' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
+											<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
+											<mat-datepicker #selesai></mat-datepicker>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Total Hari Penyewaan' value=''>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value=''>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value=''>
+										</mat-form-field>
+									</div>
+									<div fxFlex>
+										<mat-form-field class='full-width'>
+											<input disabled matInput placeholder='Total Harga Penyewaan Mobil + Supir (Rp.)' value=''>
+										</mat-form-field>
+									</div>
+								</div>
 							</div>
 						</div>
 					</mat-card-content>

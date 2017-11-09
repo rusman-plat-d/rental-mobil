@@ -1,6 +1,8 @@
 import {
 	MatButtonModule,
 	MatCardModule,
+	MatCheckboxModule,
+	MatPseudoCheckboxModule,
 	MatDatepickerModule,
 	MatGridListModule,
 	MatIconModule,
@@ -23,6 +25,8 @@ import {
 export const MatModules: any[] = [
 	MatButtonModule,
 	MatCardModule,
+	MatCheckboxModule,
+	MatPseudoCheckboxModule,
 	MatDatepickerModule,
 	MatGridListModule,
 	MatIconModule,

@@ -9,7 +9,6 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 	styles: [`
 		.mat-sidenav-content{
 			height: calc(100vh - 64px);
-			overflow-y: auto;
 			position: fixed;
 			top:64px;
 			width:100vw;

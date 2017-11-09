@@ -10,11 +10,21 @@ import { Supir } from '../../interfaces/supir.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
+import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 import { Pp2Service } from '../../services/pp2.service';
 
 @Component({
 	selector: 'pp2-dry-sewaForm',
-	templateUrl: '_sewa-form.component.html'
+	templateUrl: '_sewa-form.component.html',
+	styles: [`
+		.pp2-dry-sewaForm-container{
+			 height: 100%;
+			 width: 100%;
+		}
+		.example-margin {
+			margin: 0 10px;
+		}
+	`]
 })
 export class _SewaFormComponent implements AfterViewInit, OnInit {
 	minDate = new Date();
@@ -26,14 +36,21 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	_mobilDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	_supirDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	sewaForm: FormGroup;
-	get Mobil(): Mobil | {} {
+	get Mobil(): Mobil {
 		return this.$_pp2.parse(this.sewaForm.value.mobil)
+	}
+	get Supir(): Supir {
+		return this.$_pp2.parse(this.sewaForm.value.supir)
+	}
+	get SAlamat(){
+		return this.Supir.alamat ? this.Supir.alamat : '';
 	}
 	constructor(
 		public $_pp2Conf: ConfigService,
 		public $_pp2: Pp2Service,
 		public $_ngFormBuilder: FormBuilder,
-		public $_matDateAdapter: DateAdapter<Date>
+		public $_matDateAdapter: DateAdapter<Date>,
+		public $_pp2MQ: Pp2MediaQueryService
 	){
 		$_matDateAdapter.setLocale('id-ID');
 		this._mobilDatabase.init<Mobil>('/db/mobil')
