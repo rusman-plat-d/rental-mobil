@@ -1,11 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-
-// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'assets/scss/custom-theme.scss';
-
+// @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 @import '~font-awesome/css/font-awesome.min.css';
 @import 'assets/materialize/materialize.min.css';
-// @import '~materialize-css/dist/css/materialize.min.css';
 @import './assets/iconfont/material-icons.css';
 @import '~animate.css/animate.min.css';
 
@@ -13,82 +10,136 @@ body {
 	padding: 0 !important;
 	margin: 0 !important;
 }
-.hide{
+.hide {
 	display: none !important;
 }
 .pointer {
 	cursor: pointer !important;
 }
-button{
+button {
 	box-sizing: border-box;
 }
-button:focus{
-	border: 2px solid #2196F3;
+button:focus {
+	border: 2px solid #2196f3;
 	color: #000;
 }
-button[disabled]{
+button[disabled] {
 	cursor: url(./assets/Cursors/cursor_click_x.cur) !important;
 }
-.mat-card{
+.mat-card {
 	border-radius: 0 !important;
 	box-sizing: border-box !important;
-	.mat-card-content{
+	.mat-card-content {
 		border-radius: 0 !important;
 		box-sizing: border-box !important;
 	}
 }
-.mat-toolbar{
+.mat-toolbar {
 	border-radius: 0 !important;
+	margin: 0 !important;
 }
 .mat-dialog-container {
 	padding: 0 !important;
 	overflow: unset !important;
 	max-width: 85vw !important;
-	.mat-card{
+	.mat-card {
 		padding: 0;
 	}
 }
 
-.pad-l-255px{
+.pad-l-255px {
 	padding-left: 255px;
 }
-.pad-r-255px{
+.pad-r-255px {
 	padding-right: 255px;
 }
-.pad-s-255px{
+.pad-s-255px {
 	padding: 0 255px;
 }
 
-@for $o from 1 through 10{
+@for $o from 1 through 10 {
 	.w#{$o*20}px {
 		width: #{$o*20}px;
 	}
 }
 
-.mat-sidenav{
+.mat-sidenav,
+.mat-drawer {
 	width: 300px;
+	padding-top: 64px;
 }
-.mat-drawer-backdrop.mat-drawer-shown{
-	background-color: transparent !important;
-	z-index: -2000;
-	display: none;
-}
-@media (max-width:720px){
-	.mat-drawer-backdrop.mat-drawer-shown{
-		background-color: rgba(0,0,0,.6) !important;
-		z-index: 2000;
-		display: initial;
-		margin-left: 300px;
+@media (max-width: 750px) {
+	.mat-sidenav,
+	.mat-drawer {
+		width: 80vw;
 	}
 }
+// .mat-drawer-backdrop.mat-drawer-shown {
+// 	background-color: transparent !important;
+// 	z-index: -2000;
+// 	display: none;
+// }
+// @media (max-width: 750px) {
+// 	.mat-drawer-backdrop.mat-drawer-shown {
+// 		background-color: rgba(0, 0, 0, 0.6) !important;
+// 		z-index: 2000;
+// 		display: initial;
+// 		margin-left: 300px;
+// 	}
+// }
 
-@import './assets/scss/grid.scss';
-.flex-auto{
+.flex-auto {
 	flex: 1 1 auto;
 }
-.pp2-content{
+.pp2-content {
+	margin: 64px 0;
 	padding: 0 24px;
 }
-.margin-l-20px{
+h1 {
+	padding: 0 20px;
+	margin: 0 !important;
+}
+.margin-l-20px {
 	margin-left: 20px;
+}
+@for $i from 1 through 10 {
+	.container-#{$i*10} {
+		width: $i*10%;
+	}
+	.padding-#{$i*10} {
+		padding: $i*20px;
+	}
+}
+.as-center {
+	align-self: center;
+}
+.ac-center {
+	align-content: center;
+}
+.full-width {
+	width: calc(100% - 50px) !important;
+	padding: 0 25px;
+}
+
+// .container {
+// 	width: 650px !important;
+// }
+// @media (max-width: 800px) {
+// 	.container {
+// 		width: 90% !important;
+// 	}
+// }
+
+.margin-auto{
+	margin: 64px auto;
+}
+
+.iil{
+	margin: 2px 8px 2px 0;
+	height: 40px;
+	width: 40px;
+	float: left;
+}
+.owit{
+	float: left;
 }

@@ -3,14 +3,15 @@ const SRC_DIR = 'src/client';
 const BUILD_DIR = 'dist/public';
 const SW = 'sw.js';
 const globPatterns = [
-  '**/*.{js,jpg,jpeg,cur,ani,eot,ijmap,ttf,woff,woff2,png,ico,svg,html,css}',
+  '**/*',
+  '**/**',
+  'uploads/*',
+  'uploads/**',
   'assets/*',
   'assets/**'
 ];
 
 const globIgnores = [
-  'package.json',
-  'index.js',
   'sw.js'
 ];
 
@@ -20,7 +21,7 @@ const input = {
   globDirectory: BUILD_DIR,
   globPatterns: globPatterns,
   globIgnores: globIgnores,
-  maximumFileSizeToCacheInBytes: 4000000
+  maximumFileSizeToCacheInBytes: 400000000000
 };
 
 workboxBuild.injectManifest(input).then(() => {

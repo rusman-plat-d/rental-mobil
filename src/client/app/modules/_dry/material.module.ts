@@ -1,31 +1,49 @@
 import {
-	MatDatepickerModule,
-	MatMenuModule,
 	MatButtonModule,
+	MatCardModule,
+	MatDatepickerModule,
+	MatGridListModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
+	MatMenuModule,
 	MatNativeDateModule,
+	MatPaginatorModule,
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSnackBarModule,
+	MatSortModule,
 	MatStepperModule,
-	MatToolbarModule
+	MatTableModule,
+	MatToolbarModule,
+	MatTooltipModule
 } from '@angular/material';
 
 export const MatModules: any[] = [
-	MatDatepickerModule,
-	MatMenuModule,
 	MatButtonModule,
+	MatCardModule,
+	MatDatepickerModule,
+	MatGridListModule,
 	MatIconModule,
 	MatInputModule,
 	MatListModule,
+	MatMenuModule,
 	MatNativeDateModule,
+	MatPaginatorModule,
 	MatRippleModule,
 	MatSelectModule,
 	MatSidenavModule,
+	MatSnackBarModule,
+	MatSortModule,
 	MatStepperModule,
-	MatToolbarModule
+	MatTableModule,
+	MatToolbarModule,
+	MatTooltipModule
+];
+
+export const MatServices: any = [
+
 ];
 
 import { A11yModule } from '@angular/cdk/a11y';

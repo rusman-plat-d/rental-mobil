@@ -1,0 +1,17 @@
+<div class="pp2--nav">
+	<nav>
+		<mat-toolbar color='primary'>
+			<button mat-icon-button>
+				<mat-icon class='pointer' (click)='$C_Mat_Sidenav_Click$.next()'>menu</mat-icon>
+			</button>
+			<span class='margin-l-20px'>Rental Mobil</span>
+			<span class='flex-auto'></span>
+			<button mat-button routerLink='/'><a>Home</a></button>
+			<!-- <button mat-button routerLink='/dev'><a>Dev</a></button> -->
+			<button mat-button routerLink='/sewa'><a>Sewa</a></button>
+			<button class='!auth.signedIn' mat-button routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
+			<button class='!auth.signedIn' mat-button routerLink='/masuk/pengguna'><a>Masuk</a></button>
+			<!-- <button class='auth.signedIn' mat-button log-out><a>Sign Out</a></button> -->
+		</mat-toolbar>
+	</nav>
+</div>

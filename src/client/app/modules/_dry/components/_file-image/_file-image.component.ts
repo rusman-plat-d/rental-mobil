@@ -1,45 +1,41 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { CONFIG } from '../../consts/config.const';
 
-declare var document: any;
+declare var document: any,
+			SocketIOFileUpload: any;
 
 @Component({
 	selector: 'pp2-dry-fileImage',
 	templateUrl: '_file-image.component.html',
-	styles: [`
-		.img-view{
-			background-color: yellowgreen;
-			width: 200px;
-			height: 250px;
-			display: flex;
-			flex-direction: column;
-		}
-		.img-view img{
-			max-height: 215px;
-		}
-		.img-view button{
-			background-color: transparent;
-			font-size: 20px;
-			width: 100%;
-		}
-	`]
+	styleUrls:['_file-image.component.scss']
 })
 
-export class _FileImageComponent implements OnInit {
-	@Input() size: { height: string, width: string } = { height: '200px', width: '250px' };
+export class _FileImageComponent implements OnDestroy, OnInit {
 	@ViewChild('preview') img;
+	CONFIG = CONFIG;
+	imageSrc: string = '';
 	fileExist: boolean = false;
+	i_file: HTMLInputElement;
+	SIOFU: any;
 	get label() {
 		return this.fileExist ? 'Ganti' : 'Upload';
 	}
-	constructor() { }
-
+	constructor(
+		private $_ngRouter: Router,
+		private $_matSnackBar: MatSnackBar
+	) { }
+	ngOnDestroy() {
+		this.SIOFU = null;
+	}
 	ngOnInit() { }
 	chooseFile() {
-		const i_file: HTMLInputElement = document.createElement('input');
+		this.i_file = document.createElement('input');
 		const img = this.img.nativeElement;
-		i_file.type = 'file';
-		i_file.onchange = () => {
-			let fileSelected = i_file.files
+		this.i_file.type = 'file';
+		this.i_file.onchange = () => {
+			let fileSelected = this.i_file.files
 			if (fileSelected.length > 0) {
 				let fileToLoad = fileSelected[0]
 				let fileReader = new FileReader()
@@ -52,6 +48,32 @@ export class _FileImageComponent implements OnInit {
 				fileReader.readAsDataURL(fileToLoad);
 			}
 		}
-		i_file.dispatchEvent(new MouseEvent('click'))
+		this.i_file.dispatchEvent(new MouseEvent('click'))
+	}
+	save($Socket, data, type, url?: string[]) {
+		const btn: HTMLButtonElement = document.createElement('button');
+		this.SIOFU = new SocketIOFileUpload($Socket);
+		this.SIOFU.listenOnSubmit(btn, this.i_file);
+		if ( type === 'tambah' ) {
+			this.SIOFU.addEventListener('start', e => {
+				e.file.meta.data = data;
+				e.file.meta._type = 'tambah';
+			});
+		} else {
+			this.SIOFU.addEventListener('start', e => {
+				e.file.meta.data = data;
+				e.file.meta._type = 'ubah';
+			});
+		}
+		btn.dispatchEvent(new MouseEvent('click'));
+		this.SIOFU.addEventListener('complete', e => {
+			if (url) {
+				this.$_ngRouter.navigate(url);
+			}
+			this.$_matSnackBar.open('Data Berhasil Disimpan')
+			setTimeout(() => {
+				this.$_matSnackBar.dismiss();
+			}, 4000)
+		})
 	}
 }

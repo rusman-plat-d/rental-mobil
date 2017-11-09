@@ -1,0 +1,57 @@
+<div class='pp2-su-supirForm'>
+	<pp2-dry-nav #C_Pp2_Dry_Nav></pp2-dry-nav>
+	<pp2-dry-container #C_Pp2_Dry_Container>
+		<div class="container pp2-content margin-auto">
+			<form [formGroup]='supirForm' fxLayout='column' fxLayoutAlign='center center' (submit)='pp2OnSubmit($event, supirForm.value)'>
+				<mat-card class='full-width'>
+					<mat-card-header>
+						<mat-card-title>Tambah Supir</mat-card-title>
+					</mat-card-header>
+					<mat-card-content fxLayoutAlign='center center'>
+						<div class="pp2-dry-supirForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
+							<div fxFlex>
+								<pp2-dry-fileImage #fi></pp2-dry-fileImage>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='noSIM' matInput type="text" placeholder="No. SIM" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='nama' matInput type="text" placeholder="Nama" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<mat-select formControlName='jk' placeholder='Jenis Kelamin' required>
+										<mat-option value='Laki-Laki'>Laki-Laki</mat-option>
+										<mat-option value='Perempuan'>Perempuan</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat" required></textarea>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='noHP' matInput type="text" placeholder="No Telp/HP" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='email' matInput type="email" placeholder="E-mail" required>
+								</mat-form-field>
+							</div>
+						</div>
+					</mat-card-content>
+					<mat-card-actions>
+						<button [disabled]='disable' mat-button type='submit'>Save</button>
+					</mat-card-actions>
+				</mat-card>
+			</form>
+		</div>
+	</pp2-dry-container>
+</div>

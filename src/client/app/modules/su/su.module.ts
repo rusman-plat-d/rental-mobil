@@ -2,17 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { DryModule } from '../_dry/dry.module';
 
-import { Pp2SuRoutingModule } from './su.routing.module';
-
-
-import { Pp2SuComponent } from './su.component';
-import { Pp2SuFormSupirComponent } from './components/_form-supir/_form-supir.component';
-
-
-export const Pp2SuComponents = [
-	Pp2SuComponent,
-	Pp2SuFormSupirComponent
-];
+import { Pp2SuRoutingModule, Pp2SuComponents } from './su.routing.module';
 
 export const Pp2SuDirectives = [
 

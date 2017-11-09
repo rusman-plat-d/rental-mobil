@@ -7,8 +7,14 @@
 
 # dependencies
 /node_modules
+<<<<<<< HEAD
 /node_modules4
 /node_modules5
+=======
+/node_modules5
+/node_modules4
+node_modules4
+>>>>>>> master
 
 # IDEs and editors
 /.idea
@@ -18,13 +24,6 @@
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # misc
 /.sass-cache

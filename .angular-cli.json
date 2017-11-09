@@ -9,10 +9,14 @@
 			"outDir": "dist/public",
 			"assets": [
 				"assets",
+				"uploads",
 				"favicon.ico",
+				"manifest.appcache",
 				"manifest.json",
-				"sw.js",
+				"manifest.webapp",
 				"offline.html",
+				"robots.txt",
+				"sw.js",
 				{
 					"glob": "workbox-sw.prod.*",
 					"input": "../../node_modules/workbox-sw/build/importScripts/",
@@ -29,7 +33,7 @@
 				"styles.scss"
 			],
 			"scripts": [
-				"../../node_modules/socket.io-client/dist/socket.io.js",
+				"../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js",
 				"../../node_modules/socketio-file-upload/client.min.js"
 			],
 			"environmentSource": "environments/environment.ts",
