@@ -1,10 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Supir = require("../../../db/file/supir/supir");
+var Supir = require("../../../db/file/supir");
 var $SIOFU = require('socketio-file-upload');
 var join = require('path').join;
-var mkdir = require('fs').mkdir;
+var _a = require('fs'), mkdir = _a.mkdir, unlink = _a.unlink;
 var filepath = join(__dirname, '..', '..', '..', 'public', 'uploads', 'supir');
+function remove_image(name) {
+    unlink(join(filepath, name), function (err) {
+        if (err)
+            return console.error("err while delete file => ", err);
+        return console.log('remove image success');
+    });
+}
 module.exports = function ($Socket) {
     var _Socket = $Socket.of('/db/supir');
     _Socket.on('connection', function (Socket) {
@@ -14,7 +21,7 @@ module.exports = function ($Socket) {
         _SIOFU.on('saved', function (e) {
             var ext = e.file.name.split('.');
             var filename = e.file.base + '.' + ext[ext.length - 1];
-            var $Supir = Object.assign(JSON.parse(JSON.stringify(e.file.meta.Supir)), {
+            var $Supir = Object.assign(JSON.parse(JSON.stringify(e.file.meta.data)), {
                 image: filename
             });
             if (e.file.meta._type === 'tambah') {
@@ -22,6 +29,7 @@ module.exports = function ($Socket) {
                 _Socket.emit('add', $Supir);
             }
             else {
+                remove_image(Supir.get($Supir.id).image);
                 Supir.update($Supir);
                 _Socket.emit('update', $Supir);
             }
@@ -31,10 +39,6 @@ module.exports = function ($Socket) {
         });
         Socket.on('gets', function (cb) {
             cb(Supir.gets());
-        });
-        Socket.on('add', function (supir) {
-            Supir.add(supir);
-            Socket.emit('add', supir);
         });
         Socket.on('get', function (id, cb) {
             cb(Supir.get(id));
