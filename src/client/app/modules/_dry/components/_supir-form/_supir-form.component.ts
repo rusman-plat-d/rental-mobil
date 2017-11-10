@@ -49,24 +49,26 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 	ngOnInit() {
 		this.supirForm = this.$_ngFormBuilder.group({
-			id: [""],
-			noSIM: [""],
-			nama: [""],
-			jk: [""],
-			noHP: [""],
-			alamat: [""],
-			email: [""],
-			image: [""]
+			id: [''],
+			nama: [''],
+			noSIM: [''],
+			jk: [''],
+			noHP: [''],
+			hargaSewa: [''],
+			alamat: [''],
+			email: [''],
+			image: ['']
 		});
 		this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/supir/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Supir: Supir) => {
 				this.supirForm.setValue({
 					id: Supir.id,
-					noSIM: Supir.noSIM,
 					nama: Supir.nama,
+					noSIM: Supir.noSIM,
 					jk: Supir.jk,
 					noHP: Supir.noHP,
+					hargaSewa: Supir.hargaSewa,
 					alamat: Supir.alamat,
 					email: Supir.email,
 					image: Supir.image

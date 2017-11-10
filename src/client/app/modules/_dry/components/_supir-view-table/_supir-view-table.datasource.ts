@@ -53,8 +53,9 @@ export class SupirTableDataSource extends DataSource<Supir> {
 				case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
 				case 'name': [propertyA, propertyB] = [a.nama, b.nama]; break;
 				case 'noSIM': [propertyA, propertyB] = [a.noSIM, b.noSIM]; break;
-				case 'jk': [propertyA, propertyB] = [a.jk, b.jk]; break;
 				case 'noHP': [propertyA, propertyB] = [a.noHP, b.noHP]; break;
+				case 'jk': [propertyA, propertyB] = [a.jk, b.jk]; break;
+				case 'hargaSewa': [propertyA, propertyB] = [a.hargaSewa, b.hargaSewa]; break;
 				case 'alamat': [propertyA, propertyB] = [a.alamat, b.alamat]; break;
 				case 'email': [propertyA, propertyB] = [a.email, b.email]; break;
 				case 'image': [propertyA, propertyB] = [a.image, b.image]; break;

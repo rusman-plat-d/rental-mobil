@@ -39,7 +39,7 @@ export class _UserViewComponent implements AfterViewInit, OnDestroy, OnInit {
 	dataSource: UserTableDataSource | null;
 	dataSourceWithDetails: UserTableDetailDataSource | null;
 	// displayedColumns: UserProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	displayedColumns: UserProperties[] = ['image', 'nama', 'jk', 'noHP', 'email', 'action'];
+	displayedColumns: UserProperties[] = ['image', 'nama', 'noHP', 'email', 'action'];
 	changeReferences = false;
 	wasExpanded = new Set<User>();
 

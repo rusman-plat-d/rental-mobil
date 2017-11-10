@@ -36,12 +36,16 @@
 											<td>{{ row.data.noSIM }}</td>
 										</tr>
 										<tr>
+											<td>No. HP</td>
+											<td>{{ row.data.noHP }}</td>
+										</tr>
+										<tr>
 											<td>Jenis Kelamin</td>
 											<td>{{ row.data.jk }}</td>
 										</tr>
 										<tr>
-											<td>No. HP</td>
-											<td>{{ row.data.noHP }}</td>
+											<td>Harga Sewa</td>
+											<td>{{ row.data.hargaSewa | currency:'IDR' }}</td>
 										</tr>
 										<tr>
 											<td>Email</td>
@@ -75,15 +79,20 @@
 							<mat-header-cell *matHeaderCellDef mat-sort-header> No.SIM </mat-header-cell>
 							<mat-cell *matCellDef="let row"> {{row.noSIM}} </mat-cell>
 						</ng-container>
+						<!-- Column Definition: noHP -->
+						<ng-container matColumnDef="noHP">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> No.HP </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.noHP}} </mat-cell>
+						</ng-container>
 						<!-- Column Definition: jk -->
 						<ng-container matColumnDef="jk">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> JK </mat-header-cell>
 							<mat-cell *matCellDef="let row"> {{row.jk}} </mat-cell>
 						</ng-container>
-						<!-- Column Definition: noHP -->
-						<ng-container matColumnDef="noHP">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> No.HP </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.noHP}} </mat-cell>
+						<!-- Column Definition: hargaSewa -->
+						<ng-container matColumnDef="hargaSewa">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Harga Sewa </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.hargaSewa}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: alamat -->
 						<ng-container matColumnDef="alamat">

@@ -20,7 +20,7 @@ import { DetailRow, SupirTableDetailDataSource } from './_supir-view-table.detai
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
 
-export type SupirProperties = 'id' | 'nama' | 'noSim' | 'jk' | 'noHP' | 'alamat' | 'email' | 'image' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
+export type SupirProperties = 'id' | 'nama' | 'noSim' | 'noHP' | 'jk' | 'hargaSewa' | 'alamat' | 'email' | 'image' | '_status' | '_disewaSampai' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
 @Component({
 	selector: 'pp2-dry-supirViewTable',
@@ -39,8 +39,8 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	
 	dataSource: SupirTableDataSource | null;
 	dataSourceWithDetails: SupirTableDetailDataSource | null;
-	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'jk', 'noHP', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
-	displayedColumns: SupirProperties[] = ['image', 'nama', 'jk', '_status', 'action'];
+	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'noHP', 'jk', 'hargaSewa', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
+	displayedColumns: SupirProperties[] = ['image', 'nama', '_status', 'action'];
 	changeReferences = false;
 	wasExpanded = new Set<Supir>();
 
