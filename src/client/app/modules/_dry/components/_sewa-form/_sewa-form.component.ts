@@ -35,15 +35,15 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	private id_supir: string;
 	_mobilDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	_supirDatabase: DatabaseService = new DatabaseService(this.$_pp2Conf);
-	sewaForm: FormGroup;
+	sewaForm_mobil: FormGroup;
+	sewaForm_supir: FormGroup;
+	sewaForm_saya: FormGroup;
+	sewaForm_sewa: FormGroup;
 	get Mobil(): Mobil {
-		return this.$_pp2.parse(this.sewaForm.value.mobil)
+		return this.$_pp2.parse(this.sewaForm_mobil.value.mobil)
 	}
 	get Supir(): Supir {
-		return this.$_pp2.parse(this.sewaForm.value.supir)
-	}
-	get SAlamat(){
-		return this.Supir.alamat ? this.Supir.alamat : '';
+		return this.$_pp2.parse(this.sewaForm_supir.value.supir)
 	}
 	constructor(
 		public $_pp2Conf: ConfigService,
@@ -55,12 +55,19 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		$_matDateAdapter.setLocale('id-ID');
 		this._mobilDatabase.init<Mobil>('/db/mobil')
 		this._supirDatabase.init<Supir>('/db/supir')
-		this.sewaForm = $_ngFormBuilder.group({
-			mobil: [''],
-			supir: [''],
+		this.sewaForm_mobil = $_ngFormBuilder.group({
+			mobil: ['']
+		});
+		this.sewaForm_supir = $_ngFormBuilder.group({
+			supir: ['']
+		});
+		this.sewaForm_saya = $_ngFormBuilder.group({
+			gg: ['']
+		});
+		this.sewaForm_sewa = $_ngFormBuilder.group({
 			tgl_mulai: [''],
-			tgl_selesai: [''],
-		})
+			tgl_selesai: ['']
+		});
 	}
 	ngAfterViewInit(){
 		console.log(this.$_matDateAdapter)
