@@ -53,7 +53,7 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	){
-		_database.init<Mobil>('/db/mobil');
+		_database.init<Mobil>('mobil', '/db/mobil');
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {

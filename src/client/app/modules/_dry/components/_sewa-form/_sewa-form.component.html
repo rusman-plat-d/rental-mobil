@@ -7,10 +7,58 @@
 				</mat-card-header>
 				<mat-card-content>
 					<div class="pp2-dry-sewaForm-container">
-						<mat-vertical-stepper [linear]='false'>
+						<mat-vertical-stepper [linear]='true'>
+							<mat-step [stepControl]='sewaForm_sewa'>
+								<ng-template matStepLabel>Penyewaan</ng-template>
+								<form [formGroup]='sewaForm_sewa'>
+									<div fxLayout='column'>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
+												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
+												<mat-datepicker #mulai></mat-datepicker>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input formControlName='tgl_selesai' [min]='sewaForm_sewa.value.tgl_mulai' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
+												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
+												<mat-datepicker #selesai></mat-datepicker>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											{{ sewaForm_sewa.value.tgl_mulai | json }}
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Hari Penyewaan' value=''>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+											</mat-form-field>
+										</div>
+										<div fxFlex *ngIf='Supir?.hargaSewa'>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Mobil + Supir (Rp.)' value=''>
+											</mat-form-field>
+										</div>
+									</div>
+								</form>
+								<div>
+									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
+									<button color='primary' mat-raised-button matStepperNext>Next</button>
+								</div>
+							</mat-step>
 							<mat-step [stepControl]='sewaForm_mobil'>
+								<ng-template matStepLabel>Mobil {{ Mobil?.hargaSewa ? ' => ' + (Mobil?.hargaSewa | currency:'IDR') : '' }}</ng-template>
 								<form [formGroup]='sewaForm_mobil'>
-									<ng-template matStepLabel>Pilih Mobil</ng-template>
 									<div fxLayout='column'>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
@@ -50,21 +98,21 @@
 									</div>
 								</form>
 								<div>
-									<button mat-button matStepperNext>Next</button>
+									<button color='primary' mat-raised-button matStepperNext>Next</button>
 								</div>
 							</mat-step>
 							<mat-step [stepControl]='sewaForm_supir'>
+								<ng-template matStepLabel>Supir {{ Supir?.hargaSewa ? ' => ' + (Supir?.hargaSewa | currency:'IDR') : '' }}</ng-template>
 								<form [formGroup]='sewaForm_supir'>
-									<ng-template matStepLabel>Supir</ng-template>
 									<div fxLayout='column'>
 										<div fxFlex class='full-width'>
-											<section>
-												<mat-checkbox class="example-margin" color='primary'> Gunakan Jasa Supir?</mat-checkbox>
+											<section class='padd-15px'>
+												<mat-checkbox #butuhSupir color='primary'> Gunakan Jasa Supir?</mat-checkbox>
 											</section>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<mat-select formControlName='supir' placeholder='Supir'>
+												<mat-select [disabled]='!butuhSupir.checked' formControlName='supir' placeholder='Supir' [required]='butuhSupir.checked'>
 													<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
 														<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
 														<span class="owit">{{ supir.nama }}</span>
@@ -75,6 +123,11 @@
 										<div fxFlex>
 											<mat-form-field class='full-width'>
 												<input disabled matInput placeholder='Nama Supir' [value]='Supir?.nama ? Supir.nama : ""'>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
@@ -105,13 +158,13 @@
 									</div>
 								</form>
 								<div>
-									<button mat-button matStepperPrevious>Back</button>
-									<button mat-button matStepperNext>Next</button>
+									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
+									<button color='primary' mat-raised-button matStepperNext>Next</button>
 								</div>
 							</mat-step>
 							<mat-step [stepControl]='sewaForm_saya'>
+								<ng-template matStepLabel>Biodata Diri</ng-template>
 								<form [formGroup]='sewaForm_saya'>
-									<ng-template matStepLabel>Biodata Diri</ng-template>
 									<div fxLayout='column'>
 										<div fxHide>
 											<mat-form-field class='full-width'>
@@ -149,61 +202,20 @@
 											</mat-form-field>
 										</div>
 										<div fxFlex>
-											<button mat-button matStepperNext>Next</button>
+											<button color='primary' mat-raised-button matStepperPrevious>Back</button>
+											<button color='primary' mat-raised-button matStepperNext>Next</button>
 										</div>
 									</div>
 								</form>
-							</mat-step>
-							<mat-step [stepControl]='sewaForm_sewa'>
-								<form [formGroup]='sewaForm_sewa'>
-									<div fxLayout='column'>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
-												<mat-datepicker #mulai></mat-datepicker>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input formControlName='tgl_selesai' [min]='sewaForm_sewa.value.tgl_mulai' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
-												<mat-datepicker #selesai></mat-datepicker>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Hari Penyewaan' value=''>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value=''>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value=''>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil + Supir (Rp.)' value=''>
-											</mat-form-field>
-										</div>
-									</div>
-								</form>
-								<ng-template matStepLabel>Done</ng-template>
-								<div>
-									<button mat-button matStepperPrevious>Back</button>
-									<button mat-button matStepperNext>Next</button>
-								</div>
 							</mat-step>
 							<mat-step>
-								<ng-template matStepLabel>Done</ng-template>
-								You are now done.
+								<ng-template matStepLabel>Selesai</ng-template>
+								<div fxLayout='column'>
+									
+								</div>
 								<div>
-									<button mat-button matStepperPrevious>Back</button>
+									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
+									<button color='primary' mat-raised-button>Selesai</button>
 								</div>
 							</mat-step>
 						</mat-vertical-stepper>

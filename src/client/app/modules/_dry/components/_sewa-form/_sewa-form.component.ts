@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 
 import 'rxjs/add/operator/map';
@@ -21,8 +21,8 @@ import { Pp2Service } from '../../services/pp2.service';
 			 height: 100%;
 			 width: 100%;
 		}
-		.example-margin {
-			margin: 0 10px;
+		.padd-15px {
+			padding: 15px 0;
 		}
 	`]
 })
@@ -45,6 +45,12 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	get Supir(): Supir {
 		return this.$_pp2.parse(this.sewaForm_supir.value.supir)
 	}
+	get tgl_mulai() {
+		return this.$_pp2.parse(this.sewaForm_sewa.value.tgl_mulai)
+	}
+	get tgl_selesai() {
+		return this.$_pp2.parse(this.sewaForm_sewa.value.tgl_selesai)
+	}
 	constructor(
 		public $_pp2Conf: ConfigService,
 		public $_pp2: Pp2Service,
@@ -56,7 +62,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		this._mobilDatabase.init<Mobil>('/db/mobil')
 		this._supirDatabase.init<Supir>('/db/supir')
 		this.sewaForm_mobil = $_ngFormBuilder.group({
-			mobil: ['']
+			mobil: ['', Validators.required]
 		});
 		this.sewaForm_supir = $_ngFormBuilder.group({
 			supir: ['']
@@ -65,8 +71,8 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			gg: ['']
 		});
 		this.sewaForm_sewa = $_ngFormBuilder.group({
-			tgl_mulai: [''],
-			tgl_selesai: ['']
+			tgl_mulai: ['', Validators.required],
+			tgl_selesai: ['', Validators.required]
 		});
 	}
 	ngAfterViewInit(){

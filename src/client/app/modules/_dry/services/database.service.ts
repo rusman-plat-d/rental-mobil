@@ -10,21 +10,26 @@ import { ConfigService } from '../services/config.service';
 import { $Socket } from '../helpers/database.socketio.helper';
 
 declare var io: any;
+declare var localStorage: Storage;
+declare var JSON: JSON;
 
 @Injectable()
 export class DatabaseService{
 	$Socket: Server;
 	dataChange: any;
+	table: string;
 	get data() { return this.dataChange.value; }
 	constructor(
 		public $_pp2Conf: ConfigService
 	){}
-	init <T>(namespace: string){
+	init <T>(table: string, namespace: string = ''){
+		this.table = table;
 		this.dataChange = new BehaviorSubject<T[]>([]);
 		this.$Socket = io(this.$_pp2Conf.socket + namespace);
 		this.$Socket.emit('gets', (data$: T[]) => {
 			setTimeout(() => {
 				this.dataChange.next(data$)
+				localStorage[table] = JSON.stringify(data$);
 			},10)
 		})
 		$Socket<T>(this);
@@ -32,6 +37,7 @@ export class DatabaseService{
 	add <T>(data: T): T[] {
 		const copiedData = this.data.slice();
 		copiedData.unshift(data);
+		localStorage[this.table] = JSON.stringify(JSON.parse(localStorage[this.table]).unshift(data));
 		this.dataChange.next(copiedData);
 		return this.data;
 	}
@@ -43,6 +49,7 @@ export class DatabaseService{
 			}
 		});
 		this.dataChange.next(copiedData);
+		localStorage[this.table] = JSON.stringify(JSON.parse(copiedData));
 		return this.data;
 	}
 	remove <T>(id: string) {
@@ -51,10 +58,12 @@ export class DatabaseService{
 			return id !== data['id'];
 		});
 		this.dataChange.next(copiedData);
+		localStorage[this.table] = JSON.stringify(JSON.parse(copiedData));
 		return this.data;
 	}
 	clear() {
 		this.dataChange.next([]);
+		localStorage[this.table] = '[]';
 		return this.data;
 	}
 }

@@ -53,7 +53,7 @@ export class _UserViewComponent implements AfterViewInit, OnDestroy, OnInit {
 		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	) {
-		_database.init<User>('/db/user');
+		_database.init<User>('user','/db/user');
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {

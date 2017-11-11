@@ -54,7 +54,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	) {
-		_database.init<Supir>('/db/supir');
+		_database.init<Supir>('supir', '/db/supir');
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
