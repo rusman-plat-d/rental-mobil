@@ -8,54 +8,6 @@
 				<mat-card-content>
 					<div class="pp2-dry-sewaForm-container">
 						<mat-vertical-stepper [linear]='true'>
-							<mat-step [stepControl]='sewaForm_sewa'>
-								<ng-template matStepLabel>Penyewaan</ng-template>
-								<form [formGroup]='sewaForm_sewa'>
-									<div fxLayout='column'>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
-												<mat-datepicker #mulai></mat-datepicker>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input formControlName='tgl_selesai' [min]='sewaForm_sewa.value.tgl_mulai' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
-												<mat-datepicker #selesai></mat-datepicker>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											{{ sewaForm_sewa.value.tgl_mulai | json }}
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Hari Penyewaan' value=''>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
-											</mat-form-field>
-										</div>
-										<div fxFlex *ngIf='Supir?.hargaSewa'>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil + Supir (Rp.)' value=''>
-											</mat-form-field>
-										</div>
-									</div>
-								</form>
-								<div>
-									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-									<button color='primary' mat-raised-button matStepperNext>Next</button>
-								</div>
-							</mat-step>
 							<mat-step [stepControl]='sewaForm_mobil'>
 								<ng-template matStepLabel>Mobil {{ Mobil?.hargaSewa ? ' => ' + (Mobil?.hargaSewa | currency:'IDR') : '' }}</ng-template>
 								<form [formGroup]='sewaForm_mobil'>
@@ -207,6 +159,51 @@
 										</div>
 									</div>
 								</form>
+							</mat-step>
+							<mat-step [stepControl]='sewaForm_sewa'>
+								<ng-template matStepLabel>Penyewaan</ng-template>
+								<form [formGroup]='sewaForm_sewa'>
+									<div fxLayout='column'>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input (keypress)='tgl_keypress($event)' (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
+												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
+												<mat-datepicker #mulai></mat-datepicker>
+											</mat-form-field>
+										</div>
+										<div fxFlex *ngIf='sewaForm_sewa.value.tgl_mulai'>
+											<mat-form-field class='full-width'>
+												<input formControlName='tgl_selesai' [min]='tgl_selesai_minDate' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
+												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
+												<mat-datepicker #selesai></mat-datepicker>
+											</mat-form-field>
+										</div>
+										<div fxFlex *ngIf='sewaForm_sewa.value.tgl_selesai'>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Hari Penyewaan' [value]='total_hari_sewa'>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+											</mat-form-field>
+										</div>
+										<div fxFlex *ngIf='Supir?.hargaSewa'>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
+											</mat-form-field>
+										</div>
+										<div fxFlex>
+											<mat-form-field class='full-width'>
+												<input disabled matInput placeholder='Total Harga Penyewaan Mobil {{ Supir?.hargaSewa ? " + Supir" : "" }} (Rp.)' value='{{ (Supir?.hargaSewa ? Mobil.hargaSewa + Supir.hargaSewa : Mobil.hargaSewa) | currency:"IDR" }}'>
+											</mat-form-field>
+										</div>
+									</div>
+								</form>
+								<div>
+									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
+									<button color='primary' mat-raised-button matStepperNext>Next</button>
+								</div>
 							</mat-step>
 							<mat-step>
 								<ng-template matStepLabel>Selesai</ng-template>

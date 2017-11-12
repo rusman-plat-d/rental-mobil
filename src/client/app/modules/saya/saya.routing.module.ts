@@ -15,7 +15,6 @@ const routes: Routes = [
 		{ path: '**', pathMatch: 'full', redirectTo: '/saya/dashboard' },
 	]}
 ];
-
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],

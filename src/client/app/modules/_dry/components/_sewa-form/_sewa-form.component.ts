@@ -46,10 +46,17 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		return this.$_pp2.parse(this.sewaForm_supir.value.supir)
 	}
 	get tgl_mulai() {
-		return this.$_pp2.parse(this.sewaForm_sewa.value.tgl_mulai)
+		return this.sewaForm_sewa.value.tgl_mulai.valueOf();
 	}
 	get tgl_selesai() {
-		return this.$_pp2.parse(this.sewaForm_sewa.value.tgl_selesai)
+		return this.sewaForm_sewa.value.tgl_selesai.valueOf();
+	}
+	get tgl_selesai_minDate(){
+		return new Date(this.tgl_mulai + 86400000)
+	}
+	get total_hari_sewa() {
+		const HARI = (this.tgl_selesai - this.tgl_mulai) / 86400000;
+		return ( HARI < 0 ? 0 : HARI ) + ' Hari ';
 	}
 	constructor(
 		public $_pp2Conf: ConfigService,
@@ -59,8 +66,8 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		public $_pp2MQ: Pp2MediaQueryService
 	){
 		$_matDateAdapter.setLocale('id-ID');
-		this._mobilDatabase.init<Mobil>('/db/mobil')
-		this._supirDatabase.init<Supir>('/db/supir')
+		this._mobilDatabase.init<Mobil>('mobil', '/db/mobil')
+		this._supirDatabase.init<Supir>('supir', '/db/supir')
 		this.sewaForm_mobil = $_ngFormBuilder.group({
 			mobil: ['', Validators.required]
 		});
@@ -75,9 +82,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			tgl_selesai: ['', Validators.required]
 		});
 	}
-	ngAfterViewInit(){
-		console.log(this.$_matDateAdapter)
-	}
+	ngAfterViewInit(){}
 	ngOnInit(){
 		setTimeout(() => {
 			this._mobilDatabase.dataChange.subscribe((mobil: Mobil[]) => {
@@ -87,5 +92,9 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 				this.Supir$ = supir;
 			})
 		}, 10);
+	}
+	tgl_keypress(e: Event){
+		e.preventDefault();
+		console.log(e)
 	}
 }
