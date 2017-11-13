@@ -95,6 +95,5 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	}
 	tgl_keypress(e: Event){
 		e.preventDefault();
-		console.log(e)
 	}
 }
