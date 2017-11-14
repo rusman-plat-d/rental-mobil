@@ -1,5 +1,2 @@
 2017-11-03
 []	wrong supir-form label
-
-2017-11-09
-[]	Supir.addControl('hargaSewa')

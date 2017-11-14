@@ -12,24 +12,40 @@ import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.ser
 
 import { User } from '../../interfaces/user.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
-import { CONFIG } from '../../../_dry/consts/config.const';
 
 declare var io: any;
 
 @Component({
 	selector: "pp2-dry-userForm",
 	templateUrl: "_user-form.component.html",
-	styles: [``]
+	styles: [`
+		.pp2-dry-userForm-container{
+			height: 100%;
+			width: 100%;
+		}
+	`]
 })
 export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
+	type: string;
+	label: string;
 	disable: boolean = false;
 	$Socket: Server;
 	userForm: FormGroup;
-	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
+	cities: string[] = ['Bandung', 'Cirebon', 'Jakarta', 'Padang'];
+	private _pt = 'password';
+	get pt(){
+		return this._pt;
+	}
+	set pt(val){
+		this._pt = val;
+		setTimeout(() => {
+			this._pt = 'password';
+		}, 100)
+	}
 	constructor(
 		public $_ngFormBuilder: FormBuilder,
 		public $_Pp2_MQ: Pp2MediaQueryService,
@@ -38,7 +54,9 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_pp2Conf: ConfigService,
 		private $_matSnackBar: MatSnackBar
 	) {
-		this.$Socket = io(this.$_pp2Conf.socket+'/db/user');
+		this.$Socket = io($_pp2Conf.socket+'/db/user');
+		this.type = $_ngActivatedRoute.data['value']['type'];
+		this.label = this.type === 'tambah' ? 'Daftar Akun Baru' : 'Ubah Data Akun';
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
@@ -52,6 +70,8 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.userForm = this.$_ngFormBuilder.group({
 			id: [''],
 			nama: [''],
+			username: [''],
+			password: [''],
 			noKTP: [''],
 			noHP: [''],
 			jk: [''],
@@ -61,12 +81,14 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: ['']
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/user/gg.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/user/gg.png';
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
 			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (user: User) => {
 				this.userForm.setValue({
 					id: user.id,
 					nama: user.nama,
+					username: user.username,
+					password: user.password,
 					noKTP: user.noKTP,
 					noHP: user.noHP,
 					jk: user.jk,
@@ -76,7 +98,7 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 					createdAt: user.createdAt,
 					updatedAt: user.updatedAt
 				})
-				this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/user/' + user.image;
+				this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/user/' + user.image;
 			})
 		}
 		this.disableForm();

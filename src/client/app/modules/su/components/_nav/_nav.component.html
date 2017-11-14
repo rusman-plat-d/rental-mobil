@@ -6,22 +6,22 @@
 			</button>
 			<span class='margin-l-20px'>Rental Mobil</span>
 			<span class='flex-auto'></span>
-			<button mat-button [matMenuTriggerFor]='C_Mat_Supir'>Supir</button>
-			<button mat-button [matMenuTriggerFor]='C_Mat_Mobil'>Mobil</button>
-			<button mat-button [matMenuTriggerFor]='C_Mat_User'>Pengguna</button>
+			<button mat-button [matMenuTriggerFor]='C_mat_Supir'>Supir</button>
+			<button mat-button [matMenuTriggerFor]='C_mat_Mobil'>Mobil</button>
+			<button mat-button [matMenuTriggerFor]='C_mat_User'>Pengguna</button>
 		</mat-toolbar>
 
-		<mat-menu #C_Mat_Supir='matMenu' [overlapTrigger]='false'>
+		<mat-menu #C_mat_Supir='matMenu' [overlapTrigger]='false'>
 			<button mat-menu-item routerLink='/su/supir/tambah'><a>Tambah</a></button>
 			<button mat-menu-item routerLink='/su/supir/lihat'><a>Lihat</a></button>
 		</mat-menu>
 
-		<mat-menu #C_Mat_Mobil='matMenu' [overlapTrigger]='false'>
+		<mat-menu #C_mat_Mobil='matMenu' [overlapTrigger]='false'>
 			<button mat-menu-item routerLink='/su/mobil/tambah'><a>Tambah</a></button>
 			<button mat-menu-item routerLink='/su/mobil/lihat'><a>Lihat</a></button>
 		</mat-menu>
 
-		<mat-menu #C_Mat_User='matMenu' [overlapTrigger]='false'>
+		<mat-menu #C_mat_User='matMenu' [overlapTrigger]='false'>
 			<button mat-menu-item routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
 			<button mat-menu-item routerLink='/su/pengguna/lihat'><a>Lihat</a></button>
 		</mat-menu>	

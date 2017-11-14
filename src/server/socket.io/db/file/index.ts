@@ -5,4 +5,5 @@ module.exports = function($Socket: Server) {
 	require('./supir')($Socket)
 	require('./mobil')($Socket)
 	require('./user')($Socket)
+	require('./sewa')($Socket)
 }

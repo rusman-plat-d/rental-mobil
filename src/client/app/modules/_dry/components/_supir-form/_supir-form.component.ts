@@ -26,6 +26,8 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
+	type: string;
+	label: string;
 	disable: boolean = false;
 	$Socket: Server;
 	supirForm: FormGroup;
@@ -37,7 +39,9 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		this.$Socket = io(this.$_pp2Conf.socket+'/db/supir');
+		this.$Socket = io($_pp2Conf.socket+'/db/supir');
+		this.type = $_ngActivatedRoute.data['value']['type'];
+		this.label = this.type === 'tambah' ? 'Tambah Supir' : 'Ubah Data Supir';
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {

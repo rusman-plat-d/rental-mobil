@@ -1,4 +1,4 @@
-<div class="pp2--nav pp2----nav">
+<div class="pp2-saya-nav pp2----nav">
 	<nav>
 		<mat-toolbar color='primary'>
 			<button mat-icon-button>
@@ -7,10 +7,16 @@
 			<span class='margin-l-20px'>Rental Mobil</span>
 			<span class='flex-auto'></span>
 			<button mat-button routerLink='/'><a>Home</a></button>
-			<button mat-button routerLink='/mobil'><a>Mobil</a></button>
+			<!-- <button mat-button routerLink='/dev'><a>Dev</a></button> -->
+			<button mat-button [matMenuTriggerFor]='C_Mat_Sewa'>Sewa</button>
 			<button class='!auth.signedIn' mat-button routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
 			<button class='!auth.signedIn' mat-button routerLink='/masuk/pengguna'><a>Masuk</a></button>
 			<!-- <button class='auth.signedIn' mat-button log-out><a>Sign Out</a></button> -->
 		</mat-toolbar>
+
+		<mat-menu #C_Mat_Sewa='matMenu' [overlapTrigger]='false'>
+			<button mat-menu-item routerLink='/saya/sewa/tambah'><a>Tambah</a></button>
+			<button mat-menu-item routerLink='/saya/sewa/lihat'><a>Lihat</a></button>
+		</mat-menu>
 	</nav>
 </div>

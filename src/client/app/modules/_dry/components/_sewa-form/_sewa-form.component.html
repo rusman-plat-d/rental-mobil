@@ -1,4 +1,5 @@
 <div class="pp2-dry-sewaForm">
+	<pp2-dry-nav #C_Pp2_Dry_Nav></pp2-dry-nav>
 	<pp2-dry-container #C_Pp2_Dry_Container>
 		<div class="container pp2-content margin-auto">
 			<mat-card class='full-width'>
@@ -14,7 +15,7 @@
 									<div fxLayout='column'>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<mat-select formControlName='mobil' placeholder='Mobil'>
+												<mat-select formControlName='mobil' name='mobil' placeholder='Mobil'>
 													<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
 														<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" class='iil'>
 														<span class="owit">{{ mobil.nama }}</span>
@@ -24,27 +25,27 @@
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Nama Mobil' [value]='Mobil?.nama ? Mobil.nama : ""'>
+												<input disabled matInput name='mobil_name' placeholder='Nama Mobil' [value]='Mobil?.nama ? Mobil.nama : ""'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Plat Nomor' [value]='Mobil?.platNo ? Mobil.platNo : ""'>
+												<input disabled matInput name='mobil_platNomor' placeholder='Plat Nomor' [value]='Mobil?.platNo ? Mobil.platNo : ""'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Jumlah Kursi' [value]='Mobil?.kursi ? Mobil.kursi : ""'>
+												<input disabled matInput name='mobil_jumlahKursi' placeholder='Jumlah Kursi' [value]='Mobil?.kursi ? Mobil.kursi : ""'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Bahan Bakar' [value]='Mobil?.bensin ? Mobil.bensin : ""'>
+												<input disabled matInput name='mobil_bahanBakar' placeholder='Bahan Bakar' [value]='Mobil?.bensin ? Mobil.bensin : ""'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='mobil_sewaPerHari' placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 									</div>
@@ -59,12 +60,12 @@
 									<div fxLayout='column'>
 										<div fxFlex class='full-width'>
 											<section class='padd-15px'>
-												<mat-checkbox #butuhSupir color='primary'> Gunakan Jasa Supir?</mat-checkbox>
+												<mat-checkbox #butuhSupir color='primary' name='supir?'> Gunakan Jasa Supir?</mat-checkbox>
 											</section>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<mat-select [disabled]='!butuhSupir.checked' formControlName='supir' placeholder='Supir' [required]='butuhSupir.checked'>
+												<mat-select formControlName='supir' name='supir' placeholder='Supir' [required]='butuhSupir.checked'>
 													<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
 														<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
 														<span class="owit">{{ supir.nama }}</span>
@@ -72,39 +73,39 @@
 												</mat-select>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Nama Supir' [value]='Supir?.nama ? Supir.nama : ""'>
+												<input disabled matInput name='supir_nama' placeholder='Nama Supir' [value]='Supir?.nama ? Supir.nama : ""'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='supir_sewaPerHari' placeholder='Harga Sewa per Hari (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Nomor SIM' [value]='Supir?.noSIM ? Supir.noSIM : ""'>
+												<input disabled matInput name='supir_noSIM' placeholder='Nomor SIM' [value]='Supir?.noSIM ? Supir.noSIM : ""'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Jenis Kelamin' [value]='Supir?.jk ? Supir.jk : ""'>
+												<input disabled matInput name='supir_jk' placeholder='Jenis Kelamin' [value]='Supir?.jk ? Supir.jk : ""'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Nomor Seluler' [value]='Supir?.noHP ? Supir.noHP : ""'>
+												<input disabled matInput name='supir_noSeluler' placeholder='Nomor Seluler' [value]='Supir?.noHP ? Supir.noHP : ""'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='E-Mail' [value]='Supir?.email ? Supir.email : ""'>
+												<input disabled matInput name='supir_email' placeholder='E-Mail' [value]='Supir?.email ? Supir.email : ""'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex [fxHide]='!butuhSupir.checked'>
 											<mat-form-field class='full-width'>
-												<textarea disabled matInput matAutosizeMaxRows='4' matTextareaAutosize placeholder="Alamat Supir" [value]='Supir?.alamat ? Supir.alamat : ""'></textarea>
+												<textarea disabled matInput matAutosizeMaxRows='4' matTextareaAutosize name='supir_alamat' placeholder="Alamat Supir" [value]='Supir?.alamat ? Supir.alamat : ""'></textarea>
 											</mat-form-field>
 										</div>
 									</div>
@@ -118,39 +119,34 @@
 								<ng-template matStepLabel>Biodata Diri</ng-template>
 								<form [formGroup]='sewaForm_saya'>
 									<div fxLayout='column'>
-										<div fxHide>
+										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput>
+												<input disabled matInput name='saya_nama' placeholder='Nama' [value]='Saya.nama'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder="Nama" value="nama">
+												<input disabled matInput name='saya_noKTP' placeholder='Nomor KTP.' [value]='Saya.noKTP'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder="Nomor KTP.">
+												<input disabled matInput name='saya_noSeluler' placeholder='Nomor Seluler' [value]='Saya.noHP'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder="Nomor Seluler">
+												<input disabled matInput name='saya_jk' placeholder='Jenis Kelamin' [value]='Saya.jk'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder="Jenis Kelamin">
+												<input disabled matInput name='saya_email' placeholder='E-Mail' [value]='Saya.email'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder="E-Mail">
-											</mat-form-field>
-										</div>
-										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<textarea disabled matInput matAutosizeMaxRows='4' matTextareaAutosize placeholder='Alamat'></textarea>
+												<textarea disabled matInput matAutosizeMaxRows='4' matTextareaAutosize name='saya_alamat' placeholder='Alamat' [value]='Saya.alamat'></textarea>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
@@ -166,43 +162,43 @@
 									<div fxLayout='column'>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input (keypress)='tgl_keypress($event); mulai.open()' (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput [matDatepicker]="mulai" placeholder='Tanggal Mulai Sewa'>
+												<input (keypress)='tgl_keypress($event); mulai.open()' (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput name='sewa_mulai' [matDatepicker]='mulai' placeholder='Tanggal Mulai Sewa'>
 												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
 												<mat-datepicker #mulai></mat-datepicker>
 											</mat-form-field>
 										</div>
 										<div fxFlex *ngIf='sewaForm_sewa.value.tgl_mulai'>
 											<mat-form-field class='full-width'>
-												<input (keypress)='tgl_keypress($event); selesai.open()' (click)='selesai.open()' formControlName='tgl_selesai' [min]='tgl_selesai_minDate' matInput [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
+												<input (keypress)='tgl_keypress($event); selesai.open()' (click)='selesai.open()' formControlName='tgl_selesai' [min]='tgl_selesai_minDate' matInput name='sewa_selesai' [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
 												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
 												<mat-datepicker #selesai></mat-datepicker>
 											</mat-form-field>
 										</div>
 										<div fxFlex *ngIf='sewaForm_sewa.value.tgl_selesai'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Hari Penyewaan' [value]='total_hari_sewa'>
+												<input disabled matInput name='sewa_totalHari' placeholder='Total Hari Penyewaan' [value]='total_hari_sewa + " Hari"'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='sewa_hargaMobil' placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 										<div fxFlex *ngIf='Supir?.hargaSewa'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='sewa_hargaSupir' placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 										<div fxFlex>
 											<mat-form-field class='full-width'>
-												<input disabled matInput placeholder='Total Harga Penyewaan Mobil {{ Supir?.hargaSewa ? " + Supir" : "" }} (Rp.)' value='{{ (Supir?.hargaSewa ? Mobil.hargaSewa + Supir.hargaSewa : Mobil.hargaSewa) | currency:"IDR" }}'>
+												<input disabled matInput name='sewa_hargaTotal' placeholder='Total Harga Penyewaan Mobil {{ Supir?.hargaSewa ? " + Supir" : "" }} (Rp.)' value='{{ (Supir?.hargaSewa ? Mobil.hargaSewa + Supir.hargaSewa : Mobil.hargaSewa) * total_hari_sewa | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 									</div>
 								</form>
 								<div>
 									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-									<button color='primary' mat-raised-button matStepperNext>Next</button>
+									<button (click)='pp2SewaSubmit()' color='primary' mat-raised-button matStepperNext>Next</button>
 								</div>
 							</mat-step>
 							<mat-step>

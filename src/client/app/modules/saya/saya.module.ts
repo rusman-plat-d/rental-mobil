@@ -4,11 +4,13 @@ import { DryModule } from '../_dry/dry.module';
 
 import { Pp2SayaRoutingModule, Pp2SayaComponents } from './saya.routing.module';
 
+import { SayaChildrenGuard } from './guards/saya-children.guard';
 
 export const Pp2SayaDirectives = [
 ];
 
 export const Pp2SayaServices = [
+	SayaChildrenGuard
 ];
 
 @NgModule({

@@ -52,6 +52,7 @@ export function add(Supir: Supir) {
 		_status: 'Tersedia',
 		_disewa: 0,
 		createdAt: Date.now(),
+		updatedAt: Date.now()
 	}));
 	save();
 }

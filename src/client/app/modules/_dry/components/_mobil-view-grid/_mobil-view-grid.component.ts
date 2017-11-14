@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -20,8 +21,7 @@ declare var io: SocketIOStatic;
 export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
 	$Socket: Server;
-	dataChange: BehaviorSubject<Mobil[]> = new BehaviorSubject<Mobil[]>([]);
-	get data(): Mobil[] { return this.dataChange.value; }
+	get data(): Mobil[] { return this._database.dataChange.value; }
 	get cols(): number {
 		if ( this.$_pp2MQ.screen.gtOE.l )
 			return 3;
@@ -33,11 +33,15 @@ export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	constructor(
 		public $_pp2Conf: ConfigService,
 		public _database: DatabaseService,
-		public $_pp2MQ: Pp2MediaQueryService
+		public $_pp2MQ: Pp2MediaQueryService,
+		public $_ngRouter: Router
 	) {
 		this.$Socket = io($_pp2Conf.socket + '/db/mobil')
-		_database.init<Mobil>('/db/mobil');
+		_database.init<Mobil>('mobil', '/db/mobil');
 	}
 	ngAfterViewInit() {}
 	ngOnInit() {}
+	pindah(ke){
+		this.$_ngRouter.navigate(['saya', 'sewa', ke]);
+	}
 }

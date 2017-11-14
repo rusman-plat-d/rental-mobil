@@ -12,9 +12,10 @@ import { _SupirViewTableComponent } from './components/_supir-view-table/_supir-
 import { _MobilFormComponent } from './components/_mobil-form/_mobil-form.component';
 import { _MobilViewTableComponent } from './components/_mobil-view-table/_mobil-view-table.component';
 import { _UserFormComponent } from './components/_user-form/_user-form.component';
-import { _UserViewComponent } from './components/_user-view-table/_user-view-table.component';
+import { _UserViewTableComponent } from './components/_user-view-table/_user-view-table.component';
 import { _MobilViewGridComponent } from './components/_mobil-view-grid/_mobil-view-grid.component';
 import { _SewaFormComponent } from './components/_sewa-form/_sewa-form.component';
+import { _SewaViewTableComponent } from './components/_sewa-view-table/_sewa-view-table.component';
 
 import { GridDirective } from './directives/grid.directive';
 
@@ -28,15 +29,21 @@ export const DryComponents = [
 	_NavComponent,
 	_SidenavComponent,
 	_FileImageComponent,
+
 	_SupirFormComponent,
 	_SupirViewTableComponent,
+
 	_MobilFormComponent,
 	_MobilViewTableComponent,
-	_UserFormComponent,
-	_UserViewComponent,
 	_MobilViewGridComponent,
-	_SewaFormComponent
+
+	_UserFormComponent,
+	_UserViewTableComponent,
+
+	_SewaFormComponent,
+	_SewaViewTableComponent
 ];
+
 export const DryDirectives = [
 	GridDirective
 ];

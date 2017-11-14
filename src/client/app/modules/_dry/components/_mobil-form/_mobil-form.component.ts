@@ -24,6 +24,8 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
+	type: string;
+	label: string;
 	disable: boolean = false;
 	$Socket: Server;
 	mobilForm: FormGroup;
@@ -35,7 +37,9 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		this.$Socket = io(this.$_pp2Conf.socket+'/db/mobil');
+		this.$Socket = io($_pp2Conf.socket+'/db/mobil');
+		this.type = $_ngActivatedRoute.data['value']['type'];
+		this.label = this.type === 'tambah' ? 'Tambah Mobil' : 'Ubah Data Mobil';
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {

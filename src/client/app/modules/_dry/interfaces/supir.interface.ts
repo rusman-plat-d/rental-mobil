@@ -4,7 +4,7 @@ export interface Supir {
 	noSIM?: string;
 	noHP?: string;
 	jk?: string;
-	hargaSewa?: string;
+	hargaSewa?: number;
 	alamat?: string;
 	email?: string;
 	image?: string;

@@ -7,7 +7,5 @@ export class ConfigService {
 	get socket(){
 		return window.location.hostname === 'localhost' ? 'http://localhost:4136' : 'https://pp2-rental.herokuapp.com';
 	}
-	constructor() {
-		
-	}
+	constructor() {}
 }

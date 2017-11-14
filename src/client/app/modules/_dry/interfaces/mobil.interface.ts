@@ -4,7 +4,7 @@ export interface Mobil {
 	platNo?: string;
 	kursi?: string;
 	bensin?: string;
-	hargaSewa?: string;
+	hargaSewa?: number;
 	image?: string;
 	kondisi?: string;
 	_status?: 'Tersedia' | 'Disewa';

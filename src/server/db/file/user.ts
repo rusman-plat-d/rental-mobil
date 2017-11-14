@@ -7,6 +7,8 @@ declare var __dirname: any;
 export interface User {
 	id?: string;
 	nama?: string;
+	username?: string;
+	password?: string;
 	noKTP?: string;
 	noHP?: string;
 	jk?: string;
@@ -22,7 +24,7 @@ const { join } = require('path');
 
 let User$: User[];
 try{
-	User$ = require('./User.json');
+	User$ = require('./user.json');
 }catch(e){
 	User$ = [];
 }
@@ -46,6 +48,7 @@ export function add(User: User): void {
 	console.log('[db]User: add');
 	User$.unshift(Object.assign(User, {
 		createdAt: Date.now(),
+		updatedAt: Date.now()
 	}));
 	save();
 }

@@ -50,6 +50,7 @@ export function add(mobil: Mobil): void {
 		_status: 'Tersedia',
 		_disewa: 0,
 		createdAt: Date.now(),
+		updatedAt: Date.now()
 	}));
 	save();
 }

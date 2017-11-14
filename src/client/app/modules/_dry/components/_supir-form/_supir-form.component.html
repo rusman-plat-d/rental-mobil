@@ -5,7 +5,7 @@
 			<form [formGroup]='supirForm' fxLayout='column' fxLayoutAlign='center center' (submit)='pp2OnSubmit($event, supirForm.value)'>
 				<mat-card class='full-width'>
 					<mat-card-header>
-						<mat-card-title>Tambah Supir</mat-card-title>
+						<mat-card-title>{{ label }}</mat-card-title>
 					</mat-card-header>
 					<mat-card-content fxLayoutAlign='center center'>
 						<div class="pp2-dry-supirForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
@@ -14,22 +14,22 @@
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='nama' matInput placeholder="Nama" required>
+									<input formControlName='nama' matInput name='nama' placeholder="Nama" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='noSIM' matInput placeholder="No. SIM" required type='number'>
+									<input formControlName='noSIM' matInput name='noSIM' placeholder="No. SIM" required type='number'>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='noHP' matInput placeholder="No Telp/HP" required type='number'>
+									<input formControlName='noHP' matInput name='noTelp' placeholder="No Telp/HP" required type='number'>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<mat-select formControlName='jk' placeholder='Jenis Kelamin' required>
+									<mat-select formControlName='jk' name='jk' placeholder='Jenis Kelamin' required>
 										<mat-option value='Laki-Laki'>Laki-Laki</mat-option>
 										<mat-option value='Perempuan'>Perempuan</mat-option>
 									</mat-select>
@@ -37,17 +37,17 @@
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='hargaSewa' matInput type="number" placeholder="Harga Sewa per Hari (Rp.)" required>
+									<input formControlName='hargaSewa' matInput name='sewa_per_hari' type="number" placeholder="Harga Sewa per Hari (Rp.)" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat" required></textarea>
+									<textarea formControlName='alamat' matInput matTextareaAutosize name='alamat' placeholder="Alamat" required></textarea>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='email' matInput type="email" placeholder="E-mail" required>
+									<input formControlName='email' matInput type="email" name='email' placeholder="E-mail" required>
 								</mat-form-field>
 							</div>
 						</div>

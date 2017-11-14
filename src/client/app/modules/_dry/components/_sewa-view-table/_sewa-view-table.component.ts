@@ -11,49 +11,49 @@ import { _NavComponent } from '../_nav/_nav.component';
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
-import { UserTableDataSource } from './_user-view-table.datasource';
-import { DetailRow, UserTableDetailDataSource } from './_user-view-table.detail.datasource';
+import { SewaTableDataSource } from './_sewa-view-table.datasource';
+import { DetailRow, SewaTableDetailDataSource } from './_sewa-view-table.detail.datasource';
 
-import { User } from '../../interfaces/user.interface';
+import { Sewa } from '../../interfaces/sewa.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
 
-export type UserProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'email' | 'alamat' | 'image' | 'createdAt' | 'updatedAt' | 'action' | undefined;
+export type SewaProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'email' | 'alamat' | 'image' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
 @Component({
-	selector: 'pp2-dry-userViewTable',
-	templateUrl: './_user-view-table.component.html',
-	styleUrls: ['./_user-view-table.component.scss'],
+	selector: 'pp2-dry-sewaViewTable',
+	templateUrl: './_sewa-view-table.component.html',
+	styleUrls: ['./_sewa-view-table.component.scss'],
 	animations: [
 		...TableExpand
 	]
 })
-export class _UserViewTableComponent implements AfterViewInit, OnDestroy, OnInit {
-	@ViewChild('filter') filter: ElementRef;
-	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
+export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
+	@ViewChild('filter') filter: ElementRef;
+	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
+	dataSource: SewaTableDataSource | null;
+	dataSourceWithDetails: SewaTableDetailDataSource | null;
+	// displayedColumns: SewaProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
+	displayedColumns: SewaProperties[] = ['image', 'nama', 'noHP', 'email', 'action'];
 	changeReferences = false;
-	dataSource: UserTableDataSource | null;
-	dataSourceWithDetails: UserTableDetailDataSource | null;
-	// displayedColumns: UserProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	displayedColumns: UserProperties[] = ['image', 'nama', 'noHP', 'email', 'action'];
+	wasExpanded = new Set<Sewa>();
 
 	dynamicColumnDefs: any[] = [];
 	dynamicColumnIds: string[] = [];
-	expandedUser: User;
-	wasExpanded = new Set<User>();
+	expandedSewa: Sewa;
 
-	isDetailRow = (row: DetailRow|User) => row.hasOwnProperty('detailRow');
+	isDetailRow = (row: DetailRow|Sewa) => row.hasOwnProperty('detailRow');
+	_database: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	constructor(
 		public $_ngRouter: Router,
-		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	) {
-		_database.init<User>('user','/db/user');
+		this._database.init<Sewa>('sewa','/db/Sewa');
 	}
 	ngAfterViewInit(){
 		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
@@ -62,20 +62,20 @@ export class _UserViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	}
 	ngOnDestroy(){}
 	ngOnInit() {
-		this.dataSource = new UserTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
+		this.dataSource = new SewaTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
 				if (!this.dataSource) { return; }
 				this.dataSource.filter = this.filter.nativeElement.value;
 			});
-		this.dataSourceWithDetails = new UserTableDetailDataSource(this.dataSource);
+		this.dataSourceWithDetails = new SewaTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
-		if (this.expandedUser == row) {
-			this.expandedUser = null;
+		if (this.expandedSewa == row) {
+			this.expandedSewa = null;
 		} else {
-			this.expandedUser = row;
+			this.expandedSewa = row;
 		}
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}

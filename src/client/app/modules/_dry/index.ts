@@ -11,5 +11,13 @@ export * from './components/_user-view-table/_user-view-table.component';
 
 export * from './directives/grid.directive';
 
-export * from './services/Pp2-media-query.service';
+export * from './interfaces/mobil.interface';
+export * from './interfaces/Pp2-media-query.interface';
+export * from './interfaces/socket.interface';
+export * from './interfaces/supir.interface';
+export * from './interfaces/user.interface';
+
 export * from './services/config.service';
+export * from './services/database.service';
+export * from './services/pp2.service';
+export * from './services/Pp2-media-query.service';

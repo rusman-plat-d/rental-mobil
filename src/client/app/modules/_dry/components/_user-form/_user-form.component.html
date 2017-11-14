@@ -5,31 +5,42 @@
 			<form [formGroup]='userForm' fxLayout='column' (submit)='pp2OnSubmit($event, userForm.value)' fxLayoutAlign='center center'>
 				<mat-card class='full-width'>
 					<mat-card-header>
-						<mat-card-title>Daftar Akun Baru</mat-card-title>
+						<mat-card-title>{{ label }}</mat-card-title>
 					</mat-card-header>
 					<mat-card-content fxLayoutAlign='center center'>
-						<div class="pp2-dry-userForm-container" fxLayout='column' style='height: 100%;width: 100%;'>
+						<div class='pp2-dry-userForm-container' fxLayout='column'>
 							<div fxFlex>
 								<pp2-dry-fileImage #fi></pp2-dry-fileImage>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='nama' matInput type="text" placeholder="Nama" required>
+									<input formControlName='nama' matInput name='nama' type="text" placeholder="Nama" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='noKTP' matInput type="text" placeholder="Nomor KTP" required>
+									<input formControlName='username' matInput name='username' type="text" placeholder="Username" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='noHP' matInput type="text" placeholder="Nomor Seluler" required>
+									<input formControlName='password' matInput name='password' placeholder="Password" required [type]='pt'>
+									<mat-hint align='end' class='pointer' (click)='pt = pt === "password" ? "text" : "password" '>{{ pt === "password" ? "Lihat" : "Sembunyikan" }} Password</mat-hint>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<mat-select formControlName='jk' placeholder='Jenis Kelamin' required>
+									<input formControlName='noKTP' matInput name='noKTP' placeholder="Nomor KTP" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<input formControlName='noHP' matInput name='noSeluler' placeholder="Nomor Seluler" required>
+								</mat-form-field>
+							</div>
+							<div fxFlex>
+								<mat-form-field class='full-width'>
+									<mat-select formControlName='jk' name='jk' placeholder='Jenis Kelamin' required>
 										<mat-option value='Laki-Laki'>Laki-Laki</mat-option>
 										<mat-option value='Perempuan'>Perempuan</mat-option>
 									</mat-select>
@@ -37,12 +48,12 @@
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<input formControlName='email' matInput type="email" placeholder="E-Mail" required>
+									<input formControlName='email' matInput name='email' type="email" placeholder="E-Mail" required>
 								</mat-form-field>
 							</div>
 							<div fxFlex>
 								<mat-form-field class='full-width'>
-									<textarea formControlName='alamat' matInput matTextareaAutosize placeholder="Alamat" required></textarea>
+									<textarea formControlName='alamat' matInput matTextareaAutosize name='alamat' placeholder="Alamat" required></textarea>
 								</mat-form-field>
 							</div>
 						</div>

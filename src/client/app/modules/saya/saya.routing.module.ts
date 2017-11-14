@@ -3,16 +3,26 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Pp2SayaComponent } from './saya.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SewaFormComponent } from './components/sewa-form/sewa-form.component';
+
+
+import { SayaChildrenGuard } from './guards/saya-children.guard';
 
 export const Pp2SayaComponents: any[] = [
 	Pp2SayaComponent,
-	DashboardComponent
+	DashboardComponent,
+	SewaFormComponent
 ];
 
 const routes: Routes = [
-	{ path: 'saya', children:[
+	{ path: 'saya', canActivateChild: [SayaChildrenGuard], children:[
 		{ path: '', component: DashboardComponent },
-		{ path: '**', pathMatch: 'full', redirectTo: '/saya/dashboard' },
+		{ path: 'sewa', children: [
+			{ path: '', component: SewaFormComponent },
+			{ path: ':idMobil', component: SewaFormComponent },
+			{ path: '**', pathMatch: 'full', redirectTo: '/saya/' }
+		] },
+		{ path: '**', pathMatch: 'full', redirectTo: '/saya/' }
 	]}
 ];
 @NgModule({
