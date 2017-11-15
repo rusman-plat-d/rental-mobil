@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { DateAdapter, MatCheckbox, MatSnackBar, NativeDateAdapter } from '@angular/material';
+import { DateAdapter, MatCheckbox, MatSelect, MatSnackBar, NativeDateAdapter } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
+
+import { _ContainerComponent } from '../_container/_container.component';
+import { _NavComponent } from '../_nav/_nav.component';
 
 import { Mobil } from '../../interfaces/mobil.interface';
 import { Supir } from '../../interfaces/supir.interface';
@@ -34,12 +37,17 @@ declare var io: any;
 })
 export class _SewaFormComponent implements AfterViewInit, OnInit {
 	@ViewChild('butuhSupir') _butuhSupir: MatCheckbox;
+	@ViewChild('C_Mat_Select_Mobil') C_Mat_Select_Mobil: MatSelect;
+	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
+	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 	$Socket: Server;
 
 	private tgl_mulai_val;
 	private id_mobil: string;
 	private id_supir: string;
 
+	idMobil = this.$_ngActivatedRoute.snapshot.params['idMobil'];
+	idSupir = this.$_ngActivatedRoute.snapshot.params['idSupir'];
 	minDate = new Date();
 	Mobil$: Mobil[] = [];
 	Supir$: Supir[] = [];
@@ -80,8 +88,6 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		public $_pp2MQ: Pp2MediaQueryService,
 		private $_matSnackBar: MatSnackBar
 	){
-		console.log($_ngActivatedRoute.snapshot.params['idMobil'])
-		console.log($_ngActivatedRoute.snapshot.params['idMobil'] === '')
 		this.$Socket = io($_pp2Conf.socket + '/db/sewa');
 		try {
 			this.Saya = JSON.parse(localStorage.ggPengguna);
@@ -97,37 +103,42 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 
 		this._mobilDatabase.init<Mobil>('mobil', '/db/mobil')
 		this._supirDatabase.init<Supir>('supir', '/db/supir')
-
-		this.sewaForm_mobil = $_ngFormBuilder.group({
+	}
+	ngAfterViewInit() {
+		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
+			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
+		})
+	}
+	ngOnInit(){
+		this.sewaForm_mobil = this.$_ngFormBuilder.group({
 			mobil: ['', Validators.required]
 		});
-		this.sewaForm_mobil.valueChanges.subscribe((form) => {
-			this._sewa.id_mobil = this.Mobil.id;
-			this._sewa.totalSewaMobil = this.Mobil.hargaSewa * this.total_hari_sewa;
+		this.sewaForm_mobil.get('mobil').valueChanges.subscribe((mobil: string)=>{
+			if ( typeof mobil == 'string') {
+				this.$_ngRouter.navigate(['saya', 'sewa', (JSON.parse(mobil) as Mobil).id])
+			}
 		})
-
-		this.sewaForm_supir = $_ngFormBuilder.group({
+		this.sewaForm_supir = this.$_ngFormBuilder.group({
 			supir: ['']
 		});
-		this.sewaForm_supir.valueChanges.subscribe((form) => {
-			this._sewa.id_supir = this.Supir.id;
-			this._sewa.totalSewaSupir = this.Supir.hargaSewa * this.total_hari_sewa;
-		})
-
-		this.sewaForm_saya = $_ngFormBuilder.group({
-			gg: ['']
+		this.sewaForm_supir.get('supir').valueChanges.subscribe((supir: string) => {
+			setTimeout(()=>{
+				console.log('supir =>> ', JSON.parse(supir))
+				this.$_ngRouter.navigate(['saya', 'sewa', this.Mobil.id, this.Supir.id])
+			},10)
 		});
 
-		this.sewaForm_sewa = $_ngFormBuilder.group({
+		this.sewaForm_saya = this.$_ngFormBuilder.group({
+			gg: ['']
+		});
+		this.sewaForm_sewa = this.$_ngFormBuilder.group({
 			tgl_mulai: ['', Validators.required],
 			tgl_selesai: ['', Validators.required]
 		});
-	}
-	ngAfterViewInit(){}
-	ngOnInit(){
 		setTimeout(() => {
 			this._mobilDatabase.dataChange.subscribe((mobil: Mobil[]) => {
 				this.Mobil$ = mobil;
+				this.sewaForm_mobil.get('mobil').setValue(JSON.stringify(this.Mobil$.filter((mobil: Mobil) => mobil.id === this.idMobil)[0]))
 			})
 			this._supirDatabase.dataChange.subscribe((supir: Supir[]) => {
 				this.Supir$ = supir;

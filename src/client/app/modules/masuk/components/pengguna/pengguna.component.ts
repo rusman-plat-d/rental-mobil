@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { _ContainerComponent, _NavComponent } from '../../../_dry/index';
+
 declare var localStorage: Storage;
 
 @Component({
@@ -9,6 +11,7 @@ declare var localStorage: Storage;
 	templateUrl: './pengguna.component.html'
 })
 export class PenggunaComponent implements OnInit {
+
 	masukPenggunaForm: FormGroup;
 	constructor(
 		private $_ngFormBuilder: FormBuilder, private $_ngRouter: Router

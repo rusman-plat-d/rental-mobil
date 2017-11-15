@@ -12,7 +12,10 @@ export class _SidenavComponent implements OnInit {
 	ngOnInit() {
 		this.links = [
 			{ url: '/', text: 'Home' },
-			{ url: '/dev', text: 'Dev' }
+			{ url: '/dev', text: 'Dev' },
+			{ url: '/masuk', text: 'Masuk' },
+			{ url: '/saya', text: 'Saya' },
+			{ url: '/saya/sewa', text: 'Sewa' },
 		]
 	}
 }

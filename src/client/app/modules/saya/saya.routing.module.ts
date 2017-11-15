@@ -19,10 +19,15 @@ const routes: Routes = [
 		{ path: '', component: DashboardComponent },
 		{ path: 'sewa', children: [
 			{ path: '', component: SewaFormComponent },
-			{ path: ':idMobil', component: SewaFormComponent },
-			{ path: '**', pathMatch: 'full', redirectTo: '/saya/' }
+			{ path: ':idMobil', children:[
+				{ path: '', component: SewaFormComponent },
+				{ path: ':idSupir', children:[
+					{ path: '', component: SewaFormComponent },
+				] },
+				// { path: '**', pathMatch: 'full', redirectTo: '/saya/sewa' }
+			] },
 		] },
-		{ path: '**', pathMatch: 'full', redirectTo: '/saya/' }
+		{ path: '**', pathMatch: 'full', redirectTo: '/saya' }
 	]}
 ];
 @NgModule({
