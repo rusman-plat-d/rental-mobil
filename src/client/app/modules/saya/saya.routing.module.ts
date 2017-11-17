@@ -21,9 +21,10 @@ const routes: Routes = [
 			{ path: '', component: SewaFormComponent },
 			{ path: ':idMobil', children:[
 				{ path: '', component: SewaFormComponent },
-				{ path: ':idSupir', children:[
-					{ path: '', component: SewaFormComponent },
-				] },
+				{ path: ':idSupir', component: SewaFormComponent },
+				// { path: ':idSupir', children:[
+				// 	{ path: '', component: SewaFormComponent },
+				// ] },
 				// { path: '**', pathMatch: 'full', redirectTo: '/saya/sewa' }
 			] },
 		] },
