@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { _ContainerComponent } from '../_container/_container.component';
+
 import { SocketIOStatic, Server } from '../../interfaces/socket.interface';
 import { Mobil } from '../../interfaces/mobil.interface';
 
@@ -20,6 +22,7 @@ declare var io: SocketIOStatic;
 
 export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
+	@ViewChild('C_Pp2_Dry_Container') C_Pp2_Dry_Container: _ContainerComponent;
 	$Socket: Server;
 	get data(): Mobil[] { return this._database.dataChange.value; }
 	get cols(): number {

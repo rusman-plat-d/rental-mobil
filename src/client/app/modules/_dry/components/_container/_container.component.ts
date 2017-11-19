@@ -28,7 +28,4 @@ export class _ContainerComponent implements OnInit {
 	) {}
 	ngOnDestroy() {}
 	ngOnInit() {}
-	gg() {
-		return this.$_Pp2MQ.screen.lt.xl ? 'FOO' : 'BAR';
-	}
 }

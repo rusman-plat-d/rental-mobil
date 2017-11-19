@@ -6,6 +6,8 @@ export * from './components/_supir-form/_supir-form.component';
 export * from './components/_supir-view-table/_supir-view-table.component';
 export * from './components/_mobil-form/_mobil-form.component';
 export * from './components/_mobil-view-table/_mobil-view-table.component';
+export * from './components/_mobil-view-grid/_mobil-view-grid.component';
+export * from './components/_sewa-form/_sewa-form.component';
 export * from './components/_user-form/_user-form.component';
 export * from './components/_user-view-table/_user-view-table.component';
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivateChild, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
@@ -10,13 +11,18 @@ import { User } from '../../_dry/index';
 @Injectable()
 export class SayaChildrenGuard implements CanActivateChild {
 	constructor(
-		public $_ngRouter: Router
+		public $_ngRouter: Router,
+		public $_matSnackBar: MatSnackBar
 	){}
 	canActivateChild(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean> | Promise<boolean> | boolean {
 		if (!localStorage.masukPengguna) {
+			this.$_matSnackBar.open('Masuk Terlebih Dahulu');
+			setTimeout(() => {
+				this.$_matSnackBar.dismiss()
+			}, 4000)
 			this.$_ngRouter.navigate(['masuk']);
 		}
 		let User$: User[];

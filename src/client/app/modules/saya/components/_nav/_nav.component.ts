@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from '../../../_dry/index';
 
@@ -10,10 +11,18 @@ import { User } from '../../../_dry/index';
 export class NavComponent_ implements OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
 	saya: User;
-	constructor(){}
+	constructor(
+		public $_ngRouter: Router
+	){}
 	ngOnInit() {
 		try{
 			this.saya = JSON.parse(localStorage.ggPengguna);
 		}catch(e){}
+	}
+	keluar(){
+		localStorage.removeItem('ezPengguna')
+		localStorage.removeItem('ggPengguna')
+		localStorage.removeItem('masukPengguna')
+		this.$_ngRouter.navigate([''])
 	}
 }

@@ -6,9 +6,8 @@ import { DryModule } from './modules/_dry/dry.module';
 
 import { Pp2RoutingModule, Pp2Components } from './pp2.routing.module';
 
-import { Pp2SuModule } from './modules/su/su.module';
+import { PengurusModule } from './modules/pengurus/pengurus.module';
 import { Pp2SayaModule } from './modules/saya/saya.module';
-import { Pp2MasukModule } from './modules/masuk/masuk.module';
 
 import { Pp2Component } from './pp2.component';
 import { NavComponent_ } from './components/_nav/_nav.component';
@@ -21,9 +20,8 @@ export const Pp2Guards = [
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
 		// TransferHttpCacheModule,
-		Pp2SuModule,
+		PengurusModule,
 		Pp2SayaModule,
-		Pp2MasukModule,
 		Pp2RoutingModule
 	],
 	declarations: [

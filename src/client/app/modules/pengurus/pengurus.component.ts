@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'pp2-su-root',
+  selector: 'pp2-pengurus-root',
   template: '<router-outlet></router-outlet>'
 })
-export class Pp2SuComponent implements OnInit {
+export class PengurusComponent implements OnInit {
   constructor() {}
   ngOnInit() {}
 }

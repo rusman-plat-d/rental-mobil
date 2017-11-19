@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { _ContainerComponent } from '../_container/_container.component';
-import { _NavComponent } from '../_nav/_nav.component';
 import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-image.component';
 
 import { ConfigService } from '../../services/config.service';
@@ -28,7 +27,6 @@ declare var io: any;
 export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
-	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
 	type: string;
 	label: string;
@@ -58,11 +56,7 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Daftar Akun Baru' : 'Ubah Data Akun';
 	}
-	ngAfterViewInit(){
-		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
-	}
+	ngAfterViewInit(){}
 	ngOnDestroy() {
 		this.$Socket = null;
 	}
