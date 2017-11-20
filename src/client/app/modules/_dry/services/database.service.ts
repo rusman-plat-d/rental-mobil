@@ -10,8 +10,6 @@ import { ConfigService } from '../services/config.service';
 import { $Socket } from '../helpers/database.socketio.helper';
 
 declare var io: any;
-declare var localStorage: Storage;
-declare var JSON: JSON;
 
 @Injectable()
 export class DatabaseService{

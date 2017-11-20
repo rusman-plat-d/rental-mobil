@@ -88,12 +88,12 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		private $_matSnackBar: MatSnackBar
 	){
 		this.$Socket = io($_pp2Conf.socket + '/db/sewa');
-		const id = this.$_ngActivatedRoute.snapshot.params['id'].split('-')
-		try{
-			this.idMobil = id[0] ? id[0].split('m:')[1] : '';
-			this.idSupir = id[1] ? id[1].split('s:')[1] : '';
-		}catch(e){
-			alert('e: id')
+		if ( this.$_ngActivatedRoute.snapshot.params['id'] != undefined ) {
+			const id = JSON.parse(this.$_ngActivatedRoute.snapshot.params['id'].replace('(', '{').replace(')', '}'))
+			try{
+				this.idMobil = id['m'] ? id['m'] : '';
+				this.idSupir = id['s'] ? id['s'] : '';
+			}catch(e){alert('e: id')}
 		}
 		try {
 			this.Saya = JSON.parse(localStorage.ggPengguna);
@@ -117,7 +117,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		});
 		this.sewaForm_mobil.get('mobil').valueChanges.subscribe((mobil: string)=>{
 			if ( typeof mobil == 'string') {
-				this.$_ngRouter.navigate(['saya', 'sewa', 'm:'+ (JSON.parse(mobil) as Mobil).id])
+				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${JSON.parse(mobil).id || this.idMobil}")`])
 			}
 		})
 		this.sewaForm_supir = this.$_ngFormBuilder.group({
@@ -125,8 +125,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		});
 		this.sewaForm_supir.get('supir').valueChanges.subscribe((supir: string) => {
 			setTimeout(()=>{
-				console.log('supir =>> ', JSON.parse(supir))
-				this.$_ngRouter.navigate(['saya', 'sewa', 'm:' + this.Mobil.id + '-s:' + this.Supir.id])
+				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${this.Mobil.id || this.idMobil}","s":"${JSON.parse(supir).id || this.idSupir}")`])
 			},10)
 		});
 
@@ -142,21 +141,19 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 				this.Mobil$ = Mobil$;
 				this.sewaForm_mobil.get('mobil').setValue(JSON.stringify(
 					this.Mobil$.filter((mobil: Mobil) => {
-						console.log(this.idMobil)
 						return mobil.id == this.idMobil
 					})[0]
 				))
 			})
 			this._supirDatabase.dataChange.subscribe((supir: Supir[]) => {
 				this.Supir$ = supir;
-				try{
+				if ( this.idSupir ) {
 					this.sewaForm_supir.get('supir').setValue(JSON.stringify(
 						this.Supir$.filter((supir: Supir) => {
-							console.log(this.idSupir)
 							return supir.id == this.idSupir
 						})[0]
 					))
-				}catch(e){}
+				}
 			})
 		}, 10);
 	}

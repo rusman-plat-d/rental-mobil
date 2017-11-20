@@ -7,7 +7,7 @@ import { DryModule } from './modules/_dry/dry.module';
 import { Pp2RoutingModule, Pp2Components } from './pp2.routing.module';
 
 import { PengurusModule } from './modules/pengurus/pengurus.module';
-import { Pp2SayaModule } from './modules/saya/saya.module';
+import { SayaModule } from './modules/saya/saya.module';
 
 import { Pp2Component } from './pp2.component';
 import { NavComponent_ } from './components/_nav/_nav.component';
@@ -21,7 +21,7 @@ export const Pp2Guards = [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
 		// TransferHttpCacheModule,
 		PengurusModule,
-		Pp2SayaModule,
+		SayaModule,
 		Pp2RoutingModule
 	],
 	declarations: [

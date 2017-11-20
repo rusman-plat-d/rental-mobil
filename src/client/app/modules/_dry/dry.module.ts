@@ -16,6 +16,7 @@ import { _UserViewTableComponent } from './components/_user-view-table/_user-vie
 import { _MobilViewGridComponent } from './components/_mobil-view-grid/_mobil-view-grid.component';
 import { _SewaFormComponent } from './components/_sewa-form/_sewa-form.component';
 import { _SewaViewTableComponent } from './components/_sewa-view-table/_sewa-view-table.component';
+import { _SupirViewGridComponent } from './components/_supir-view-grid/_supir-view-grid.component';
 
 import { GridDirective } from './directives/grid.directive';
 
@@ -41,7 +42,8 @@ export const DryComponents = [
 	_UserViewTableComponent,
 
 	_SewaFormComponent,
-	_SewaViewTableComponent
+	_SewaViewTableComponent,
+	_SupirViewGridComponent
 ];
 
 export const DryDirectives = [

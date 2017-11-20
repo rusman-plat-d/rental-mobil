@@ -7,6 +7,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class NavComponent_ implements OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	constructor(){}
+	saya;
+	constructor(){
+		try{
+			this.saya = JSON.parse(localStorage.ggPengguna);
+		}catch(e){
+			this.saya = null;
+		}
+	}
 	ngOnInit() {}
 }

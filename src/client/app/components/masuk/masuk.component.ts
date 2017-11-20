@@ -37,7 +37,7 @@ export class MasukComponent implements AfterViewInit, OnInit {
 			password: masukForm.password,
 			createdAt: Date.now()
 		});
-		this.$_ngRouter.navigate(['saya']);
+		this.$_ngRouter.navigate([this.level == 'Pengguna' ? 'saya' : 'pengurus']);
 	}
 	onKeyPress($event: KeyboardEvent): void {
 		const number = ($event.charCode >= 48) && ($event.charCode <= 57);

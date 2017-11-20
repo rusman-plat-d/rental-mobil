@@ -35,7 +35,6 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatSort) C_mat_sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
-	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 	
 	dataSource: SupirTableDataSource | null;
 	dataSourceWithDetails: SupirTableDetailDataSource | null;
@@ -57,9 +56,6 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		_database.init<Supir>('supir', '/db/supir');
 	}
 	ngAfterViewInit(){
-		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
 	}
 	ngOnDestroy(){}
 	ngOnInit() {

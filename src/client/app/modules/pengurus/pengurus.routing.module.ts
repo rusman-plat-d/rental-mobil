@@ -9,6 +9,9 @@ import { MobilFormComponent } from './components/mobil-form/mobil-form.component
 import { MobilViewTableComponent } from './components/mobil-view-table/mobil-view-table.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserViewTableComponent } from './components/user-view-table/user-view-table.component';
+import { NavComponent_ } from './components/_nav/_nav.component';
+
+import { PengurusChildrenGuard } from './guards/pengurus-children.guard';
 
 export const PengurusComponents: any[] = [
 	PengurusComponent,
@@ -18,12 +21,13 @@ export const PengurusComponents: any[] = [
 	MobilFormComponent,
 	MobilViewTableComponent,
 	UserFormComponent,
-	UserViewTableComponent
+	UserViewTableComponent,
+	NavComponent_
 ];
 
 const routes: Routes = [
 	{
-		path: 'pengurus', component: PengurusComponent, children: [
+		path: 'pengurus', canActivateChild: [PengurusChildrenGuard], component: PengurusComponent, children: [
 			{ path: 'supir', children:[
 				{ path: 'tambah', component: SupirFormComponent, data: {type: 'tambah'} },
 				{ path: 'lihat', component: SupirViewTableComponent },

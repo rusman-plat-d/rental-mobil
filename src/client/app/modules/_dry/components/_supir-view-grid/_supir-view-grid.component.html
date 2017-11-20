@@ -1,21 +1,21 @@
-<div class='pp2-dry-mobilViewGrid'>
+<div class='pp2-dry-supirViewGrid'>
 	<pp2-dry-container #C_Pp2_Dry_Container>
 		<div class="container pp2-content margin-auto">
 			<mat-card>
 				<mat-card-header>
-					<mat-card-title>Mobil</mat-card-title>
+					<mat-card-title>Supir</mat-card-title>
 				</mat-card-header>
 				<mat-card-content>
 					<mat-grid-list #C_Mat_GridList [cols]='cols' gutterSize='4px' rowHeight="400px">
-						<mat-grid-tile *ngFor='let mobil of data' class='light-blue'>
+						<mat-grid-tile *ngFor='let supir of Supir$' class='light-blue'>
 							<mat-grid-tile-header>
 								<!-- <mat-icon mat-grid-avatar>info_outline</mat-icon> -->
 								<span>
-									{{ mobil.nama }}
+									{{ supir.nama }}
 								</span>
 								<span class='flex-auto'></span>
 								<span>
-									{{ mobil.hargaSewa | currency:'IDR' }}
+									{{ supir.hargaSewa | currency:'IDR' }}
 								</span>
 							</mat-grid-tile-header>
 							<div class='mat-grid-tile-content' style="padding: 4px;">
@@ -23,32 +23,31 @@
 									<colgroup width="100px"></colgroup>
 									<tr>
 										<td colspan="2">
-											<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" style="max-height: 200px; max-width: 200px; justify-self: center;align-self: center">
+											<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" style="max-height: 200px; max-width: 200px; justify-self: center;align-self: center">
 										</td>
 									</tr>
 									<tr>
 										<td>Kursi</td>
-										<td>{{ mobil.kursi }}</td>
+										<td>{{ supir.kursi }}</td>
 									</tr>
 									<tr>
 										<td>Bahan Bakar</td>
-										<td>{{ mobil.bensin }}</td>
+										<td>{{ supir.bensin }}</td>
 									</tr>
 									<tr>
 										<td>Plat Nomor</td>
-										<td>{{ mobil.platNo }}</td>
+										<td>{{ supir.platNo }}</td>
 									</tr>
 									<tr>
 										<td>Kondisi</td>
-										<td>{{ mobil.kondisi }}</td>
+										<td>{{ supir.kondisi }}</td>
 									</tr>
 								</table>
 							</div>
 							<mat-grid-tile-footer>
-								<h3 mat-line>{{ mobil.nama }}</h3>
-								<span mat-line>Harga Sewa: {{ mobil.hargaSewa | currency:'IDR' }}</span>
-								<button (click)='pindah(mobil.id)' color='primary' mat-raised-button><a>Sewa</a></button>
-								<!-- <button color='primary' mat-raised-button [routerLink]='["saya","sewa","(\"m\": \""+ mobil.id +"\")"]'><a>Sewa</a></button> -->
+								<h3 mat-line>{{ supir.nama }}</h3>
+								<span mat-line>Harga Sewa: {{ supir.hargaSewa | currency:'IDR' }}</span>
+								<button (click)='pindah(supir.id)' color='primary' mat-raised-button><a>Sewa</a></button>
 								<!-- <mat-icon>star_borderstar_borderstar_borderstar_border</mat-icon> -->
 							</mat-grid-tile-footer>
 						</mat-grid-tile>

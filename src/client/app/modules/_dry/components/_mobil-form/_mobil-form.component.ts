@@ -22,7 +22,6 @@ declare var io: any;
 export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
-	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
 	type: string;
 	label: string;
@@ -41,11 +40,7 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Tambah Mobil' : 'Ubah Data Mobil';
 	}
-	ngAfterViewInit(){
-		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
-	}
+	ngAfterViewInit(){}
 	ngOnDestroy() {
 		this.$Socket = null;
 	}
@@ -117,15 +112,14 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 					Object.assign(val, {
 						id: ((Math.random() * Math.random() * 1000).toString()
 								+Date.now()
-								+(Math.random() * Math.random() * 1000).toString())
-								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
+								).replace('.', '').replace('.', '')
 					})
 				}
-				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['su','mobil','lihat'])
+				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus', 'mobil', 'lihat'])
 			}
 		}catch(e){
 			this.$Socket.emit('update', val);
-			this.$_ngRouter.navigate(['su','mobil','lihat'])
+			this.$_ngRouter.navigate(['pengurus', 'mobil', 'lihat'])
 		}
 	}
 }

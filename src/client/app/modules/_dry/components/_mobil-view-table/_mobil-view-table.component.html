@@ -1,11 +1,10 @@
 <div class="pp2-dry-mobilViewTable">
-	<pp2-dry-nav #C_Pp2_Dry_Nav></pp2-dry-nav>
 	<pp2-dry-container #C_Pp2_Dry_Container>
 		<div class='container pp2-content margin-auto'>
 			<mat-card>
 				<mat-card-content>
 					<mat-toolbar color='primary'>
-						<button mat-icon-button matTooltip='Tambah Mobil' [routerLink]="['/su/mobil/tambah']">
+						<button mat-icon-button matTooltip='Tambah Mobil' [routerLink]="['/pengurus/mobil/tambah']">
 							<mat-icon>add</mat-icon>
 						</button>
 						<mat-form-field class='full-width' color='accent' floatPlaceholder="never">
@@ -111,7 +110,7 @@
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Mobil' [routerLink]='"/su/mobil/ubah/" + row.id'>
+								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Mobil' [routerLink]='"/pengurus/mobil/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
 								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Mobil' (click)='remove(row.id)'>

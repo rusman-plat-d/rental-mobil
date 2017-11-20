@@ -125,8 +125,7 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 					Object.assign(val, {
 						id: ((Math.random() * Math.random() * 1000).toString()
 								+Date.now()
-								+(Math.random() * Math.random() * 1000).toString())
-								.replace('.', '').replace('.', '').replace('.', '').replace('.', '')
+								).replace('.', '').replace('.', '')
 					})
 				}
 				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], [''])

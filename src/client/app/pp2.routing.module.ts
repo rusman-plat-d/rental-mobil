@@ -6,13 +6,15 @@ import { DevComponent } from './components/dev/dev.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { MobilViewGridComponent } from './components/mobil-view-grid/mobil-view-grid.component';
 import { MasukComponent } from './components/masuk/masuk.component';
+import { SupirViewGridComponent } from './components/supir-view-grid/supir-view-grid.component';
 
 export const Pp2Components = [
 	HomeComponent,
 	DevComponent,
 	UserRegisterComponent,
 	MobilViewGridComponent,
-	MasukComponent
+	MasukComponent,
+	SupirViewGridComponent
 ];
 
 const routes: Routes = [
@@ -28,6 +30,7 @@ const routes: Routes = [
 	]},
 	{ path: 'dev', component: DevComponent },
 	{ path: 'mobil', component: MobilViewGridComponent },
+	{ path: 'supir', component: SupirViewGridComponent },
 	{ path: '**', pathMatch: 'full', redirectTo: '/' }
 ];
 

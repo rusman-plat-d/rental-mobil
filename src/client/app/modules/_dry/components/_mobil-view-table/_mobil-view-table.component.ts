@@ -34,7 +34,6 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
-	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 	
 	dataSource: MobilTableDataSource | null;
 	dataSourceWithDetails: MobilTableDetailDataSource | null;
@@ -55,11 +54,7 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	){
 		_database.init<Mobil>('mobil', '/db/mobil');
 	}
-	ngAfterViewInit(){
-		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
-	}
+	ngAfterViewInit(){}
 	ngOnDestroy(){}
 	ngOnInit() {
 		this.dataSource = new MobilTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)

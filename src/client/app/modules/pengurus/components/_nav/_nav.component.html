@@ -1,29 +1,31 @@
-<div class='pp2-dry-nav pp2----nav'>
+<div class='pp2-pengurus-nav pp2----nav'>
 	<nav>
 		<mat-toolbar color='primary'>
 			<button mat-icon-button>
 				<mat-icon class='pointer' (click)='$C_Mat_Sidenav_Click$.next()'>menu</mat-icon>
 			</button>
-			<span class='margin-l-20px'>Rental Mobil</span>
+			<span class='margin-l-20px pointer' routerLink='/'>Rental Mobil</span>
 			<span class='flex-auto'></span>
+			<button mat-button routerLink='/'><a>Beranda</a></button>
 			<button mat-button [matMenuTriggerFor]='C_mat_Supir'>Supir</button>
 			<button mat-button [matMenuTriggerFor]='C_mat_Mobil'>Mobil</button>
 			<button mat-button [matMenuTriggerFor]='C_mat_User'>Pengguna</button>
+			<button (click)='keluar()' mat-button><a>Keluar</a></button>
 		</mat-toolbar>
 
 		<mat-menu #C_mat_Supir='matMenu' [overlapTrigger]='false'>
-			<button mat-menu-item routerLink='/su/supir/tambah'><a>Tambah</a></button>
-			<button mat-menu-item routerLink='/su/supir/lihat'><a>Lihat</a></button>
+			<button mat-menu-item routerLink='/pengurus/supir/tambah'><a>Tambah</a></button>
+			<button mat-menu-item routerLink='/pengurus/supir/lihat'><a>Lihat</a></button>
 		</mat-menu>
 
 		<mat-menu #C_mat_Mobil='matMenu' [overlapTrigger]='false'>
-			<button mat-menu-item routerLink='/su/mobil/tambah'><a>Tambah</a></button>
-			<button mat-menu-item routerLink='/su/mobil/lihat'><a>Lihat</a></button>
+			<button mat-menu-item routerLink='/pengurus/mobil/tambah'><a>Tambah</a></button>
+			<button mat-menu-item routerLink='/pengurus/mobil/lihat'><a>Lihat</a></button>
 		</mat-menu>
 
 		<mat-menu #C_mat_User='matMenu' [overlapTrigger]='false'>
 			<button mat-menu-item routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
-			<button mat-menu-item routerLink='/su/pengguna/lihat'><a>Lihat</a></button>
+			<button mat-menu-item routerLink='/pengurus/pengguna/lihat'><a>Lihat</a></button>
 		</mat-menu>	
 	</nav>
 </div>

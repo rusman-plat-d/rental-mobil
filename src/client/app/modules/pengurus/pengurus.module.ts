@@ -4,10 +4,12 @@ import { DryModule } from '../_dry/dry.module';
 
 import { PengurusRoutingModule, PengurusComponents } from './pengurus.routing.module';
 
-export const PengurusDirectives = [
-];
+import { PengurusChildrenGuard } from './guards/pengurus-children.guard';
+
+export const PengurusDirectives = [];
 
 export const PengurusServices = [
+	PengurusChildrenGuard
 ];
 
 @NgModule({

@@ -34,7 +34,6 @@ export class _UserViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 	@ViewChild(MatPaginator) C_Mat_Paginator: MatPaginator;
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
-	@ViewChild(_NavComponent) C_Pp2_Dry_Nav: _NavComponent;
 
 	changeReferences = false;
 	dataSource: UserTableDataSource | null;
@@ -55,11 +54,7 @@ export class _UserViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	) {
 		_database.init<User>('user','/db/user');
 	}
-	ngAfterViewInit(){
-		this.C_Pp2_Dry_Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
-	}
+	ngAfterViewInit(){}
 	ngOnDestroy(){}
 	ngOnInit() {
 		this.dataSource = new UserTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
