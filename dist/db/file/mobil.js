@@ -31,6 +31,7 @@ function get(id) {
 exports.get = get;
 function add(mobil) {
     Mobil$.unshift(Object.assign(mobil, {
+        id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         _status: 'Tersedia',
         _disewa: 0,
         createdAt: Date.now(),
@@ -49,6 +50,7 @@ function update(mobil) {
         }
     });
     save();
+    return mobil;
 }
 exports.update = update;
 function remove(id) {

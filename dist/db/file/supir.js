@@ -30,8 +30,9 @@ function get(id) {
     return Supir$.filter(function (supir) { return supir.id === id; })[0];
 }
 exports.get = get;
-function add(Supir) {
-    Supir$.unshift(Object.assign(Supir, {
+function add(supir) {
+    Supir$.unshift(Object.assign(supir, {
+        id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         _status: 'Tersedia',
         _disewa: 0,
         createdAt: Date.now(),
@@ -40,16 +41,17 @@ function add(Supir) {
     save();
 }
 exports.add = add;
-function update(Supir) {
+function update(supir) {
     console.log('[db]Supir: update');
     Object.keys(Supir$).map(function (key) {
-        if (Supir$[key].id == Supir.id) {
-            Object.assign(Supir$[key], Object.assign(Supir, {
+        if (Supir$[key].id == supir.id) {
+            Object.assign(Supir$[key], Object.assign(supir, {
                 updatedAt: Date.now()
             }));
         }
     });
     save();
+    return supir;
 }
 exports.update = update;
 function remove(id) {

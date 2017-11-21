@@ -47,6 +47,7 @@ export function get(id: string): User {
 export function add(User: User): void {
 	console.log('[db]User: add');
 	User$.unshift(Object.assign(User, {
+		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
 		createdAt: Date.now(),
 		updatedAt: Date.now()
 	}));

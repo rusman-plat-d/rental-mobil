@@ -12,8 +12,13 @@ function remove_image(name) {
         return console.log('remove image success');
     });
 }
-module.exports = function ($Socket) {
-    var _Socket = $Socket.of('/db/mobil');
+var _Socket;
+function update(mobil) {
+    _Socket.emit('update', mobil);
+}
+exports.update = update;
+var $ = function ($Socket) {
+    _Socket = $Socket.of('/db/mobil');
     _Socket.on('connection', function (Socket) {
         var _SIOFU = new $SIOFU();
         _SIOFU.dir = filepath;
@@ -49,7 +54,7 @@ module.exports = function ($Socket) {
         });
         Socket.on('update', function (mobil) {
             Mobil.update(mobil);
-            _Socket.emit('update', Mobil);
+            update(mobil);
         });
         Socket.on('remove', function (id) {
             Mobil.remove(id);
@@ -57,3 +62,4 @@ module.exports = function ($Socket) {
         });
     });
 };
+exports.$ = $;

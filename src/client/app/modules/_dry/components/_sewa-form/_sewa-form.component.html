@@ -3,7 +3,10 @@
 		<div class="container pp2-content margin-auto">
 			<mat-card class='full-width'>
 				<mat-card-header>
-					<mat-card-title>Sewa Mobil</mat-card-title>
+					<mat-card-title>
+						Sewa Mobil
+						<button #btnDialogSelesai fxHide mat-button (click)='dialogSelesai()'>buka</button>
+					</mat-card-title>
 				</mat-card-header>
 				<mat-card-content>
 					<div class="pp2-dry-sewaForm-container">
@@ -50,7 +53,7 @@
 									</div>
 								</form>
 								<div>
-									<button color='primary' mat-raised-button matStepperNext>Next</button>
+									<button color='primary' mat-raised-button matStepperNext>Selanjutnya</button>
 								</div>
 							</mat-step>
 							<mat-step [stepControl]='sewaForm_supir'>
@@ -110,8 +113,8 @@
 									</div>
 								</form>
 								<div>
-									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-									<button color='primary' mat-raised-button matStepperNext>Next</button>
+									<button color='primary' mat-raised-button matStepperPrevious>Kembali</button>
+									<button color='primary' mat-raised-button matStepperNext>Selanjutnya</button>
 								</div>
 							</mat-step>
 							<mat-step [stepControl]='sewaForm_saya'>
@@ -149,8 +152,8 @@
 											</mat-form-field>
 										</div>
 										<div fxFlex>
-											<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-											<button color='primary' mat-raised-button matStepperNext>Next</button>
+											<button color='primary' mat-raised-button matStepperPrevious>Kembali</button>
+											<button color='primary' mat-raised-button matStepperNext>Selanjutnya</button>
 										</div>
 									</div>
 								</form>
@@ -196,18 +199,8 @@
 									</div>
 								</form>
 								<div>
-									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-									<button (click)='pp2SewaSubmit()' color='primary' mat-raised-button matStepperNext>Next</button>
-								</div>
-							</mat-step>
-							<mat-step>
-								<ng-template matStepLabel>Selesai</ng-template>
-								<div fxLayout='column'>
-									
-								</div>
-								<div>
-									<button color='primary' mat-raised-button matStepperPrevious>Back</button>
-									<button color='primary' mat-raised-button>Selesai</button>
+									<button color='primary' mat-raised-button matStepperPrevious>Kembali</button>
+									<button (click)='pp2SewaSubmit()' color='primary' [disabled]='!sewaForm_sewa.valid' mat-raised-button>Selesai</button>
 								</div>
 							</mat-step>
 						</mat-vertical-stepper>

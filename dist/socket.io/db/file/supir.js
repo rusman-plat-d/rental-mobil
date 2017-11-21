@@ -12,8 +12,13 @@ function remove_image(name) {
         return console.log('remove image success');
     });
 }
-module.exports = function ($Socket) {
-    var _Socket = $Socket.of('/db/supir');
+var _Socket;
+function update(supir) {
+    _Socket.emit('update', supir);
+}
+exports.update = update;
+var $ = function ($Socket) {
+    _Socket = $Socket.of('/db/supir');
     _Socket.on('connection', function (Socket) {
         var _SIOFU = new $SIOFU();
         _SIOFU.dir = filepath;
@@ -45,7 +50,7 @@ module.exports = function ($Socket) {
         });
         Socket.on('update', function (supir) {
             Supir.update(supir);
-            _Socket.emit('update', supir);
+            update(supir);
         });
         Socket.on('remove', function (id) {
             Supir.remove(id);
@@ -53,3 +58,4 @@ module.exports = function ($Socket) {
         });
     });
 };
+exports.$ = $;

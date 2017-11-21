@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DateAdapter, MatCheckbox, MatSelect, MatSnackBar, NativeDateAdapter } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -87,6 +87,8 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		public $_pp2MQ: Pp2MediaQueryService,
 		private $_matSnackBar: MatSnackBar
 	){
+		// $_matDialog.afterOpen.subscribe(() => {if (!doc.body.classList.contains('no-scroll')) {doc.body.classList.add('no-scroll');}});
+		// $_matDialog.afterAllClosed.subscribe(() => {doc.body.classList.remove('no-scroll');});
 		this.$Socket = io($_pp2Conf.socket + '/db/sewa');
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] != undefined ) {
 			const id = JSON.parse(this.$_ngActivatedRoute.snapshot.params['id'].replace('(', '{').replace(')', '}'))
@@ -110,14 +112,18 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		this._mobilDatabase.init<Mobil>('mobil', '/db/mobil')
 		this._supirDatabase.init<Supir>('supir', '/db/supir')
 	}
-	ngAfterViewInit() {}
+	ngAfterViewInit() {
+		if (this.idSupir) {
+			this._butuhSupir.checked = true;
+		}
+	}
 	ngOnInit(){
 		this.sewaForm_mobil = this.$_ngFormBuilder.group({
 			mobil: ['', Validators.required]
 		});
 		this.sewaForm_mobil.get('mobil').valueChanges.subscribe((mobil: string)=>{
 			if ( typeof mobil == 'string') {
-				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${JSON.parse(mobil).id || this.idMobil}")`])
+				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${JSON.parse(mobil).id || this.idMobil}","s":"${this.idSupir || ''}")`])
 			}
 		})
 		this.sewaForm_supir = this.$_ngFormBuilder.group({
@@ -138,15 +144,19 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		});
 		setTimeout(() => {
 			this._mobilDatabase.dataChange.subscribe((Mobil$: Mobil[]) => {
-				this.Mobil$ = Mobil$;
+				this.Mobil$ = Mobil$.filter((mobil: Mobil)=>{
+					return mobil._status == 'Tersedia';
+				});
 				this.sewaForm_mobil.get('mobil').setValue(JSON.stringify(
 					this.Mobil$.filter((mobil: Mobil) => {
 						return mobil.id == this.idMobil
 					})[0]
 				))
 			})
-			this._supirDatabase.dataChange.subscribe((supir: Supir[]) => {
-				this.Supir$ = supir;
+			this._supirDatabase.dataChange.subscribe((Supir$: Supir[]) => {
+				this.Supir$ = Supir$.filter((supir: Supir)=>{
+					return supir._status == 'Tersedia';
+				});
 				if ( this.idSupir ) {
 					this.sewaForm_supir.get('supir').setValue(JSON.stringify(
 						this.Supir$.filter((supir: Supir) => {
@@ -173,5 +183,13 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		}
 		console.log(this._sewa);
 		this.$Socket.emit('add', this._sewa);
+		this.$_matSnackBar.open('Berhasil Menyewa Mobil')
+		this.$_ngRouter.navigate(['saya'])
+		setTimeout(()=>{
+			this.$_matSnackBar.dismiss()
+		},4000)
+	}
+	log(e){
+		console.log(e)
 	}
 }

@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/filter");
+var Mobil = require("./mobil");
+var User = require("./user");
 var writeFile = require('fs').writeFile;
 var join = require('path').join;
 var Sewa$;
@@ -21,7 +23,17 @@ function save() {
 }
 function gets() {
     console.log('[db]Sewa: gets');
-    return Sewa$;
+    var Sewa$_ = Sewa$;
+    for (var key in Sewa$_) {
+        Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil);
+        Sewa$_[key].user = User.get(Sewa$_[key].id_user);
+        if (Sewa$_[key].id_supir) {
+            Sewa$_[key].supir = Mobil.get(Sewa$_[key].id_supir);
+        }
+    }
+    return Sewa$_.filter(function (sewa) {
+        return sewa.mobil;
+    });
 }
 exports.gets = gets;
 function get(id) {
@@ -32,6 +44,7 @@ exports.get = get;
 function add(sewa) {
     console.log('[db]Sewa: add');
     Sewa$.unshift(Object.assign(sewa, {
+        id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
         createdAt: Date.now(),
         updatedAt: Date.now()
     }));

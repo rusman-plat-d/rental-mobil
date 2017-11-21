@@ -4,17 +4,14 @@
 			<mat-card>
 				<mat-card-content>
 					<mat-toolbar color='primary'>
-						<button mat-icon-button matTooltip='Tambah User' [routerLink]="['/su/user/tambah']">
-							<mat-icon>add</mat-icon>
-						</button>
 						<mat-form-field class='full-width' color='accent' floatPlaceholder="never">
-							<input matInput #filter placeholder="Cari User">
+							<input matInput #filter placeholder="Cari Penyewaan">
 						</mat-form-field>
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedUser == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
-						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedUser ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedSewa == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSewa ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
 							<mat-cell *matCellDef="let row">
@@ -23,32 +20,12 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
-											<td>Nama</td>
-											<td>{{ row.data.nama }}</td>
-										</tr>
-										<tr>
-											<td>Nomor KTP</td>
-											<td>{{ row.data.noKTP }}</td>
-										</tr>
-										<tr>
-											<td>Nomor Seluler</td>
-											<td>{{ row.data.noHP }}</td>
-										</tr>
-										<tr>
-											<td>Jenis Kelamin</td>
-											<td>{{ row.data.jk }}</td>
-										</tr>
-										<tr>
-											<td>E-Mail</td>
-											<td>{{ row.data.email }}</td>
-										</tr>
-										<tr>
-											<td>Alamat</td>
-											<td>{{ row.data.alamat }}</td>
+											<td>Nama Penyewa</td>
+											<td>{{ row.data.user.nama }}</td>
 										</tr>
 									</table>
 								</ng-container>
@@ -60,51 +37,46 @@
 							<mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
 							<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
 						</ng-container>
-						<!-- Column Definition: nama -->
-						<ng-container matColumnDef="nama">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Nama </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.nama}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: noKTP -->
-						<ng-container matColumnDef="noKTP">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Nomor KTP </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.noKTP}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: noHP -->
-						<ng-container matColumnDef="noHP">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Nomor Seluler </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.noHP}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: jk -->
-						<ng-container matColumnDef="jk">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> Jenis Kelamin </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.jk}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: email -->
-						<ng-container matColumnDef="email">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.email}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: alamat -->
-						<ng-container matColumnDef="alamat">
-							<mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.alamat}} </mat-cell>
-						</ng-container>
-						<!-- Column Definition: image -->
-						<ng-container matColumnDef="image">
-							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+						<!-- Column Definition: u_image -->
+						<ng-container matColumnDef="u_image">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> 
+								<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.user.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
+						</ng-container>
+						<!-- Column Definition: u_nama -->
+						<ng-container matColumnDef="u_nama">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Penyewa </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.user.nama}} </mat-cell>
+						</ng-container>
+						<!-- Column Definition: m_nama -->
+						<ng-container matColumnDef="m_nama">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Mobil </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.mobil.nama}} </mat-cell>
+						</ng-container>
+						<!-- Column Definition: s_nama -->
+						<ng-container matColumnDef="s_nama">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Supir </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.supir.nama}} </mat-cell>
+						</ng-container>
+						<!-- Column Definition: _s_hari -->
+						<ng-container matColumnDef="_s_hari">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Sewa hari </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{row.totalSewaHari}} </mat-cell>
+						</ng-container>
+						<!-- Column Definition: _s_hargaTotal -->
+						<ng-container matColumnDef="_s_hargaTotal">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Harga Sewa Total </mat-header-cell>
+							<mat-cell *matCellDef="let row;"> {{ (row.totalSewaHari * row.mobil.hargaSewa)}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: action -->
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data User' [routerLink]='"/su/user/ubah/" + row.id'>
+								<!-- <button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Penyewaan' [routerLink]='"/pengurus/Penyewaan/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
-								</button>
-								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus User' (click)='remove(row.id)'>
+								</button> -->
+								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Penyewaan' (click)='remove(row.id)'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>

@@ -12,12 +12,12 @@ export class PengurusChildrenGuard implements CanActivateChild {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): boolean {
-		if (!localStorage.masukPengguna) {
+		if (!localStorage['masukPengurus']) {
 			this.$_matSnackBar.open('Masuk Terlebih Dahulu');
 			setTimeout(() => {
 				this.$_matSnackBar.dismiss()
 			}, 4000)
-			this.$_ngRouter.navigate(['masuk']);
+			this.$_ngRouter.navigate(['masuk', 'pengurus']);
 		}
 		let MasukPengurus;
 		try{
@@ -27,7 +27,7 @@ export class PengurusChildrenGuard implements CanActivateChild {
 		}
 		const retVal = MasukPengurus['username'] == 'admin' && MasukPengurus['password'] == 'admin';
 		if (!retVal) {
-			this.$_matSnackBar.open('Masuk Terlebih Dahulu')
+			this.$_matSnackBar.open('Password atau Username Salah')
 			setTimeout(()=>{
 				this.$_matSnackBar.dismiss()
 			},4000)

@@ -16,8 +16,14 @@ function remove_image(name: string) {
 	})
 }
 
-module.exports = function($Socket: Server) {
-	const _Socket = $Socket.of('/db/mobil');
+let _Socket;
+
+function update(mobil: Mobil.Mobil): void {
+	_Socket.emit('update', mobil);
+}
+
+let $ = function($Socket: Server) {
+	_Socket = $Socket.of('/db/mobil');
 	_Socket.on('connection', Socket => {
 		const _SIOFU = new $SIOFU();
 		_SIOFU.dir = filepath;
@@ -53,7 +59,7 @@ module.exports = function($Socket: Server) {
 		})
 		Socket.on('update', (mobil: Mobil.Mobil) => {
 			Mobil.update(mobil);
-			_Socket.emit('update', Mobil);
+			update(mobil);
 		})
 		Socket.on('remove', (id: string) => {
 			Mobil.remove(id);
@@ -61,3 +67,5 @@ module.exports = function($Socket: Server) {
 		})
 	})
 }
+
+export { $, update };

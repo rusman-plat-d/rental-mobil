@@ -1,6 +1,10 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
+import * as Mobil from './mobil';
+import * as Supir from './supir';
+import * as User from './user';
+
 declare var require: any;
 declare var __dirname: any;
 
@@ -9,6 +13,9 @@ export interface Sewa {
 	id_user?: string;
 	id_mobil?: string;
 	id_supir?: string;
+	mobil?: Mobil.Mobil;
+	supir?: Supir.Supir;
+	user?: User.User;
 	tglMulai?: string;
 	tglSelesai?: string;
 	totalSewaHari?: string;
@@ -38,7 +45,17 @@ function save(): void {
 
 export function gets(): Sewa[] {
 	console.log('[db]Sewa: gets');
-	return Sewa$;
+	let Sewa$_ = Sewa$;
+	for (let key in Sewa$_) {
+		Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil)
+		Sewa$_[key].user = User.get(Sewa$_[key].id_user)
+		if (Sewa$_[key].id_supir) {
+			Sewa$_[key].supir = Mobil.get(Sewa$_[key].id_supir)
+		}
+	}
+	return Sewa$_.filter((sewa: Sewa) => {
+		return sewa.mobil;
+	});
 }
 export function get(id: string): Sewa {
 	console.log('[db]Sewa: get');
@@ -47,6 +64,7 @@ export function get(id: string): Sewa {
 export function add(sewa: Sewa): void {
 	console.log('[db]Sewa: add');
 	Sewa$.unshift(Object.assign(sewa, {
+		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
 		createdAt: Date.now(),
 		updatedAt: Date.now()
 	}));

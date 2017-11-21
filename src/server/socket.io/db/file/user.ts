@@ -16,7 +16,7 @@ function remove_image(name: string) {
 	})
 }
 
-module.exports = function($Socket: Server) {
+module.exports.$ = function($Socket: Server) {
 	const _Socket = $Socket.of('/db/user');
 	_Socket.on('connection', Socket => {
 		const _SIOFU = new $SIOFU();

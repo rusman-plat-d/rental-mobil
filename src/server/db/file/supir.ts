@@ -47,8 +47,9 @@ export function get(id: string): Supir {
 	console.log('[db]Supir: get');
 	return Supir$.filter((supir: Supir) => supir.id === id)[0];
 }
-export function add(Supir: Supir) {
-	Supir$.unshift(Object.assign(Supir, {
+export function add(supir: Supir) {
+	Supir$.unshift(Object.assign(supir, {
+		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
 		_status: 'Tersedia',
 		_disewa: 0,
 		createdAt: Date.now(),
@@ -56,16 +57,17 @@ export function add(Supir: Supir) {
 	}));
 	save();
 }
-export function update(Supir: Supir): void {
+export function update(supir: Supir): Supir {
 	console.log('[db]Supir: update');
 	Object.keys(Supir$).map((key)=>{
-		if( Supir$[key].id == Supir.id ){
-			Object.assign(Supir$[key], Object.assign(Supir, {
+		if( Supir$[key].id == supir.id ){
+			Object.assign(Supir$[key], Object.assign(supir, {
 				updatedAt: Date.now()
 			}))
 		}
 	})
 	save();
+	return supir;
 }
 export function remove(id: string): void {
 	console.log('[db]Supir: remove');

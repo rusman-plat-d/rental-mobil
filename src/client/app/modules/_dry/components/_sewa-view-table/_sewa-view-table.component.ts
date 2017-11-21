@@ -19,7 +19,7 @@ import { Sewa } from '../../interfaces/sewa.interface';
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
 
-export type SewaProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'email' | 'alamat' | 'image' | 'createdAt' | 'updatedAt' | 'action' | undefined;
+// export type SewaProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'email' | 'alamat' | 'image' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
 @Component({
 	selector: 'pp2-dry-sewaViewTable',
@@ -38,7 +38,8 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	dataSource: SewaTableDataSource | null;
 	dataSourceWithDetails: SewaTableDetailDataSource | null;
 	// displayedColumns: SewaProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	displayedColumns: SewaProperties[] = ['image', 'nama', 'noHP', 'email', 'action'];
+	// displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', 's_nama', '_s_hari', '_s_hargaTotal', 'action'];
+	displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', '_s_hari', '_s_hargaTotal', 'action'];
 	changeReferences = false;
 	wasExpanded = new Set<Sewa>();
 
@@ -52,7 +53,7 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		public $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		this._database.init<Sewa>('sewa','/db/Sewa');
+		this._database.init<Sewa>('sewa','/db/sewa');
 	}
 	ngAfterViewInit(){}
 	ngOnDestroy(){}

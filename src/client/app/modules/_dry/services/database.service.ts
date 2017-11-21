@@ -35,7 +35,7 @@ export class DatabaseService{
 	add <T>(data: T): T[] {
 		const copiedData = this.data.slice();
 		copiedData.unshift(data);
-		localStorage[this.table] = JSON.stringify(JSON.parse(localStorage[this.table]).unshift(data));
+		localStorage[this.table] = JSON.stringify(copiedData);
 		this.dataChange.next(copiedData);
 		return this.data;
 	}
@@ -47,7 +47,7 @@ export class DatabaseService{
 			}
 		});
 		this.dataChange.next(copiedData);
-		localStorage[this.table] = JSON.stringify(JSON.parse(copiedData));
+		localStorage[this.table] = JSON.stringify(copiedData);
 		return this.data;
 	}
 	remove <T>(id: string) {
@@ -56,7 +56,7 @@ export class DatabaseService{
 			return id !== data['id'];
 		});
 		this.dataChange.next(copiedData);
-		localStorage[this.table] = JSON.stringify(JSON.parse(copiedData));
+		localStorage[this.table] = JSON.stringify(copiedData);
 		return this.data;
 	}
 	clear() {

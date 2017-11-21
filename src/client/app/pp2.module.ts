@@ -1,5 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 
 import { DryModule } from './modules/_dry/dry.module';
@@ -22,7 +24,8 @@ export const Pp2Guards = [
 		// TransferHttpCacheModule,
 		PengurusModule,
 		SayaModule,
-		Pp2RoutingModule
+		Pp2RoutingModule,
+		// ServiceWorkerModule.register('/ngsw-worker.js')
 	],
 	declarations: [
 		Pp2Component,

@@ -12,7 +12,7 @@ function remove_image(name) {
         return console.log('remove image success');
     });
 }
-module.exports = function ($Socket) {
+module.exports.$ = function ($Socket) {
     var _Socket = $Socket.of('/db/user');
     _Socket.on('connection', function (Socket) {
         var _SIOFU = new $SIOFU();

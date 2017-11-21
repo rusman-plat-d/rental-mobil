@@ -108,13 +108,6 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		console.log(val)
 		try{
 			if ( this.C_Pp2_Dry_FI.i_file['files'] ) {
-				if ( this.$_ngActivatedRoute.data['value']['type'] === 'tambah' ) {
-					Object.assign(val, {
-						id: ((Math.random() * Math.random() * 1000).toString()
-								+Date.now()
-								).replace('.', '').replace('.', '')
-					})
-				}
 				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus', 'mobil', 'lihat'])
 			}
 		}catch(e){
