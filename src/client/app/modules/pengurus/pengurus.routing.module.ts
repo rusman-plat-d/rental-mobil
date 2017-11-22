@@ -8,6 +8,7 @@ import { SupirViewTableComponent } from './components/supir-view-table/supir-vie
 import { MobilFormComponent } from './components/mobil-form/mobil-form.component';
 import { MobilViewTableComponent } from './components/mobil-view-table/mobil-view-table.component';
 import { SewaViewTableComponent } from './components/sewa-view-table/sewa-view-table.component';
+import { PengembalianFormComponent } from './components/pengembalian-form/pengembalian-form.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserViewTableComponent } from './components/user-view-table/user-view-table.component';
 import { NavComponent_ } from './components/_nav/_nav.component';
@@ -21,11 +22,12 @@ export const PengurusComponents: any[] = [
 	SupirViewTableComponent,
 	MobilFormComponent,
 	MobilViewTableComponent,
+	PengembalianFormComponent,
 	SewaViewTableComponent,
 	UserFormComponent,
 	UserViewTableComponent,
 	NavComponent_
-];
+]
 
 const routes: Routes = [
 	{
@@ -42,7 +44,8 @@ const routes: Routes = [
 				{ path: 'ubah/:id', component: SupirFormComponent, data: {type: 'ubah'} },
 				{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/penguruspir/lihat' }
 			] },
-			{ path: 'penyewaan', component: SewaViewTableComponent, data:{type:'pengurus'} },
+			{ path: 'penyewaan', component: SewaViewTableComponent, data: { type: 'pengurus' } },
+			{ path: 'pengembalian/:id', component: PengembalianFormComponent },
 			{ path: 'pengguna', children: [
 				{ path: 'tambah', component: UserFormComponent, data: {type: 'tambah'} },
 				{ path: 'lihat', component: UserViewTableComponent },

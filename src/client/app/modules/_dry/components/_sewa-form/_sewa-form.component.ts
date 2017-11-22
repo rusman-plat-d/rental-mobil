@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { DateAdapter, MatCheckbox, MatSelect, MatSnackBar, NativeDateAdapter } from '@angular/material';
+import { DateAdapter, MatCheckbox, MatDatepicker, MatSelect, MatSnackBar, NativeDateAdapter } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
@@ -39,14 +39,17 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	@ViewChild('butuhSupir') _butuhSupir: MatCheckbox;
 	@ViewChild('C_Mat_Select_Mobil') C_Mat_Select_Mobil: MatSelect;
 	@ViewChild('C_Pp2_Dry_Container') C_Pp2_Dry_Container: _ContainerComponent;
+	@ViewChild('mulai') __mulai: MatDatepicker<Date>;
+	@ViewChild('selesai') __selesai: MatDatepicker<Date>;
 	$Socket: Server;
 
 	private tgl_mulai_val;
-	private id_mobil: string;
-	private id_supir: string;
 
 	idMobil: string;
 	idSupir: string;
+	tglMulai;
+	tglSelesai;
+
 	minDate = new Date();
 	Mobil$: Mobil[] = [];
 	Supir$: Supir[] = [];
@@ -58,21 +61,15 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	sewaForm_saya: FormGroup;
 	sewaForm_sewa: FormGroup;
 	Saya: User;
-	get Mobil(): Mobil{
-		return this.$_pp2.parse(this.sewaForm_mobil.value.mobil);
-	}
-	get Supir(): Supir {
-		return this.$_pp2.parse(this.sewaForm_supir.value.supir);
-	}
-	get tgl_mulai() {
-		return this.sewaForm_sewa.value.tgl_mulai.valueOf();
-	}
-	get tgl_selesai() {
-		return this.sewaForm_sewa.value.tgl_selesai.valueOf();
-	}
-	get tgl_selesai_minDate(){
-		return new Date(this.tgl_mulai + 86400000)
-	}
+	
+	get _m() { return `"m":"${this.idMobil || ''}"`; }
+	get _s() { return `,"s":"${this.idSupir || ''}"`; }
+
+	get Mobil(): Mobil{return this.$_pp2.parse(this.sewaForm_mobil.value.mobil);}
+	get Supir(): Supir {return this.$_pp2.parse(this.sewaForm_supir.value.supir);}
+	get tgl_mulai() {return this.sewaForm_sewa.value.tgl_mulai.valueOf();}
+	get tgl_selesai() {return this.sewaForm_sewa.value.tgl_selesai.valueOf();}
+	get tgl_selesai_minDate(){return new Date(this.tgl_mulai + 86400000)}
 	get total_hari_sewa(): number {
 		const HARI = (this.tgl_selesai - this.tgl_mulai) / 86400000;
 		return ( HARI < 0 ? 0 : HARI );
@@ -89,12 +86,16 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	){
 		// $_matDialog.afterOpen.subscribe(() => {if (!doc.body.classList.contains('no-scroll')) {doc.body.classList.add('no-scroll');}});
 		// $_matDialog.afterAllClosed.subscribe(() => {doc.body.classList.remove('no-scroll');});
+		this._mobilDatabase.init<Mobil>('mobil', '/db/mobil')
+		this._supirDatabase.init<Supir>('supir', '/db/supir')
 		this.$Socket = io($_pp2Conf.socket + '/db/sewa');
 		if ( this.$_ngActivatedRoute.snapshot.params['id'] != undefined ) {
 			const id = JSON.parse(this.$_ngActivatedRoute.snapshot.params['id'].replace('(', '{').replace(')', '}'))
 			try{
 				this.idMobil = id['m'] ? id['m'] : '';
 				this.idSupir = id['s'] ? id['s'] : '';
+				this.tglMulai = id['tm'] ? id['tm'] : '';
+				this.tglSelesai = id['ts'] ? id['ts'] : '';
 			}catch(e){alert('e: id')}
 		}
 		try {
@@ -108,13 +109,12 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			this.$_ngRouter.navigate(['masuk'])
 		}
 		$_matDateAdapter.setLocale('id-ID');
-
-		this._mobilDatabase.init<Mobil>('mobil', '/db/mobil')
-		this._supirDatabase.init<Supir>('supir', '/db/supir')
 	}
 	ngAfterViewInit() {
 		if (this.idSupir) {
-			this._butuhSupir.checked = true;
+			setTimeout(()=>{
+				this._butuhSupir.checked = true;
+			},1000)
 		}
 	}
 	ngOnInit(){
@@ -123,15 +123,22 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		});
 		this.sewaForm_mobil.get('mobil').valueChanges.subscribe((mobil: string)=>{
 			if ( typeof mobil == 'string') {
-				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${JSON.parse(mobil).id || this.idMobil}","s":"${this.idSupir || ''}")`])
+				const _mobil	= `"m":"${JSON.parse(mobil).id || this.idMobil}"`;
+				this.$_ngRouter.navigate(['saya', 'sewa', `(${_mobil+this._s})`])
 			}
 		})
 		this.sewaForm_supir = this.$_ngFormBuilder.group({
-			supir: ['']
+			supir: [{value:''}]
 		});
 		this.sewaForm_supir.get('supir').valueChanges.subscribe((supir: string) => {
 			setTimeout(()=>{
-				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${this.Mobil.id || this.idMobil}","s":"${JSON.parse(supir).id || this.idSupir}")`])
+				let id;
+				try{
+					id = JSON.parse(supir).id;
+				}catch(e){
+					id = this.idSupir;
+				}
+				this.$_ngRouter.navigate(['saya', 'sewa', `("m":"${this.Mobil.id}"${this._s})`])
 			},10)
 		});
 
@@ -145,7 +152,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		setTimeout(() => {
 			this._mobilDatabase.dataChange.subscribe((Mobil$: Mobil[]) => {
 				this.Mobil$ = Mobil$.filter((mobil: Mobil)=>{
-					return mobil._status == 'Tersedia';
+					return (mobil._status == 'Tersedia') || (mobil.id == this.idMobil);
 				});
 				this.sewaForm_mobil.get('mobil').setValue(JSON.stringify(
 					this.Mobil$.filter((mobil: Mobil) => {
@@ -155,7 +162,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 			})
 			this._supirDatabase.dataChange.subscribe((Supir$: Supir[]) => {
 				this.Supir$ = Supir$.filter((supir: Supir)=>{
-					return supir._status == 'Tersedia';
+					return (supir._status == 'Tersedia') || (supir.id == this.idSupir);
 				});
 				if ( this.idSupir ) {
 					this.sewaForm_supir.get('supir').setValue(JSON.stringify(

@@ -18,9 +18,7 @@ export class DevComponent implements AfterViewInit, OnInit {
 		public $_ngRouter: Router
 	) {}
 	ngAfterViewInit(){
-		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
+		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();})
 	}
 	ngOnInit() {}
 }

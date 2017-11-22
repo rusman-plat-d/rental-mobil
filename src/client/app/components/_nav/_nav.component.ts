@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 	styles: [``]
 })
 export class NavComponent_ implements OnInit {
-	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
+	@Output() $C_Mat_Sidenav_Click$: EventEmitter<any> = new EventEmitter();
 	saya;
 	constructor(){
 		try{

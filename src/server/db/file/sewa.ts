@@ -9,21 +9,25 @@ declare var require: any;
 declare var __dirname: any;
 
 export interface Sewa {
+	denda?: number;
 	id?: string;
 	id_user?: string;
 	id_mobil?: string;
 	id_supir?: string;
+	kondisi?: string;
 	mobil?: Mobil.Mobil;
 	supir?: Supir.Supir;
 	user?: User.User;
-	tglMulai?: string;
-	tglSelesai?: string;
-	totalSewaHari?: string;
-	totalSewaMobil?: string;
-	totalSewaSupir?: string;
-	totalSewa?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	tglMulai?: number;
+	tglSelesai?: number;
+	tglSewaMulai?: number;
+	tglSewaSelesai?: number;
+	totalSewaHari?: number;
+	totalSewaMobil?: number;
+	totalSewaSupir?: number;
+	totalSewa?: number;
+	createdAt?: number;
+	updatedAt?: number;
 }
 
 const { writeFile } = require('fs');
@@ -83,8 +87,13 @@ export function update(sewa: Sewa): void {
 }
 export function remove(id: string): void {
 	console.log('[db]Sewa: remove');
-	Sewa$ = Sewa$.filter((Sewa: Sewa) => {
-		return id !== Sewa.id;
+	const sewa = get(id);
+	Mobil.update(Object.assign(Mobil.get(sewa.id_mobil), { _status: 'Tersedia' }))
+	if (sewa.id_supir) {
+		Supir.update(Object.assign(Supir.get(sewa.id_supir), { _status: 'Tersedia' }))
+	}
+	Sewa$ = Sewa$.filter((sewa: Sewa) => {
+		return id !== sewa.id;
 	});
 	save();
 }

@@ -55,13 +55,17 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		public $_ngActivatedRoute: ActivatedRoute,
 		public $_pp2Conf: ConfigService
 	) {
-		this._database.init<Sewa>('sewa','/db/sewa');
 		setTimeout(()=>{
 			console.log(this._database.data)
 		},4000)
 		try{
 			this.user = JSON.parse(localStorage['ggPengguna'])
 		}catch(e){}
+		if (this.level == 'pengguna') {
+			this._database.init<Sewa>('sewa', '/db/sewa', 'id_user', this.user.id)
+		}else{
+			this._database.init<Sewa>('sewa', '/db/sewa')
+		}
 	}
 	ngAfterViewInit(){}
 	ngOnDestroy(){}
@@ -92,10 +96,13 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	periode(row: Sewa): string{
 		const mulai = new Date(row.tglMulai)
 		const selesai = new Date(row.tglSelesai)
-		const hasil = mulai.getDate() + '/' + mulai.getMonth() + '/' + mulai.getFullYear() + '<br> s/d <br>' + selesai.getDate() + '/' + selesai.getMonth() + '/' + selesai.getFullYear()
-		return hasil + '<br> (' + row.totalSewaHari + ' Hari)';
+		const hasil = mulai.getDate() + '/' + mulai.getMonth() + '/' + mulai.getFullYear() + ' s/d <br>' + selesai.getDate() + '/' + selesai.getMonth() + '/' + selesai.getFullYear()
+		return hasil + ' (' + row.totalSewaHari + ' Hari)';
 	}
 	hapusBR(str): string{
 		return str.replace('<br>', '').replace('<br>', '').replace('<br>', '')
+	}
+	id(row: Sewa): string {
+		return `("m":"${row.id_mobil}"${row.id_supir?',"s":"'+row.id_supir+'"':''},"tm":"${row.tglMulai}","ts":"${row.tglSelesai}")`;
 	}
 }

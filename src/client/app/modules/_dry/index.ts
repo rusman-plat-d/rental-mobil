@@ -4,6 +4,7 @@ export * from './components/_mobil-form/_mobil-form.component';
 export * from './components/_mobil-view-grid/_mobil-view-grid.component';
 export * from './components/_mobil-view-table/_mobil-view-table.component';
 export * from './components/_nav/_nav.component';
+export * from './components/_pengembalian-form/_pengembalian-form.component';
 export * from './components/_sewa-form/_sewa-form.component';
 export * from './components/_sewa-view-table/_sewa-view-table.component';
 export * from './components/_sidenav/_sidenav.component';

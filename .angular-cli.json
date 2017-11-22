@@ -85,7 +85,8 @@
 		},
 		"build": {
 			"deleteOutputPath": false,
-			"commonChunk": false
+			"commonChunk": false,
+			"outputHashing":"none"
 		}
 	}
 }

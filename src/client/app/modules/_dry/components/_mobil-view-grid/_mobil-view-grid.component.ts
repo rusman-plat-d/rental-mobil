@@ -40,7 +40,7 @@ export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 		public $_ngRouter: Router
 	) {
 		this.$Socket = io($_pp2Conf.socket + '/db/mobil')
-		_database.init<Mobil>('mobil', '/db/mobil');
+		_database.init<Mobil>('mobil', '/db/mobil','_status','Tersedia');
 	}
 	ngAfterViewInit() {}
 	ngOnInit() {}

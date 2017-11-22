@@ -4,12 +4,12 @@ export interface Mobil {
 	platNo?: string;
 	kursi?: string;
 	bensin?: string;
-	hargaSewa?: string;
+	hargaSewa?: number;
 	image?: string;
 	kondisi?: string;
-	_status?: 'Tersedia' | 'Disewa';
+	_status?: 'Tersedia' | 'Dipesan' | 'Disewa';
 	_disewa?: number;
-	_disewaSampai?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	_disewaSampai?: number;
+	createdAt?: number;
+	updatedAt?: number;
 }

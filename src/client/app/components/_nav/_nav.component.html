@@ -9,10 +9,10 @@
 			<button mat-button routerLink='/'><a>Beranda</a></button>
 			<button mat-button routerLink='/mobil'><a>Mobil</a></button>
 			<button mat-button routerLink='/supir'><a>Supir</a></button>
+			<button mat-button routerLink='/saya/sewa'><a>Sewa</a></button>
 			<button *ngIf='saya' mat-button routerLink='/saya'><a>Saya</a></button>
 			<button *ngIf='!saya' mat-button routerLink='/pendaftaran/pengguna'><a>Daftar</a></button>
 			<button *ngIf='!saya' mat-button routerLink='/masuk/pengguna'><a>Masuk</a></button>
-			<!-- <button class='auth.signedIn' mat-button log-out><a>Sign Out</a></button> -->
 		</mat-toolbar>
 	</nav>
 </div>

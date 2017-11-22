@@ -8,16 +8,16 @@ export interface Mobil {
 	id?: string;
 	nama?: string;
 	platNo?: string;
-	kursi?: string;
+	kursi?: number;
 	bensin?: string;
-	hargaSewa?: string;
+	hargaSewa?: number;
 	image?: string;
 	kondisi?: string;
-	_status?: 'Tersedia' | 'Disewa';
+	_status?: 'Tersedia' | 'Dipesan' | 'Disewa';
 	_disewa?: number;
-	_disewaSampai?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	_disewaSampai?: number;
+	createdAt?: number;
+	updatedAt?: number;
 }
 
 const { writeFile } = require('fs');

@@ -16,9 +16,7 @@ export class UserRegisterComponent implements AfterViewInit, OnInit {
 	@ViewChild('C_Dry_userForm') C_Dry_userForm: _UserFormComponent;
 	constructor() {}
 	ngAfterViewInit(){
-		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(()=>{
-			this.C_Dry_userForm.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
+		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(()=>{this.C_Dry_userForm.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();})
 	}
 	ngOnInit() {}
 }

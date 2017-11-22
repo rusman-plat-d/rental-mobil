@@ -8,9 +8,9 @@ export interface Supir {
 	alamat?: string;
 	email?: string;
 	image?: string;
-	_status?: 'Tersedia' | 'Disewa';
-	_disewa?: string;
-	_disewaSampai?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	_status?: 'Tersedia' | 'Dipesan' | 'Disewa';
+	_disewa?: number;
+	_disewaSampai?: number;
+	createdAt?: number;
+	updatedAt?: number;
 }

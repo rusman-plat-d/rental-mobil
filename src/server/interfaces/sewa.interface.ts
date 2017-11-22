@@ -3,19 +3,23 @@ import { Supir } from './supir.interface';
 import { User } from './user.interface';
 
 export interface Sewa {
+	denda?: number;
 	id?: string;
 	id_user?: string;
 	id_mobil?: string;
 	id_supir?: string;
+	kondisi?: string;
 	mobil?: Mobil;
 	supir?: Supir;
 	user?: User;
-	tglMulai?: string;
-	tglSelesai?: string;
-	totalSewaHari?: string;
-	totalSewaMobil?: string;
-	totalSewaSupir?: string;
-	totalSewa?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	tglMulai?: number;
+	tglSelesai?: number;
+	tglSewaMulai?: number;
+	tglSewaSelesai?: number;
+	totalSewaHari?: number;
+	totalSewaMobil?: number;
+	totalSewaSupir?: number;
+	totalSewa?: number;
+	createdAt?: number;
+	updatedAt?: number;
 }

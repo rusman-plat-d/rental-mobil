@@ -162,16 +162,16 @@
 								<form [formGroup]='sewaForm_sewa'>
 									<div fxLayout='column'>
 										<div fxFlex>
-											<mat-form-field class='full-width'>
-												<input (keypress)='tgl_keypress($event); mulai.open()' (click)='mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput name='sewa_mulai' [matDatepicker]='mulai' placeholder='Tanggal Mulai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="mulai"></mat-datepicker-toggle>
+											<mat-form-field (click)='mulai.open()' class='full-width'>
+												<input (keypress)='tgl_keypress($event); mulai.open()' formControlName='tgl_mulai' [min]='minDate' matInput name='sewa_mulai' [matDatepicker]='mulai' placeholder='Tanggal Mulai Sewa'>
+												<mat-datepicker-toggle #toggleMulai matSuffix [for]="mulai"></mat-datepicker-toggle>
 												<mat-datepicker #mulai></mat-datepicker>
 											</mat-form-field>
 										</div>
 										<div fxFlex *ngIf='sewaForm_sewa.value.tgl_mulai'>
-											<mat-form-field class='full-width'>
-												<input (keypress)='tgl_keypress($event); selesai.open()' (click)='selesai.open()' formControlName='tgl_selesai' [min]='tgl_selesai_minDate' matInput name='sewa_selesai' [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
-												<mat-datepicker-toggle #toggle matSuffix [for]="selesai"></mat-datepicker-toggle>
+											<mat-form-field (click)='selesai.open()' class='full-width'>
+												<input (keypress)='tgl_keypress($event); selesai.open()' formControlName='tgl_selesai' [min]='tgl_selesai_minDate' matInput name='sewa_selesai' [matDatepicker]="selesai" placeholder='Tanggal Selesai Sewa'>
+												<mat-datepicker-toggle #toggleSelesai matSuffix [for]="selesai"></mat-datepicker-toggle>
 												<mat-datepicker #selesai></mat-datepicker>
 											</mat-form-field>
 										</div>

@@ -16,9 +16,7 @@ export class MobilViewGridComponent implements AfterViewInit, OnInit {
 	@ViewChild('C_Pp2_Dry_MobilViewGrid') C_Pp2_Dry_MobilViewGrid: _MobilViewGridComponent;
 	constructor() {}
 	ngAfterViewInit(){
-		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {
-			this.C_Pp2_Dry_MobilViewGrid.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();
-		})
+		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {this.C_Pp2_Dry_MobilViewGrid.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();})
 	}
 	ngOnInit() {}
 }

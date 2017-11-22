@@ -15,8 +15,8 @@ export interface User {
 	email?: string;
 	alamat?: string;
 	image?: string;
-	createdAt?: string;
-	updatedAt?: string;
+	createdAt?: number;
+	updatedAt?: number;
 }
 
 const { writeFile } = require('fs');

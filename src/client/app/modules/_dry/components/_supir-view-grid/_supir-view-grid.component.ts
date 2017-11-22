@@ -39,7 +39,7 @@ export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 		public $_ngRouter: Router
 	) {
 		this.$Socket = io($_pp2Conf.socket + '/db/supir')
-		_database.init<Supir>('supir', '/db/supir');
+		_database.init<Supir>('supir', '/db/supir', '_status', 'Tersedia');
 	}
 	ngAfterViewInit() {}
 	ngOnInit() {}

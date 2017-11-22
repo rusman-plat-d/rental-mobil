@@ -17,13 +17,22 @@ declare var io: any;
 export class DatabaseService{
 	$Socket: Server;
 	dataChange: any;
-	table: string;
 	get data() { return this.dataChange.value; }
+	get data_() {
+		return this.data.filter((data)=>{
+			return data[this.prop] == this.val
+		})
+	};
+	prop = '';
+	table: string;
+	val = '';
 	constructor(
 		public $_pp2Conf: ConfigService
 	){}
-	init <T>(table: string, namespace: string = ''){
+	init <T>(table: string, namespace: string = '',prop='', val=''){
 		this.table = table;
+		this.prop = prop;
+		this.val = val;
 		this.dataChange = new BehaviorSubject<T[]>([]);
 		this.$Socket = io(this.$_pp2Conf.socket + namespace);
 		this.$Socket.emit('gets', (data$: T[]) => {
@@ -40,6 +49,9 @@ export class DatabaseService{
 		localStorage[this.table] = JSON.stringify(copiedData);
 		this.dataChange.next(copiedData);
 		return this.data;
+	}
+	get <T>(id: string): T{
+		return
 	}
 	update <T>(data: T): T[] {
 		const copiedData = this.data.slice();
@@ -64,6 +76,6 @@ export class DatabaseService{
 	clear() {
 		this.dataChange.next([]);
 		localStorage[this.table] = '[]';
-		return this.data;
+		return [];
 	}
 }

@@ -10,5 +10,8 @@ if (environment.production) {
 	enableProdMode();
 }
 
+declare var require: any;
+
+document.getElementById('mat-core-theme').innerHTML = require('./assets/scss/custom-theme.scss');
 platformBrowserDynamic().bootstrapModule(Pp2Module)
 	.catch(err => console.log(err));
