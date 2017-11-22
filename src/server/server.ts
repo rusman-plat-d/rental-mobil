@@ -9,13 +9,13 @@ import * as io from 'socket.io';
 const { createServer } = require('http');
 const { join } = require('path');
 
-import { platformServer, renderModuleFactory } from '@angular/platform-server';
-import { ngExpressEngine } from '@nguniversal/express-engine';
+// import { platformServer, renderModuleFactory } from '@angular/platform-server';
+// import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+// import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 // Import the AOT compiled factory for your AppServerModule.
-const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
+// const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
 
 const app = express();
 const port = process.env.PORT || 4136;
@@ -60,5 +60,5 @@ require('./socket.io/core')($Socket)
 
 server.listen(port, () => {
 	console.log(`Listening at ${baseUrl}`);
-	console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
+	// console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
 });
