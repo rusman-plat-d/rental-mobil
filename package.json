@@ -7,7 +7,7 @@
 		"generate-sw": "node generate-sw.js",
 		"pp2-ngsw":"ngsw-config dist/public ./src/client/ngsw-config.json",
 		"postpp2-ngsw":"cp node_modules/@angular/service-worker/ngsw-worker.js ./dist/public/ngsw-worker.js",
-		"prestart": "npm run build && npm run tsc-server && npm run generate-sw",
+		"gg": "npm run build && npm run tsc-server && npm run generate-sw",
 		"start": "node dist/server.js",
 		"tsc-server": "cd src/server && tsc"
 	},
