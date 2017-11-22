@@ -42,7 +42,7 @@ const routes: Routes = [
 				{ path: 'ubah/:id', component: SupirFormComponent, data: {type: 'ubah'} },
 				{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/penguruspir/lihat' }
 			] },
-			{ path: 'penyewaan', component: SewaViewTableComponent  },
+			{ path: 'penyewaan', component: SewaViewTableComponent, data:{type:'pengurus'} },
 			{ path: 'pengguna', children: [
 				{ path: 'tambah', component: UserFormComponent, data: {type: 'tambah'} },
 				{ path: 'lihat', component: UserViewTableComponent },

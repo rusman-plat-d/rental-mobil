@@ -50,7 +50,7 @@ export function gets(): Sewa[] {
 		Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil)
 		Sewa$_[key].user = User.get(Sewa$_[key].id_user)
 		if (Sewa$_[key].id_supir) {
-			Sewa$_[key].supir = Mobil.get(Sewa$_[key].id_supir)
+			Sewa$_[key].supir = Supir.get(Sewa$_[key].id_supir)
 		}
 	}
 	return Sewa$_.filter((sewa: Sewa) => {

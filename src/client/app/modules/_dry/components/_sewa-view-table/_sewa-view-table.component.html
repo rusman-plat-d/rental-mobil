@@ -1,6 +1,6 @@
 <div class="pp2-dry-sewaViewTable">
 	<pp2-dry-container #C_Pp2_Dry_Container>
-		<div class='container pp2-content margin-auto'>
+		<div class='pp2-content margin-auto'>
 			<mat-card>
 				<mat-card-content>
 					<mat-toolbar color='primary'>
@@ -20,12 +20,32 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.data.user.image" style='max-width: 400px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
 											<td>Nama Penyewa</td>
 											<td>{{ row.data.user.nama }}</td>
+										</tr>
+										<tr>
+											<td>Nomor Seluler</td>
+											<td>{{ row.data.user.noHP }}</td>
+										</tr>
+										<tr>
+											<td>Alamat Penyewa</td>
+											<td>{{ row.data.user.alamat }}</td>
+										</tr>
+										<tr>
+											<td>Nama Mobil</td>
+											<td>{{ row.data.mobil.nama }}</td>
+										</tr>
+										<tr>
+											<td>Nama Supir</td>
+											<td>{{ row.data?.supir ? row.data.supir.nama : '---' }}</td>
+										</tr>
+										<tr>
+											<td>Periode Penyewaan</td>
+											<td>{{ hapusBR(periode(row.data)) }}</td>
 										</tr>
 									</table>
 								</ng-container>
@@ -57,17 +77,17 @@
 						<!-- Column Definition: s_nama -->
 						<ng-container matColumnDef="s_nama">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Supir </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.supir.nama}} </mat-cell>
+							<mat-cell *matCellDef="let row;"> {{row.supir?.nama ? row.supir?.nama : '---'}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: _s_hari -->
 						<ng-container matColumnDef="_s_hari">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Sewa hari </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{row.totalSewaHari}} </mat-cell>
+							<mat-cell *matCellDef="let row;" [innerHTML]='periode(row)'></mat-cell>
 						</ng-container>
 						<!-- Column Definition: _s_hargaTotal -->
 						<ng-container matColumnDef="_s_hargaTotal">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Harga Sewa Total </mat-header-cell>
-							<mat-cell *matCellDef="let row;"> {{ (row.totalSewaHari * row.mobil.hargaSewa)}} </mat-cell>
+							<mat-cell *matCellDef="let row;"> {{ ((row.totalSewaHari * row.mobil.hargaSewa) + (row?.supir ? row.totalSewaHari * row.supir.hargaSewa :0)) | currency:'IDR' }} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: action -->
 						<ng-container matColumnDef="action">

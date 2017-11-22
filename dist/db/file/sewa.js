@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/filter");
 var Mobil = require("./mobil");
+var Supir = require("./supir");
 var User = require("./user");
 var writeFile = require('fs').writeFile;
 var join = require('path').join;
@@ -28,7 +29,7 @@ function gets() {
         Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil);
         Sewa$_[key].user = User.get(Sewa$_[key].id_user);
         if (Sewa$_[key].id_supir) {
-            Sewa$_[key].supir = Mobil.get(Sewa$_[key].id_supir);
+            Sewa$_[key].supir = Supir.get(Sewa$_[key].id_supir);
         }
     }
     return Sewa$_.filter(function (sewa) {

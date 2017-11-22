@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
@@ -35,29 +36,37 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	@ViewChild('filter') filter: ElementRef;
 	@ViewChild(_ContainerComponent) C_Pp2_Dry_Container: _ContainerComponent;
 
+	changeReferences = false;
 	dataSource: SewaTableDataSource | null;
 	dataSourceWithDetails: SewaTableDetailDataSource | null;
 	// displayedColumns: SewaProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	// displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', 's_nama', '_s_hari', '_s_hargaTotal', 'action'];
-	displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', '_s_hari', '_s_hargaTotal', 'action'];
-	changeReferences = false;
-	wasExpanded = new Set<Sewa>();
-
+	// displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', '_s_hari', '_s_hargaTotal', 'action'];
+	displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', 's_nama', '_s_hari', '_s_hargaTotal', 'action'];
 	dynamicColumnDefs: any[] = [];
 	dynamicColumnIds: string[] = [];
 	expandedSewa: Sewa;
-
 	isDetailRow = (row: DetailRow|Sewa) => row.hasOwnProperty('detailRow');
+	wasExpanded = new Set<Sewa>();
 	_database: DatabaseService = new DatabaseService(this.$_pp2Conf);
+	level = this.$_ngActivatedRoute.data['value']['type'];
+	user;
 	constructor(
 		public $_ngRouter: Router,
+		public $_ngActivatedRoute: ActivatedRoute,
 		public $_pp2Conf: ConfigService
 	) {
 		this._database.init<Sewa>('sewa','/db/sewa');
+		setTimeout(()=>{
+			console.log(this._database.data)
+		},4000)
+		try{
+			this.user = JSON.parse(localStorage['ggPengguna'])
+		}catch(e){}
 	}
 	ngAfterViewInit(){}
 	ngOnDestroy(){}
 	ngOnInit() {
+		console.log(this.level)
 		this.dataSource = new SewaTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
@@ -68,6 +77,7 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		this.dataSourceWithDetails = new SewaTableDetailDataSource(this.dataSource);
 	}
 	rowClick(row) {
+		// alert(JSON.stringify(this.$_ngActivatedRoute.data['value']['type']))
 		if (this.expandedSewa == row) {
 			this.expandedSewa = null;
 		} else {
@@ -78,5 +88,14 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	remove(id) {
 		alert('delete');
 		this._database.$Socket.emit('remove', id)
+	}
+	periode(row: Sewa): string{
+		const mulai = new Date(row.tglMulai)
+		const selesai = new Date(row.tglSelesai)
+		const hasil = mulai.getDate() + '/' + mulai.getMonth() + '/' + mulai.getFullYear() + '<br> s/d <br>' + selesai.getDate() + '/' + selesai.getMonth() + '/' + selesai.getFullYear()
+		return hasil + '<br> (' + row.totalSewaHari + ' Hari)';
+	}
+	hapusBR(str): string{
+		return str.replace('<br>', '').replace('<br>', '').replace('<br>', '')
 	}
 }

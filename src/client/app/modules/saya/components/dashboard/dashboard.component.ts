@@ -9,7 +9,9 @@ import { _ContainerComponent } from '../../../_dry/index';
 	selector: 'pp2-saya-dashboard',
 	template: `
 		<pp2-saya-nav #C_Pp2_Saya__Nav></pp2-saya-nav>
-		<pp2-dry-container #C_Pp2_Dry_Container></pp2-dry-container>
+		<pp2-dry-container #C_Pp2_Dry_Container>
+			<pp2-dry-sewaViewTable></pp2-dry-sewaViewTable>
+		</pp2-dry-container>
 	`
 })
 export class DashboardComponent implements AfterViewInit, OnInit {

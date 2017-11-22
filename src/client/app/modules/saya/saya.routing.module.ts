@@ -17,7 +17,7 @@ export const SayaComponents: any[] = [
 
 const routes: Routes = [
 	{ path: 'saya', canActivateChild: [SayaChildrenGuard], children:[
-		{ path: '', component: DashboardComponent },
+		{ path: '', component: DashboardComponent, data:{type:'pengguna'} },
 		{ path: 'sewa', children: [
 			{ path: '', component: SewaFormComponent },
 			{ path: ':id', component: SewaFormComponent },
