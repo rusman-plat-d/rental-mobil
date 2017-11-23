@@ -33,7 +33,7 @@ const baseUrl = `http://localhost:${port}`;
 
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
-app.use('/', express.static(join(__dirname, 'public'), { index: false }));
+app.use('/', express.static(join(__dirname, 'public')));
 app.get('/api', (req, res) => {
 	res.json({ data: 'Content from HTTP request.' });
 });

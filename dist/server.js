@@ -10,7 +10,7 @@ var port = process.env.PORT || 4136;
 var baseUrl = "http://localhost:" + port;
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
-app.use('/', express.static(join(__dirname, 'public'), { index: false }));
+app.use('/', express.static(join(__dirname, 'public')));
 app.get('/api', function (req, res) {
     res.json({ data: 'Content from HTTP request.' });
 });
