@@ -5,7 +5,7 @@
 	},
 	"apps": [
 		{
-			"root": "src/client",
+			"root": "client",
 			"outDir": "dist/public",
 			"assets": [
 				"assets",
@@ -33,8 +33,8 @@
 				"styles.scss"
 			],
 			"scripts": [
-				"../../node_modules/socket.io-client/dist/socket.io.js",
-				"../../node_modules/socketio-file-upload/client.min.js",
+				"../node_modules/socket.io-client/dist/socket.io.js",
+				"../node_modules/socketio-file-upload/client.min.js",
 				"assets/js/jquery-3.2.1.min.js",
 				"assets/materialize/materialize.min.js"
 			],
@@ -47,8 +47,8 @@
 		{
 			"name": "server",
 			"platform": "server",
-			"root": "src/client",
-			"outDir": "src/server",
+			"root": "client",
+			"outDir": "server",
 			"main": "main.server.ts",
 			"tsconfig": "tsconfig.server.json",
 			"prefix": "pp2",

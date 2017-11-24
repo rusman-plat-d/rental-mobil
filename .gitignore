@@ -8,11 +8,7 @@ dist/node_modules
 
 # dependencies
 /node_modules
-/node_modules4
-/node_modules5
-/node_modules500
-/node_modules55
-/node_modules502
+client/environtments/firebase.ts
 
 # IDEs and editors
 /.idea
