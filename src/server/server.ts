@@ -9,6 +9,7 @@ import 'reflect-metadata';
 import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import { IndexRouter } from './routes/index';
 
 const { Server } = require('http');
@@ -22,11 +23,14 @@ const app = express();
 
 app.use((req, res, next) => {
 	res.set({
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE'
+		'Access-Control-Allow-Headers': '*',
+		'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE',
+		'Access-Control-Allow-Origin': '*'
 	})
 	next()
 })
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 app.use('/', IndexRouter);
 
 const PORT = process.env.PORT || 4136;
@@ -55,7 +59,7 @@ app.get('*.*', express.static(join(__dirname, 'public')));
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
 	// res.sendFile(join(__dirname, 'public', 'index.html'))
-	res.render('index', { req });
+	res.render('index', { req, res });
 });
 
 // // Start up the Node server

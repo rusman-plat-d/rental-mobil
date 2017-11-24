@@ -16,9 +16,12 @@ SewaRouter
 	// })
 	.post('/post', (req, res) => {
 		console.log('POST: /api/db/file/sewa/post')
-		const sewa: Sewa.Sewa = req.body.data;
-		Sewa.add(sewa);
-		res.json({success: true})
+		console.log(req.body)
+		const sewa: Sewa.Sewa = JSON.parse(req.body.data);
+		res.json({
+			data: Sewa.add(sewa),
+			success: true
+		})
 	})
 	.get('/get/:id', (req, res) => {
 		const id = req.params.id;
@@ -31,15 +34,19 @@ SewaRouter
 	})
 	.put('/put', (req, res) => {
 		console.log('PUT: /api/db/file/sewa/put')
-		const sewa: Sewa.Sewa = req.body.data;
-		Sewa.update(sewa)
-		res.json({success: true})
+		const sewa: Sewa.Sewa = JSON.parse(req.body.data);
+		res.json({
+			data: Sewa.update(sewa),
+			success: true
+		})
 	})
 	.delete('/delete/:id', (req, res) => {
 		const id = req.params.id;
 		console.log('DELETE: /api/db/file/sewa/delete/'+id)
-		Sewa.remove(id)
-		res.json({success: true})
+		res.json({
+			data: Sewa.remove(id),
+			success: true
+		})
 	})
 
 export { SewaRouter }

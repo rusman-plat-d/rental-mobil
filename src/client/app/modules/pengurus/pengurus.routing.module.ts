@@ -41,15 +41,6 @@ const routes: Routes = [
 			] },
 			{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/mobil/lihat' }
 		] },
-		{ path: 'supir', component: SupirComponent, children:[
-			{ path: 'tambah', component: _SupirFormComponent, data: {type: 'tambah'} },
-			{ path: 'lihat', component: _SupirViewTableComponent },
-			{ path: 'ubah', children: [
-				{ path: '', component: _UbahComponent, data: {type: 'ubah', jenis: 'supir'} },
-				{ path: ':id', component: _UbahComponent, data: {type: 'ubah', jenis: 'supir'} }
-			]  },
-			{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/pengurus/supir/lihat' }
-		] },
 		{ path: 'penyewaan', component: PenyewaanComponent, data: { type: 'pengurus' } },
 		{ path: 'pengembalian/?:id', component: _PengembalianFormComponent },
 		{ path: 'pengguna', component: PenggunaComponent, children: [
@@ -61,7 +52,16 @@ const routes: Routes = [
 			]  },
 			{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/pengguna/lihat' }
 		] },
-		{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/supir/lihat' }
+		{ path: 'supir', component: SupirComponent, children:[
+			{ path: 'tambah', component: _SupirFormComponent, data: {type: 'tambah'} },
+			{ path: 'lihat', component: _SupirViewTableComponent },
+			{ path: 'ubah', children: [
+				{ path: '', component: _UbahComponent, data: {type: 'ubah', jenis: 'supir'} },
+				{ path: ':id', component: _UbahComponent, data: {type: 'ubah', jenis: 'supir'} }
+			]  },
+			{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/pengurus/supir/lihat' }
+		] },
+		{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/penyewaan' }
 	] }
 ];
 

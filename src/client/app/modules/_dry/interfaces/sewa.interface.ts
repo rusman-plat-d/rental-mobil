@@ -5,8 +5,8 @@ import { Pengguna } from './pengguna.interface';
 export interface Sewa {
 	denda?: number;
 	id?: string;
-	id_user?: string;
 	id_mobil?: string;
+	id_pengguna?: string;
 	id_supir?: string;
 	kondisi?: string;
 	mobil?: Mobil;

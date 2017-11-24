@@ -4,6 +4,7 @@ require("zone.js/dist/zone-node");
 require("reflect-metadata");
 var core_1 = require("@angular/core");
 var express = require("express");
+var bodyParser = require("body-parser");
 var index_1 = require("./routes/index");
 var Server = require('http').Server;
 var join = require('path').join;
@@ -11,14 +12,16 @@ core_1.enableProdMode();
 var app = express();
 app.use(function (req, res, next) {
     res.set({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE'
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': 'POST,GET,PUT,DELETE',
+        'Access-Control-Allow-Origin': '*'
     });
     next();
 });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use('/', index_1.IndexRouter);
 var PORT = process.env.PORT || 4136;
-var PORT = 443;
 var _a = require('./main.bundle'), Pp2ServerModuleNgFactory = _a.Pp2ServerModuleNgFactory, Pp2ServerModule = _a.Pp2ServerModule, LAZY_MODULE_MAP = _a.LAZY_MODULE_MAP;
 var express_engine_1 = require("@nguniversal/express-engine");
 var module_map_ngfactory_loader_1 = require("@nguniversal/module-map-ngfactory-loader");
@@ -32,7 +35,7 @@ app.set('view engine', 'html');
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
 app.get('*', function (req, res) {
-    res.render('index', { req: req });
+    res.render('index', { req: req, res: res });
 });
 var server = Server(app);
 server.listen(PORT, function (err) {

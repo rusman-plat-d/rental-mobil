@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { AfterViewInit, Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DateAdapter, MatCheckbox, MatDatepicker, MatSnackBar, NativeDateAdapter } from '@angular/material';
@@ -35,6 +35,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	@ViewChild('mulai') __mulai: MatDatepicker<Date>;
 	@ViewChild('selesai') __selesai: MatDatepicker<Date>;
 
+	private headers = new HttpHeaders({'Content-Type': 'application/json'});
 	private tgl_mulai_val;
 
 	idMobil: string;
@@ -93,7 +94,7 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 		}
 		try {
 			this.Saya = JSON.parse(localStorage.ggPengguna);
-			this._sewa.id_user = this.Saya.id;
+			this._sewa.id_pengguna = this.Saya.id;
 		} catch (e) {
 			this.$_matSnackBar.open('Masuk Terlebih Dahulu');
 			setTimeout(() => {
@@ -178,16 +179,19 @@ export class _SewaFormComponent implements AfterViewInit, OnInit {
 	}
 	pp2SewaSubmit() {
 		this._sewa = {
-			id_user: this.Saya.id,
 			id_mobil: this.Mobil.id,
+			id_pengguna: this.Saya.id,
 			tglMulai: this.tgl_mulai,
 			tglSelesai: this.tgl_selesai,
 			totalSewaHari: this.total_hari_sewa
 		};
 		if (this._butuhSupir.checked) { this._sewa.id_supir = this.Supir.id }
-		const data = new FormData();
-		data.append('data', JSON.stringify(this._sewa));
-		this.$_ngHttpClient.post(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/post', data)
+		this.$_ngHttpClient.post(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/post', {data: JSON.stringify(this._sewa)}, {headers: this.headers})
+			.subscribe(
+				(a)=>{console.log(a)},
+				(a)=>{console.log(a)},
+				()=>{console.log()}
+			)
 		this.$_matSnackBar.open('Berhasil Menyewa Mobil')
 		this.$_ngRouter.navigate(['saya'])
 		setTimeout(() => {

@@ -11,9 +11,9 @@ import { ConfigService } from '../services/config.service';
 @Injectable()
 export class DatabaseService {
 	dataChange: any;
-	get data() { return this.dataChange.value; }
+	get data() { return this.prop == '' ? this.dataChange.value : this.data_ }
 	get data_() {
-		return this.data.filter((data) => {
+		return this.dataChange.value.filter((data) => {
 			return data[this.prop] == this.val
 		})
 	};
@@ -41,7 +41,7 @@ export class DatabaseService {
 		this.getData<T>()
 		setInterval(() => {
 			this.getData<T>()
-		}, isDevMode() ? 8000 : 60000)
+		}, 6000)
 	}
 	add<T>(data: T): T[] {
 		const copiedData = this.data.slice();

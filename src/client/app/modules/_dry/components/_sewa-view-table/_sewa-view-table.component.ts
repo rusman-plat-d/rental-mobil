@@ -45,7 +45,7 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	wasExpanded = new Set<Sewa>();
 	_database: DatabaseService = new DatabaseService(this.$_ngHttpClient, this.$_pp2Conf);
 	level = this.$_ngActivatedRoute.data['value']['type'];
-	user;
+	pengguna;
 	constructor(
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
@@ -53,10 +53,10 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		public $_pp2Conf: ConfigService
 	) {
 		try {
-			this.user = JSON.parse(localStorage['ggPengguna'])
+			this.pengguna = JSON.parse(localStorage['ggPengguna'])
 		} catch (e) { }
 		if (this.level == 'pengguna') {
-			this._database.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa', 'id_user', this.user.id)
+			this._database.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa', 'id_pengguna', this.pengguna.id)
 		} else {
 			this._database.init<Sewa>(this.$_pp2Conf.baseUrl + '/api/db/file/sewa/gets', 'sewa')
 		}
@@ -65,6 +65,9 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	ngOnDestroy() {}
 	ngOnInit() {
 		this.dataSource = new SewaTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
+		setTimeout(()=>{
+			console.log(this._database.data)
+		}, 6000)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {

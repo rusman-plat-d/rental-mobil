@@ -24,7 +24,7 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 
 export class _MobilViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	get data(): Mobil[] { return this._database.dataChange.value; }
+	get data(): Mobil[] { return this._database.data }
 	get cols(): number {
 		if (this.$_pp2MQ.screen.gtOE.l)
 			return 3;
