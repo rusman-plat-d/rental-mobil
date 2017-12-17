@@ -2,54 +2,80 @@ declare var __dirname: any,
 			require: any,
 			process: any;
 
-// import 'zone.js/dist/zone-node';
-// import 'reflect-metadata';
+// These are important and needed before anything else
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
+
+import { enableProdMode } from '@angular/core';
+
 import * as express from 'express';
 import * as io from 'socket.io';
 const { createServer } = require('http');
 const { join } = require('path');
 
-// import { platformServer, renderModuleFactory } from '@angular/platform-server';
-// import { ngExpressEngine } from '@nguniversal/express-engine';
-// Import module map for lazy loading
-// import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+// Faster server renders w/ Prod mode (dev mode never needed)
+enableProdMode();
 
-// Import the AOT compiled factory for your AppServerModule.
-// const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./main.bundle`);
-
+// Express server
 const app = express();
-const port = process.env.PORT || 4136;
-const baseUrl = `http://localhost:${port}`;
 
-// Set the engine
-// app.engine('html', ngExpressEngine({
-// 	bootstrap: Pp2ServerModuleNgFactory,
-// 	providers: [
-// 		provideModuleMap(LAZY_MODULE_MAP)
-// 	]
-// }));
+const PORT = process.env.PORT || 4000;
 
-// app.set('view engine', 'html');
+// * NOTE :: leave this as require() since this file is built Dynamically from webpack
+const { Pp2ServerModuleNgFactory, Pp2ServerModule, LAZY_MODULE_MAP } = require('./main.bundle');
 
+// Express Engine
+import { ngExpressEngine } from '@nguniversal/express-engine';
+// import module map for lazy loading
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+
+app.engine('html', ngExpressEngine({
+  bootstrap: Pp2ServerModule,
+  providers: [
+    provideModuleMap(LAZY_MODULE_MAP)
+  ]
+}));
+
+app.set('view engine', 'html');
 app.set('views', join(__dirname, 'public'));
-app.get('*.*', express.static(join(__dirname, 'public')));
-app.use('/', express.static(join(__dirname, 'public')));
-app.get('/api', (req, res) => {
-	res.json({ data: 'Content from HTTP request.' });
+
+// TODO: implement data requests securely
+app.get('/api/*', (req, res) => {
+  res.status(404).send('data requests are not supported');
 });
 
-// app.get('*', (req, res) => {
-// 	res.render('index', {
-// 		req,
-// 		res,
-// 		providers: [{
-// 			provide: 'serverUrl',
-// 			useValue: `${req.protocol}://${req.get('host')}`
-// 		}]
-// 	});
+// Server static files from /browser
+app.get('*.*', express.static(join(__dirname, 'public')));
+
+// All regular routes use the Universal engine
+app.get('*', (req, res) => {
+	// res.sendFile(join(__dirname, 'public', 'index.html'))
+  res.render(join(__dirname, 'public', 'index.html'), { req });
+});
+
+// // Start up the Node server
+// app.listen(PORT, () => {
+//   console.log(`Node server listening on http://localhost:${PORT}`);
 // });
 
 const server = createServer(app);
+
+// ---------------------------------------------
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+	var err = new Error('Not Found');
+	err['status'] = 404;
+	next(err);
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+	// render the error page
+	res.status(err.status || 500);
+	res.set('Content-Type', 'text/html');
+	res.sendFile(join(__dirname, 'public', 'index.html'))
+});
+// ---------------------------------------------
 
 const SocketIOFileUpload = require('socketio-file-upload');
 app.use(SocketIOFileUpload.router)
@@ -58,7 +84,7 @@ const $Socket = io(server);
 
 require('./socket.io/core')($Socket)
 
-server.listen(port, () => {
-	console.log(`Listening at ${baseUrl}`);
+server.listen(4136, () => {
+	console.log(`Listening at http://localhost:4136`);
 	// console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
 });

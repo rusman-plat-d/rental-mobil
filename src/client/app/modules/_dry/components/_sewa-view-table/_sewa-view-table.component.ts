@@ -22,6 +22,8 @@ import { DatabaseService } from '../../services/database.service';
 
 // export type SewaProperties = 'id' | 'nama' | 'noKTP' | 'noHP' | 'jk' | 'email' | 'alamat' | 'image' | 'createdAt' | 'updatedAt' | 'action' | undefined;
 
+declare var $: any;
+
 @Component({
 	selector: 'pp2-dry-sewaViewTable',
 	templateUrl: './_sewa-view-table.component.html',
@@ -40,12 +42,11 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 	dataSource: SewaTableDataSource | null;
 	dataSourceWithDetails: SewaTableDetailDataSource | null;
 	// displayedColumns: SewaProperties[] = ['id', 'nama', 'noKTP', 'noHP', 'jk', 'email', 'alamat', 'image', 'createdAt', 'updatedAt', 'action'];
-	// displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', '_s_hari', '_s_hargaTotal', 'action'];
-	displayedColumns: string[] = ['u_image', 'u_nama', 'm_nama', 's_nama', '_s_hari', '_s_hargaTotal', 'action'];
+	displayedColumns: string[] = ['u_nama', 'm_nama', 's_nama', '_s_hari', '_s_hargaTotal', 'action'];
 	dynamicColumnDefs: any[] = [];
 	dynamicColumnIds: string[] = [];
 	expandedSewa: Sewa;
-	isDetailRow = (row: DetailRow|Sewa) => row.hasOwnProperty('detailRow');
+	isDetailRow = (row: DetailRow | Sewa) => row.hasOwnProperty('detailRow');
 	wasExpanded = new Set<Sewa>();
 	_database: DatabaseService = new DatabaseService(this.$_pp2Conf);
 	level = this.$_ngActivatedRoute.data['value']['type'];
@@ -55,22 +56,23 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		public $_ngActivatedRoute: ActivatedRoute,
 		public $_pp2Conf: ConfigService
 	) {
-		setTimeout(()=>{
-			console.log(this._database.data)
-		},4000)
-		try{
+		setTimeout(() => {
+			$(document).ready(function () {
+				$('.materialboxed').materialbox();
+			});
+		}, 4000)
+		try {
 			this.user = JSON.parse(localStorage['ggPengguna'])
-		}catch(e){}
+		} catch (e) { }
 		if (this.level == 'pengguna') {
 			this._database.init<Sewa>('sewa', '/db/sewa', 'id_user', this.user.id)
-		}else{
+		} else {
 			this._database.init<Sewa>('sewa', '/db/sewa')
 		}
 	}
-	ngAfterViewInit(){}
-	ngOnDestroy(){}
+	ngAfterViewInit() { }
+	ngOnDestroy() { }
 	ngOnInit() {
-		console.log(this.level)
 		this.dataSource = new SewaTableDataSource(this._database, this.C_Mat_Paginator, this.C_Mat_Sort)
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
@@ -93,16 +95,16 @@ export class _SewaViewTableComponent implements AfterViewInit, OnDestroy, OnInit
 		alert('delete');
 		this._database.$Socket.emit('remove', id)
 	}
-	periode(row: Sewa): string{
+	periode(row: Sewa): string {
 		const mulai = new Date(row.tglMulai)
 		const selesai = new Date(row.tglSelesai)
 		const hasil = mulai.getDate() + '/' + mulai.getMonth() + '/' + mulai.getFullYear() + ' s/d <br>' + selesai.getDate() + '/' + selesai.getMonth() + '/' + selesai.getFullYear()
 		return hasil + ' (' + row.totalSewaHari + ' Hari)';
 	}
-	hapusBR(str): string{
+	hapusBR(str): string {
 		return str.replace('<br>', '').replace('<br>', '').replace('<br>', '')
 	}
 	id(row: Sewa): string {
-		return `("m":"${row.id_mobil}"${row.id_supir?',"s":"'+row.id_supir+'"':''},"tm":"${row.tglMulai}","ts":"${row.tglSelesai}")`;
+		return `("m":"${row.id_mobil}"${row.id_supir ? ',"s":"' + row.id_supir + '"' : ''},"tm":"${row.tglMulai}","ts":"${row.tglSelesai}")`;
 	}
 }

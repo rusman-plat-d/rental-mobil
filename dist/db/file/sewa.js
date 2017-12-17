@@ -66,8 +66,13 @@ function update(sewa) {
 exports.update = update;
 function remove(id) {
     console.log('[db]Sewa: remove');
-    Sewa$ = Sewa$.filter(function (Sewa) {
-        return id !== Sewa.id;
+    var sewa = get(id);
+    Mobil.update(Object.assign(Mobil.get(sewa.id_mobil), { _status: 'Tersedia' }));
+    if (sewa.id_supir) {
+        Supir.update(Object.assign(Supir.get(sewa.id_supir), { _status: 'Tersedia' }));
+    }
+    Sewa$ = Sewa$.filter(function (sewa) {
+        return id !== sewa.id;
     });
     save();
 }

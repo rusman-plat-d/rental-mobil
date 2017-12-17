@@ -3,7 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Pp2MediaQueryScreenConst } from '../consts/Pp2MediaQueryScreen.const';
 import { Pp2MediaQueryScreen } from '../interfaces/Pp2-media-query.interface';
 
-declare var window: Window;
+declare var module: any, require: any;
 
 @Injectable()
 export class Pp2MediaQueryService {

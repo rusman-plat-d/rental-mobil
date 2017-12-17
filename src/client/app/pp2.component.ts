@@ -2,9 +2,6 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 
 import { DatabaseService, ConfigService, Pp2Service } from './modules/_dry/index';
 
-declare var window: Window,
-			require: any;
-
 @Component({
 	selector: 'pp2-root',
 	template: '<router-outlet></router-outlet>',

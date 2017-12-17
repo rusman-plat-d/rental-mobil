@@ -20,6 +20,10 @@ import { DatabaseService } from '../../services/database.service';
 import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 import { Pp2Service } from '../../services/pp2.service';
 
+// import * as io from '../../libs/socket.io-client/socket.io';
+// import * as io from 'socket.io-client/dist/socket.io';
+// import * as io from 'socket.io/node_modules/socket.io-client/dist/socket.io';
+
 declare var io: any;
 
 @Component({

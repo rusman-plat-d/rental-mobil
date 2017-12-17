@@ -12,6 +12,10 @@ import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.ser
 import { User } from '../../interfaces/user.interface';
 import { Server } from '../../../_dry/interfaces/socket.interface';
 
+// import * as io from '../../libs/socket.io-client/socket.io';
+// import * as io from 'socket.io-client/dist/socket.io';
+// import * as io from 'socket.io/node_modules/socket.io-client/dist/socket.io';
+
 declare var io: any;
 
 @Component({
@@ -52,6 +56,7 @@ export class _UserFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_pp2Conf: ConfigService,
 		private $_matSnackBar: MatSnackBar
 	) {
+		console.log(io)
 		this.$Socket = io($_pp2Conf.socket+'/db/user');
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Daftar Akun Baru' : 'Ubah Data Akun';

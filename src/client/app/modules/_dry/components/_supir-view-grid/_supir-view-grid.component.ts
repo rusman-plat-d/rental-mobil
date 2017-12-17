@@ -17,7 +17,14 @@ declare var io: SocketIOStatic;
 @Component({
 	selector: 'pp2-dry-supirViewGrid',
 	templateUrl: '_supir-view-grid.component.html',
-	styles: [``]
+	styles: [`
+		.mat-grid-tile{
+			padding: 28px 0 !important;
+		}
+		.mat-grid-tile-content{
+			padding: 56px 4px !important;
+		}
+	`]
 })
 export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();

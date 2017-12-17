@@ -33,8 +33,10 @@
 				"styles.scss"
 			],
 			"scripts": [
-				"../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js",
-				"../../node_modules/socketio-file-upload/client.min.js"
+				"../../node_modules/socket.io-client/dist/socket.io.js",
+				"../../node_modules/socketio-file-upload/client.min.js",
+				"assets/js/jquery-3.2.1.min.js",
+				"assets/materialize/materialize.min.js"
 			],
 			"environmentSource": "environments/environment.ts",
 			"environments": {
@@ -86,7 +88,7 @@
 		"build": {
 			"deleteOutputPath": false,
 			"commonChunk": false,
-			"outputHashing":"none"
+			"outputHashing": "none"
 		}
 	}
 }

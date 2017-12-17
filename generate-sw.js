@@ -3,27 +3,29 @@ const SRC_DIR = 'src/client';
 const BUILD_DIR = 'dist/public';
 const SW = 'sw.js';
 const globPatterns = [
-  '**/*',
-  '**/**',
-  'uploads/*',
-  'uploads/**',
-  'assets/*',
-  'assets/**'
+	'**/*',
+	'**/**',
+	'uploads',
+	'uploads/*',
+	'uploads/**',
+	'assets',
+	'assets/*',
+	'assets/**'
 ];
 
 const globIgnores = [
-  'sw.js'
+	'sw.js'
 ];
 
 const input = {
-  swSrc: `${SRC_DIR}/${SW}`,
-  swDest: `${BUILD_DIR}/${SW}`,
-  globDirectory: BUILD_DIR,
-  globPatterns: globPatterns,
-  globIgnores: globIgnores,
-  maximumFileSizeToCacheInBytes: 400000000000
+	swSrc: `${SRC_DIR}/${SW}`,
+	swDest: `${BUILD_DIR}/${SW}`,
+	globDirectory: BUILD_DIR,
+	globPatterns: globPatterns,
+	globIgnores: globIgnores,
+	maximumFileSizeToCacheInBytes: 4000000000000
 };
 
 workboxBuild.injectManifest(input).then(() => {
-  console.log(`The service worker ${BUILD_DIR}/${SW} has been injected with a precache list.`);
+	console.log(`The service worker ${BUILD_DIR}/${SW} has been injected with a precache list.`);
 });

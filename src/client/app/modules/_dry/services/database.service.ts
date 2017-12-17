@@ -11,7 +11,8 @@ import { ConfigService } from '../services/config.service';
 
 import { $Socket } from '../helpers/database.socketio.helper';
 
-declare var io: any;
+// import * as io from '../libs/socket.io-client/socket.io';
+import * as io from 'socket.io-client/dist/socket.io';
 
 @Injectable()
 export class DatabaseService{

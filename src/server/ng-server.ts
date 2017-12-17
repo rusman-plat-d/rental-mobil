@@ -1,18 +1,20 @@
 declare var __dirname: any,
-			require: any,
-			process: any;
+	require: any,
+	process: any;
 
 // These are important and needed before anything else
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-import { renderModuleFactory } from '@angular/platform-server';
 import { enableProdMode } from '@angular/core';
 
-import * as express from 'express';
-const { join } = require('path');
-const { readFileSync } = require('fs');
+import { v4 } from 'uuid';
+import * as csp from 'helmet-csp';
 
+import * as express from 'express';
+import * as io from 'socket.io';
+const { join } = require('path');
+const { createServer } = require('http');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -20,43 +22,74 @@ enableProdMode();
 // Express server
 const app = express();
 
-const PORT = process.env.PORT || 4136;
-const DIST_FOLDER = join(__dirname, 'public');
+app.use((req, res, next) => {
+	res.locals.nonce = v4();
+	next();
+});
+app.use(csp({
+	directives: {
+		scriptSrc: [`'self'`, (req, res) => `'nonce-${res.locals.nonce}'`]
+ 	}
+}));
 
-// Our index.html we'll use as our template
-const template = readFileSync(join(DIST_FOLDER, 'index.html')).toString();
+const PORT = process.env.PORT || 4136;
+const PUBLIC = join(__dirname, 'public');
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { Pp2ServerModuleNgFactory, LAZY_MODULE_MAP } = require('./main.bundle');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./main.bundle');
 
-const { provideModuleMap } = require('@nguniversal/module-map-ngfactory-loader');
+// Express Engine
+import { ngExpressEngine } from '@nguniversal/express-engine';
+// Import module map for lazy loading
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
-app.engine('html', (_, options, callback) => {
-  renderModuleFactory(Pp2ServerModuleNgFactory, {
-    // Our index.html
-    document: template,
-    url: options.req.url,
-    // DI so that we can get lazy-loading to work differently (since we need it to just instantly render it)
-    extraProviders: [
-      provideModuleMap(LAZY_MODULE_MAP)
-    ]
-  }).then(html => {
-    callback(null, html);
-  });
-});
+app.engine('html', ngExpressEngine({
+	bootstrap: AppServerModuleNgFactory,
+	providers: [
+		provideModuleMap(LAZY_MODULE_MAP)
+	]
+}));
 
 app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER));
+app.set('views', join(PUBLIC));
+
+// TODO: implement data requests securely
+app.get('/api/*', (req, res) => {
+	res.status(404).send('data requests are not supported');
+});
 
 // Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER)));
+app.get('*.*', express.static(join(PUBLIC)));
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render(join(DIST_FOLDER, 'index.html'), { req });
+	res.render(join(PUBLIC, 'index.html'), {
+		req,
+		res,
+		providers: [
+			provideModuleMap(LAZY_MODULE_MAP)
+		]
+	},(err, html) => {
+		console.log('err => ', err)
+		console.log('html => ', html)
+		res.send(html)
+	});
 });
 
 // Start up the Node server
 app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
+	console.log(`Node server listening on http://localhost:${PORT}`);
+});
+
+const server = createServer(app);
+const SocketIOFileUpload = require('socketio-file-upload');
+app.use(SocketIOFileUpload.router)
+
+const $Socket = io(server);
+
+require('./socket.io/core')($Socket)
+
+server.listen(PORT, () => {
+	console.log(`Listening at ${PORT}`);
+	// console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
 });

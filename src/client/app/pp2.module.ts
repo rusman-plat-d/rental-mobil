@@ -1,6 +1,11 @@
-import { NgModule } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, APP_ID, Inject, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
+// import { BrowserPrebootModule } from 'preboot/browser';
 
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 
@@ -21,6 +26,9 @@ export const Pp2Guards = [
 @NgModule({
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'pp2' }),
+		// BrowserPrebootModule.replayEvents(),
+		HttpClientModule,
+		HttpModule,
 		// TransferHttpCacheModule,
 		PengurusModule,
 		SayaModule,
@@ -32,9 +40,16 @@ export const Pp2Guards = [
 		NavComponent_,
 		...Pp2Components
 	],
-	providers:[
+	providers: [
 		...Pp2Guards
 	],
 	bootstrap: [Pp2Component]
 })
-export class Pp2Module { }
+export class Pp2Module {
+	constructor(
+		@Inject(PLATFORM_ID) private platformId: Object,
+		@Inject(APP_ID) private appId: string) {
+		const platform = isPlatformBrowser(platformId) ? 'on the browser' : 'in the server';
+		console.log(`Running ${platform} with appId=${appId}`);
+	}
+}

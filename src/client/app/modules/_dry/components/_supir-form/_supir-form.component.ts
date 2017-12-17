@@ -14,6 +14,10 @@ import { Server } from '../../../_dry/interfaces/socket.interface';
 
 import { CONFIG } from '../../../_dry/consts/config.const';
 
+// import * as io from '../../libs/socket.io-client/socket.io';
+// import * as io from 'socket.io-client/dist/socket.io';
+// import * as io from 'socket.io/node_modules/socket.io-client/dist/socket.io';
+
 declare var io: any;
 
 @Component({
@@ -38,6 +42,7 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		public $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
+		console.log(io)
 		this.$Socket = io($_pp2Conf.socket+'/db/supir');
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Tambah Supir' : 'Ubah Data Supir';
