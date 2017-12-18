@@ -22,11 +22,11 @@ app.use(csp({
 }));
 var PORT = process.env.PORT || 4136;
 var PUBLIC = join(__dirname, 'public');
-var _a = require('./main.bundle'), Pp2ServerModuleNgFactory = _a.Pp2ServerModuleNgFactory, LAZY_MODULE_MAP = _a.LAZY_MODULE_MAP;
+var _a = require('./main.bundle'), AppServerModuleNgFactory = _a.AppServerModuleNgFactory, LAZY_MODULE_MAP = _a.LAZY_MODULE_MAP;
 var express_engine_1 = require("@nguniversal/express-engine");
 var module_map_ngfactory_loader_1 = require("@nguniversal/module-map-ngfactory-loader");
 app.engine('html', express_engine_1.ngExpressEngine({
-    bootstrap: Pp2ServerModuleNgFactory,
+    bootstrap: AppServerModuleNgFactory,
     providers: [
         module_map_ngfactory_loader_1.provideModuleMap(LAZY_MODULE_MAP)
     ]
@@ -50,9 +50,9 @@ app.get('*', function (req, res) {
         res.send(html);
     });
 });
-// app.listen(PORT, function () {
-//     console.log("Node server listening on http://localhost:" + PORT);
-// });
+app.listen(PORT, function () {
+    console.log("Node server listening on http://localhost:" + PORT);
+});
 var server = createServer(app);
 var SocketIOFileUpload = require('socketio-file-upload');
 app.use(SocketIOFileUpload.router);

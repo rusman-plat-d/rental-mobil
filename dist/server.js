@@ -5,10 +5,12 @@ require("reflect-metadata");
 var core_1 = require("@angular/core");
 var express = require("express");
 var io = require("socket.io");
+var index_1 = require("./routes/index");
 var createServer = require('http').createServer;
 var join = require('path').join;
 core_1.enableProdMode();
 var app = express();
+app.use('/', index_1.IndexRouter);
 var PORT = process.env.PORT || 4000;
 var _a = require('./main.bundle'), Pp2ServerModuleNgFactory = _a.Pp2ServerModuleNgFactory, Pp2ServerModule = _a.Pp2ServerModule, LAZY_MODULE_MAP = _a.LAZY_MODULE_MAP;
 var express_engine_1 = require("@nguniversal/express-engine");
@@ -35,7 +37,7 @@ app.use(function (req, res, next) {
     next(err);
 });
 app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
+    res.status(200);
     res.set('Content-Type', 'text/html');
     res.sendFile(join(__dirname, 'public', 'index.html'));
 });

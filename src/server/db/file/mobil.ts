@@ -45,7 +45,7 @@ export function get(id: string): Mobil {
 	console.log('[db]Mobil: get');
 	return Mobil$.filter((Mobil: Mobil) => Mobil.id === id)[0];
 }
-export function add(mobil: Mobil): void {
+export function add(mobil: Mobil): Mobil {
 	Mobil$.unshift(Object.assign(mobil, {
 		id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
 		_status: 'Tersedia',
@@ -54,14 +54,13 @@ export function add(mobil: Mobil): void {
 		updatedAt: Date.now()
 	}));
 	save();
+	return mobil;
 }
 export function update(mobil: Mobil): Mobil {
 	console.log('[db]Mobil: update');
 	Object.keys(Mobil$).map((key)=>{
 		if( Mobil$[key].id == mobil.id ){
-			Object.assign(Mobil$[key], Object.assign(mobil, {
-				updatedAt: Date.now()
-			}))
+			Object.assign(Mobil$[key], mobil, { updatedAt: Date.now() });
 		}
 	})
 	save();

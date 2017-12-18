@@ -10,6 +10,8 @@ import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
 import * as io from 'socket.io';
+import { IndexRouter } from './routes/index';
+
 const { createServer } = require('http');
 const { join } = require('path');
 
@@ -18,6 +20,7 @@ enableProdMode();
 
 // Express server
 const app = express();
+app.use('/', IndexRouter);
 
 const PORT = process.env.PORT || 4000;
 
@@ -71,7 +74,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
 	// render the error page
-	res.status(err.status || 500);
+	res.status(200);
 	res.set('Content-Type', 'text/html');
 	res.sendFile(join(__dirname, 'public', 'index.html'))
 });
