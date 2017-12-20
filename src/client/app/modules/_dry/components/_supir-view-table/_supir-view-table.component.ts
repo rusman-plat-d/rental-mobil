@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { animate, transition, trigger, state, style, } from '@angular/animations';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -47,16 +48,16 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	dynamicColumnIds: string[] = [];
 	expandedSupir: Supir;
 
-	isDetailRow = (row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
+	isDetailRow = (_index: number, row: DetailRow|Supir) => row.hasOwnProperty('detailRow');
 	constructor(
-		public $_ngRouter: Router,
+		private $_ngHttpClient: HttpClient,
+		private $_ngRouter: Router,
 		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	) {
-		_database.init<Supir>('supir', '/db/supir');
+		_database.init<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/gets', 'supir');
 	}
-	ngAfterViewInit(){
-	}
+	ngAfterViewInit(){}
 	ngOnDestroy(){}
 	ngOnInit() {
 		this.dataSource = new SupirTableDataSource(this._database, this.C_mat_paginator, this.C_mat_sort)
@@ -76,7 +77,7 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		}
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
-	remove(id) {
-		this._database.$Socket.emit('remove', id)
+	remove(id: string) {
+		this.$_ngHttpClient.delete(this.$_pp2Conf.baseUrl + '/api/db/file/supir/delete/' + id)
 	}
 }

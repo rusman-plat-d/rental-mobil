@@ -1,9 +1,11 @@
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { PLATFORM_ID, APP_ID, Inject, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+
+import { environment } from '../environments/environment';
 
 // import { BrowserPrebootModule } from 'preboot/browser';
 
@@ -32,8 +34,8 @@ export const Pp2Guards = [
 		// TransferHttpCacheModule,
 		PengurusModule,
 		SayaModule,
-		Pp2RoutingModule,
-		// ServiceWorkerModule.register('/ngsw-worker.js')
+		Pp2RoutingModule
+		// ,ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
 	],
 	declarations: [
 		Pp2Component,

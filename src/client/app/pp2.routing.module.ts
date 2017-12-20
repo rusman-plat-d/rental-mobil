@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
 import { DevComponent } from './components/dev/dev.component';
-import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { PenggunaDaftarComponent } from './components/pengguna-daftar/pengguna-daftar.component';
 import { MobilViewGridComponent } from './components/mobil-view-grid/mobil-view-grid.component';
 import { MasukComponent } from './components/masuk/masuk.component';
 import { SupirViewGridComponent } from './components/supir-view-grid/supir-view-grid.component';
@@ -11,7 +11,7 @@ import { SupirViewGridComponent } from './components/supir-view-grid/supir-view-
 export const Pp2Components = [
 	HomeComponent,
 	DevComponent,
-	UserRegisterComponent,
+	PenggunaDaftarComponent,
 	MobilViewGridComponent,
 	MasukComponent,
 	SupirViewGridComponent
@@ -25,7 +25,7 @@ const routes: Routes = [
 		{ path: '**', pathMatch: 'full', redirectTo: '/masuk/pengguna' }
 	] },
 	{ path: 'pendaftaran', children: [
-		{ path: 'pengguna', component: UserRegisterComponent, data: {type: 'tambah'} },
+		{ path: 'pengguna', component: PenggunaDaftarComponent, data: {type: 'tambah'} },
 		{ path: '**', pathMatch: 'full', redirectTo: '/pendaftaran/pengguna' }
 	]},
 	{ path: 'dev', component: DevComponent },

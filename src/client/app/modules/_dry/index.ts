@@ -11,8 +11,8 @@ export * from './components/_sidenav/_sidenav.component';
 export * from './components/_supir-form/_supir-form.component';
 export * from './components/_supir-view-grid/_supir-view-grid.component';
 export * from './components/_supir-view-table/_supir-view-table.component';
-export * from './components/_user-form/_user-form.component';
-export * from './components/_user-view-table/_user-view-table.component';
+export * from './components/_pengguna-form/_pengguna-form.component';
+export * from './components/_pengguna-view-table/_pengguna-view-table.component';
 
 export * from './directives/grid.directive';
 
@@ -20,7 +20,8 @@ export * from './interfaces/mobil.interface';
 export * from './interfaces/Pp2-media-query.interface';
 export * from './interfaces/socket.interface';
 export * from './interfaces/supir.interface';
-export * from './interfaces/user.interface';
+export * from './interfaces/sewa.interface';
+export * from './interfaces/pengguna.interface';
 
 export * from './services/config.service';
 export * from './services/database.service';

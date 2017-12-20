@@ -1,9 +1,15 @@
 import { Router } from 'express';
 import { MobilRouter } from './mobil';
+import { PenggunaRouter } from './pengguna';
+import { SewaRouter } from './sewa';
+import { SupirRouter } from './supir';
 
-const DBFileIndexRouter: Router = Router();
+const FileIndexRouter: Router = Router();
 
-DBFileIndexRouter
+FileIndexRouter
 	.use('/mobil', MobilRouter)
+	.use('/pengguna', PenggunaRouter)
+	.use('/sewa', SewaRouter)
+	.use('/supir', SupirRouter)
 
-export { DBFileIndexRouter }
+export { FileIndexRouter }

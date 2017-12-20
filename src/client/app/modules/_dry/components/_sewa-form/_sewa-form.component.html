@@ -18,7 +18,7 @@
 											<mat-form-field class='full-width'>
 												<mat-select formControlName='mobil' name='mobil' placeholder='Mobil'>
 													<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
-														<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" class='iil'>
+														<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" class='iil'>
 														<span class="owit">{{ mobil.nama }}</span>
 													</mat-option>
 												</mat-select>
@@ -68,7 +68,7 @@
 											<mat-form-field class='full-width'>
 												<mat-select formControlName='supir' name='supir' placeholder='Supir' [required]='butuhSupir.checked'>
 													<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
-														<img [src]="$_pp2Conf.socket + '/uploads/supir/' + supir.image" class='iil'>
+														<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + supir.image" class='iil'>
 														<span class="owit">{{ supir.nama }}</span>
 													</mat-option>
 												</mat-select>
@@ -180,17 +180,17 @@
 												<input disabled matInput name='sewa_totalHari' placeholder='Total Hari Penyewaan' [value]='total_hari_sewa + " Hari"'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex *ngIf='tgl_selesai'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput name='sewa_hargaMobil' placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='sewa_hargaMobil' placeholder='Total Harga Penyewaan Mobil (Rp.)' value='{{ (Mobil?.hargaSewa ? Mobil.hargaSewa : 0) * total_hari_sewa | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
 										<div fxFlex *ngIf='Supir?.hargaSewa'>
 											<mat-form-field class='full-width'>
-												<input disabled matInput name='sewa_hargaSupir' placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : "0") | currency:"IDR" }}'>
+												<input disabled matInput name='sewa_hargaSupir' placeholder='Total Harga Penyewaan Supir (Rp.)' value='{{ (Supir?.hargaSewa ? Supir.hargaSewa : 0) * total_hari_sewa | currency:"IDR" }}'>
 											</mat-form-field>
 										</div>
-										<div fxFlex>
+										<div fxFlex *ngIf='Supir.hargaSewa'>
 											<mat-form-field class='full-width'>
 												<input disabled matInput name='sewa_hargaTotal' placeholder='Total Harga Penyewaan Mobil {{ Supir?.hargaSewa ? " + Supir" : "" }} (Rp.)' value='{{ (Supir?.hargaSewa ? Mobil.hargaSewa + Supir.hargaSewa : Mobil.hargaSewa) * total_hari_sewa | currency:"IDR" }}'>
 											</mat-form-field>

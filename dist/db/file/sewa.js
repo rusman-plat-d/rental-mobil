@@ -4,7 +4,7 @@ require("rxjs/add/operator/map");
 require("rxjs/add/operator/filter");
 var Mobil = require("./mobil");
 var Supir = require("./supir");
-var User = require("./user");
+var Pengguna = require("./pengguna");
 var writeFile = require('fs').writeFile;
 var join = require('path').join;
 var Sewa$;
@@ -27,7 +27,7 @@ function gets() {
     var Sewa$_ = Sewa$;
     for (var key in Sewa$_) {
         Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil);
-        Sewa$_[key].user = User.get(Sewa$_[key].id_user);
+        Sewa$_[key].pengguna = Pengguna.get(Sewa$_[key].id_pengguna);
         if (Sewa$_[key].id_supir) {
             Sewa$_[key].supir = Supir.get(Sewa$_[key].id_supir);
         }
@@ -54,13 +54,11 @@ function add(sewa) {
 exports.add = add;
 function update(sewa) {
     console.log('[db]Sewa: update');
-    Object.keys(Sewa$).map(function (key) {
-        if (Sewa$[key].id == sewa.id) {
-            Object.assign(Sewa$[key], Object.assign(sewa, {
-                updatedAt: Date.now()
-            }));
+    for (var i in Sewa$) {
+        if (Sewa$[i].id == sewa.id) {
+            Object.assign(Sewa$[i], sewa, { updatedAt: Date.now() });
         }
-    });
+    }
     save();
 }
 exports.update = update;

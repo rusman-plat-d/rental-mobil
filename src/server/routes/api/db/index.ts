@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { DBFileIndexRouter } from './file/index';
+import { FileIndexRouter } from './file/index';
 
 const DBIndexRouter: Router = Router();
 
 DBIndexRouter
-	.use('/file', DBFileIndexRouter)
+	.use('/file', FileIndexRouter)
 
 export { DBIndexRouter };

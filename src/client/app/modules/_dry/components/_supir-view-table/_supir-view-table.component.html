@@ -13,7 +13,7 @@
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [style.borderBottomColor]="expandedSupir == row ? 'transparent' : ''" (click)="expandedSupir = row; wasExpanded.add(row)"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSupir ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
@@ -23,7 +23,7 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.socket + '/uploads/supir/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
@@ -107,7 +107,7 @@
 						<ng-container matColumnDef="image">
 							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.socket + '/uploads/supir/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: _status -->

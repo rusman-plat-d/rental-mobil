@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,15 +11,6 @@ import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
 
 import { Supir } from '../../interfaces/supir.interface';
-import { Server } from '../../../_dry/interfaces/socket.interface';
-
-import { CONFIG } from '../../../_dry/consts/config.const';
-
-// import * as io from '../../libs/socket.io-client/socket.io';
-// import * as io from 'socket.io-client/dist/socket.io';
-// import * as io from 'socket.io/node_modules/socket.io-client/dist/socket.io';
-
-declare var io: any;
 
 @Component({
 	selector: "pp2-dry-supirForm",
@@ -32,26 +24,22 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	type: string;
 	label: string;
 	disable: boolean = false;
-	$Socket: Server;
 	supirForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
 	constructor(
-		public $_ngFormBuilder: FormBuilder,
-		public $_Pp2_MQ: Pp2MediaQueryService,
-		public $_ngActivatedRoute: ActivatedRoute,
-		public $_ngRouter: Router,
+		private $_ngFormBuilder: FormBuilder,
+		private $_ngHttpClient: HttpClient,
+		private $_ngActivatedRoute: ActivatedRoute,
+		private $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		console.log(io)
-		this.$Socket = io($_pp2Conf.socket+'/db/supir');
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Tambah Supir' : 'Ubah Data Supir';
 	}
-	ngAfterViewInit(){}
-	ngOnDestroy() {
-		this.$Socket = null;
-	}
+	ngAfterViewInit() { }
+	ngOnDestroy() {}
 	ngOnInit() {
+		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.supirForm = this.$_ngFormBuilder.group({
 			id: [''],
 			nama: [''],
@@ -63,22 +51,23 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			email: [''],
 			image: ['']
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/supir/gg.png';
-		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
-			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Supir: Supir) => {
-				this.supirForm.setValue({
-					id: Supir.id,
-					nama: Supir.nama,
-					noSIM: Supir.noSIM,
-					jk: Supir.jk,
-					noHP: Supir.noHP,
-					hargaSewa: Supir.hargaSewa,
-					alamat: Supir.alamat,
-					email: Supir.email,
-					image: Supir.image
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/supir/placeholder.png';
+		if ( id ) {
+			this.$_ngHttpClient.get<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/get/' + id)
+				.subscribe((supir: Supir) => {
+					this.supirForm.setValue({
+						id: supir.id,
+						nama: supir.nama,
+						noSIM: supir.noSIM,
+						jk: supir.jk,
+						noHP: supir.noHP,
+						hargaSewa: supir.hargaSewa,
+						alamat: supir.alamat,
+						email: supir.email,
+						image: supir.image
+					})
+					this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/supir/' + supir.image;
 				})
-				this.C_Pp2_Dry_FI.img.nativeElement.src = CONFIG.socket + '/uploads/supir/' + Supir.image;
-			})
 		}
 		this.disableForm();
 		this.supirForm.valueChanges.subscribe(() => {
@@ -86,31 +75,25 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		})
 	}
 	disableForm(): void {
-		if ( this.$_ngActivatedRoute.data['value']['type'] === 'ubah' ) {
+		if (this.$_ngActivatedRoute.data['value']['type'] === 'ubah') {
 			this.disable = false || !this.supirForm.valid;
 		}
-		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
-			try{
-				if ( this.C_Pp2_Dry_FI.i_file.files ) {
+		if (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') {
+			try {
+				if (this.C_Pp2_Dry_FI.i_file.files) {
 					this.disable = false || !this.supirForm.valid;
 				}
-			}catch(e){
-				this.disable = true || !this.supirForm.valid;
+			} catch (e) {
+				this.disable = true;
 			}
-		}else{ this.disable = false || !this.supirForm.valid; }
+		} else { this.disable = false || !this.supirForm.valid; }
 	}
 	tooltipMsg(): string {
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';
 	}
-	pp2OnSubmit(e: Event,val): void {
+	pp2OnSubmit(e: Event, val): void {
 		e.preventDefault();
-		try{
-			if ( this.C_Pp2_Dry_FI.i_file['files'] ) {
-				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus','supir','lihat'])
-			}
-		}catch(e){
-			this.$Socket.emit('update', val);
-			this.$_ngRouter.navigate(['pengurus', 'supir', 'lihat'])
-		}
+		const url = this.$_pp2Conf.baseUrl + '/api/db/file/supir/' + (this.$_ngActivatedRoute.data['value']['type'] === 'tambah' ? 'post' : 'put');
+		this.C_Pp2_Dry_FI.save(url, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus', 'supir', 'lihat'])
 	}
 }

@@ -58,11 +58,11 @@ export function add(mobil: Mobil): Mobil {
 }
 export function update(mobil: Mobil): Mobil {
 	console.log('[db]Mobil: update');
-	Object.keys(Mobil$).map((key)=>{
-		if( Mobil$[key].id == mobil.id ){
-			Object.assign(Mobil$[key], mobil, { updatedAt: Date.now() });
+	for(let i in Mobil$){
+		if( Mobil$[i].id == mobil.id ){
+			Object.assign(Mobil$[i], mobil, { updatedAt: Date.now() });
 		}
-	})
+	}
 	save();
 	return mobil;
 }

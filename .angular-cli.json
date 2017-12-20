@@ -45,7 +45,6 @@
 			}
 		},
 		{
-			"index": "index.html",
 			"name": "server",
 			"platform": "server",
 			"root": "src/client",
@@ -61,18 +60,23 @@
 		}
 	],
 	"defaults": {
-		"styleExt": "scss",
-		"component": {
-			"spec": false,
-			"inlineStyle": true,
-			"inlineTemplate": false
-		},
-		"directive": {
-			"spec": false
+		"build": {
+			"deleteOutputPath": false,
+			"commonChunk": false,
+			"outputHashing": "none"
 		},
 		"class": {
 			"spec": false
 		},
+		"component": {
+			"inlineStyle": true,
+			"inlineTemplate": false,
+			"spec": false
+		},
+		"directive": {
+			"spec": false
+		},
+		
 		"guard": {
 			"spec": false
 		},
@@ -85,10 +89,6 @@
 		"service": {
 			"spec": false
 		},
-		"build": {
-			"deleteOutputPath": false,
-			"commonChunk": false,
-			"outputHashing": "none"
-		}
+		"styleExt": "scss"
 	}
 }

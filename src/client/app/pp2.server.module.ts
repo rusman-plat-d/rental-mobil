@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
-import * as io from 'socket.io-client/dist/socket.io';
-
-
 // import { ServerPrebootModule } from 'preboot/server';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';

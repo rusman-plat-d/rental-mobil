@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,18 +10,12 @@ import { SocketIOStatic, Server } from '../interfaces/socket.interface';
 
 import { ConfigService } from '../services/config.service';
 
-import { $Socket } from '../helpers/database.socketio.helper';
-
-// import * as io from '../libs/socket.io-client/socket.io';
-import * as io from 'socket.io-client/dist/socket.io';
-
 @Injectable()
-export class DatabaseService{
-	$Socket: Server;
+export class DatabaseService {
 	dataChange: any;
 	get data() { return this.dataChange.value; }
 	get data_() {
-		return this.data.filter((data)=>{
+		return this.data.filter((data) => {
 			return data[this.prop] == this.val
 		})
 	};
@@ -28,33 +23,31 @@ export class DatabaseService{
 	table: string;
 	val = '';
 	constructor(
-		public $_pp2Conf: ConfigService
-	){}
-	init <T>(table: string, namespace: string = '',prop='', val=''){
+		private $_ngHttpClient: HttpClient,
+		private $_pp2Conf: ConfigService
+	) { }
+	init<T>(url: string, table: string, prop = '', val = '') {
 		this.table = table;
 		this.prop = prop;
 		this.val = val;
 		this.dataChange = new BehaviorSubject<T[]>([]);
-		this.$Socket = io(this.$_pp2Conf.socket + namespace);
-		this.$Socket.emit('gets', (data$: T[]) => {
-			setTimeout(() => {
-				this.dataChange.next(data$)
-				localStorage[table] = JSON.stringify(data$);
-			},10)
-		})
-		$Socket<T>(this);
+		this.$_ngHttpClient.get(url)
+			.subscribe((res: T[]) => {
+				this.dataChange.next(res)
+				localStorage[table] = JSON.stringify(res);
+			})
 	}
-	add <T>(data: T): T[] {
+	add<T>(data: T): T[] {
 		const copiedData = this.data.slice();
 		copiedData.unshift(data);
 		localStorage[this.table] = JSON.stringify(copiedData);
 		this.dataChange.next(copiedData);
 		return this.data;
 	}
-	get <T>(id: string): T{
-		return
+	get<T>(id: string): T {
+		return this.data.filter((data) => data.id === id)
 	}
-	update <T>(data: T): T[] {
+	update<T>(data: T): T[] {
 		const copiedData = this.data.slice();
 		Object.keys(copiedData).map(($key) => {
 			if (data['id'] === copiedData[$key].id) {
@@ -65,7 +58,7 @@ export class DatabaseService{
 		localStorage[this.table] = JSON.stringify(copiedData);
 		return this.data;
 	}
-	remove <T>(id: string) {
+	remove<T>(id: string) {
 		let copiedData = this.data.slice();
 		copiedData = copiedData.filter((data: T) => {
 			return id !== data['id'];

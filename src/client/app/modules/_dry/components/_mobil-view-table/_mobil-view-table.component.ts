@@ -1,10 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, Inject, InjectionToken, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 
 import { _ContainerComponent } from '../_container/_container.component';
 import { _NavComponent } from '../_nav/_nav.component';
@@ -46,13 +48,14 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	dynamicColumnIds: string[] = [];
 	expandedMobil: Mobil;
 
-	isDetailRow = (row: DetailRow|Mobil) => row.hasOwnProperty('detailRow');
+	isDetailRow = (_index: number, row: DetailRow|Mobil) => row.hasOwnProperty('detailRow');
 	constructor(
-		public $_ngRouter: Router,
+		private $_ngHttpClient: HttpClient,
+		private $_ngRouter: Router,
 		public _database: DatabaseService,
 		public $_pp2Conf: ConfigService
 	){
-		_database.init<Mobil>('mobil', '/db/mobil');
+		_database.init<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/gets', 'mobil');
 	}
 	ngAfterViewInit(){}
 	ngOnDestroy(){}
@@ -74,8 +77,15 @@ export class _MobilViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		}
 		this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
-	remove(id) {
-		alert('delete');
-		this._database.$Socket.emit('remove', id);
+	remove(id: string) {
+		this.$_ngHttpClient.delete(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/delete/'+id)
+			.subscribe((res: {success: boolean}) => {
+				console.log('res => ', res)
+				if (res.success) {
+					this._database.dataChange.next(
+						this._database.dataChange.value.filter((mobil: Mobil) => mobil.id !== id)
+					)
+				}
+			})
 	}
 }

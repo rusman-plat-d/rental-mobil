@@ -1,6 +1,6 @@
 import { Mobil } from './mobil.interface';
 import { Supir } from './supir.interface';
-import { User } from './user.interface';
+import { Pengguna } from './pengguna.interface';
 
 export interface Sewa {
 	denda?: number;
@@ -11,7 +11,7 @@ export interface Sewa {
 	kondisi?: string;
 	mobil?: Mobil;
 	supir?: Supir;
-	user?: User;
+	pengguna?: Pengguna;
 	tglMulai?: number;
 	tglSelesai?: number;
 	tglSewaMulai?: number;

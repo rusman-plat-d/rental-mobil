@@ -9,8 +9,8 @@ import { MobilFormComponent } from './components/mobil-form/mobil-form.component
 import { MobilViewTableComponent } from './components/mobil-view-table/mobil-view-table.component';
 import { SewaViewTableComponent } from './components/sewa-view-table/sewa-view-table.component';
 import { PengembalianFormComponent } from './components/pengembalian-form/pengembalian-form.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserViewTableComponent } from './components/user-view-table/user-view-table.component';
+import { PenggunaFormComponent } from './components/pengguna-form/pengguna-form.component';
+import { PenggunaViewTableComponent } from './components/pengguna-view-table/pengguna-view-table.component';
 import { NavComponent_ } from './components/_nav/_nav.component';
 
 import { PengurusChildrenGuard } from './guards/pengurus-children.guard';
@@ -24,8 +24,8 @@ export const PengurusComponents: any[] = [
 	MobilViewTableComponent,
 	PengembalianFormComponent,
 	SewaViewTableComponent,
-	UserFormComponent,
-	UserViewTableComponent,
+	PenggunaFormComponent,
+	PenggunaViewTableComponent,
 	NavComponent_
 ]
 
@@ -47,9 +47,9 @@ const routes: Routes = [
 			{ path: 'penyewaan', component: SewaViewTableComponent, data: { type: 'pengurus' } },
 			{ path: 'pengembalian/:id', component: PengembalianFormComponent },
 			{ path: 'pengguna', children: [
-				{ path: 'tambah', component: UserFormComponent, data: {type: 'tambah'} },
-				{ path: 'lihat', component: UserViewTableComponent },
-				{ path: 'ubah/:id', component: UserFormComponent, data: {type: 'ubah'} },
+				{ path: 'tambah', component: PenggunaFormComponent, data: {type: 'tambah'} },
+				{ path: 'lihat', component: PenggunaViewTableComponent },
+				{ path: 'ubah/:id', component: PenggunaFormComponent, data: {type: 'ubah'} },
 				{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/pengguna/lihat' }
 			] },
 			{ path: '**', pathMatch: 'full', redirectTo: '/pengurus/supir/lihat' }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../../../_dry/index';
+import { Pengguna } from '../../../_dry/index';
 
 @Component({
 	selector: 'pp2-saya-nav',
@@ -10,7 +10,7 @@ import { User } from '../../../_dry/index';
 })
 export class NavComponent_ implements OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	saya: User;
+	saya: Pengguna;
 	constructor(
 		public $_ngRouter: Router
 	){}

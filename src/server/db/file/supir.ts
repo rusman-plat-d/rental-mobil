@@ -59,13 +59,11 @@ export function add(supir: Supir) {
 }
 export function update(supir: Supir): Supir {
 	console.log('[db]Supir: update');
-	Object.keys(Supir$).map((key)=>{
-		if( Supir$[key].id == supir.id ){
-			Object.assign(Supir$[key], Object.assign(supir, {
-				updatedAt: Date.now()
-			}))
+	for(let i in Supir$){
+		if( Supir$[i].id == supir.id ){
+			Object.assign(Supir$[i], supir, { updatedAt: Date.now() })
 		}
-	})
+	}
 	save();
 	return supir;
 }

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("zone.js/dist/zone-node");
 require("reflect-metadata");
 var express = require("express");
-var io = require("socket.io");
 var createServer = require('http').createServer;
 var join = require('path').join;
 var readFileSync = require('fs').readFileSync;
@@ -16,6 +15,7 @@ var app = express();
 var port = process.env.PORT || 4136;
 var baseUrl = "http://localhost:" + port;
 app.engine('html', function (_, options, callback) {
+    console.log('engine ', options.req.url);
     platform_server_1.renderModuleFactory(Pp2ServerModuleNgFactory, {
         document: (readFileSync(join(__dirname, 'public', 'index.html'), 'utf8')),
         url: (options.req.url),
@@ -29,26 +29,14 @@ app.engine('html', function (_, options, callback) {
 app.set('view engine', 'html');
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
-app.use(express.static(join(__dirname, 'public')));
-app.get('*', function (req, res) {
-    res.set('Content-Type', 'text/html');
-    res.sendFile(join(__dirname, 'public', 'index.html'));
-});
-var server = createServer(app);
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err['status'] = 404;
     next(err);
 });
 app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.set('Content-Type', 'text/html');
-    res.sendFile(join(__dirname, 'public', 'index.html'));
+    res.render('index', { req: req, res: res });
 });
-var SocketIOFileUpload = require('socketio-file-upload');
-app.use(SocketIOFileUpload.router);
-var $Socket = io(server);
-require('./socket.io/core')($Socket);
-server.listen(port, function () {
-    console.log("Listening at " + baseUrl);
+app.listen(port, function (err) {
+    console.log(baseUrl);
 });

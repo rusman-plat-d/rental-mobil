@@ -6,8 +6,8 @@
 					<mat-card-title>Mobil</mat-card-title>
 				</mat-card-header>
 				<mat-card-content>
-					<mat-grid-list #C_Mat_GridList [cols]='cols' gutterSize='4px' rowHeight="400px">
-						<mat-grid-tile *ngFor='let mobil of data' class='light-blue'>
+					<mat-grid-list #C_Mat_GridList [cols]='cols' gutterSize='4px' rowHeight="430px">
+						<mat-grid-tile *ngFor='let mobil of data' style='background-color: #26A69A'>
 							<mat-grid-tile-header>
 								<!-- <mat-icon mat-grid-avatar>info_outline</mat-icon> -->
 								<span>
@@ -18,37 +18,22 @@
 									{{ mobil.hargaSewa | currency:'IDR' }}
 								</span>
 							</mat-grid-tile-header>
-							<div class='mat-grid-tile-content' style="padding: 4px;">
-								<table>
-									<colgroup width="100px"></colgroup>
-									<tr>
-										<td colspan="2">
-											<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + mobil.image" style="max-height: 200px; max-width: 200px; justify-self: center;align-self: center">
-										</td>
-									</tr>
-									<tr>
-										<td>Kursi</td>
-										<td>{{ mobil.kursi }}</td>
-									</tr>
-									<tr>
-										<td>Bahan Bakar</td>
-										<td>{{ mobil.bensin }}</td>
-									</tr>
-									<tr>
-										<td>Plat Nomor</td>
-										<td>{{ mobil.platNo }}</td>
-									</tr>
-									<tr>
-										<td>Kondisi</td>
-										<td>{{ mobil.kondisi }}</td>
-									</tr>
-								</table>
+							<div class='mat-grid-tile-content' style="padding: 8px;">
+								<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" style="max-height: 200px; width: 90%; margin-left: 5%">
+								<p class="text-red">
+									<br>
+									Kursi		:	{{ mobil.kursi }}	<br>
+									Bahan Bakar	:	{{ mobil.bensin }}	<br>
+									Plat Nomor	:	{{ mobil.platNo }}	<br>
+									Kondisi		:	{{ mobil.kondisi }}	<br>
+								</p>
 							</div>
 							<mat-grid-tile-footer>
-								<h3 mat-line>{{ mobil.nama }}</h3>
-								<span mat-line>Harga Sewa: {{ mobil.hargaSewa | currency:'IDR' }}</span>
-								<button (click)='pindah(mobil.id)' color='primary' mat-raised-button><a>Sewa</a></button>
-								<!-- <button color='primary' mat-raised-button [routerLink]='["saya","sewa","(\"m\": \""+ mobil.id +"\")"]'><a>Sewa</a></button> -->
+								<!--  -->
+								<!-- <h3 mat-line>{{ mobil.nama }}</h3> -->
+								<h3 mat-line></h3>
+								<!-- <span mat-line>Harga Sewa: {{ mobil.hargaSewa | currency:'IDR' }}</span> -->
+								<a><button (click)='pindah(mobil.id)' color='primary' mat-raised-button style="color: #FFF !important" type="button">Sewa</button></a>
 								<!-- <mat-icon>star_borderstar_borderstar_borderstar_border</mat-icon> -->
 							</mat-grid-tile-footer>
 						</mat-grid-tile>

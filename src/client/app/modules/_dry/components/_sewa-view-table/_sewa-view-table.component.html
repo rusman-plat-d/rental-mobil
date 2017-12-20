@@ -10,7 +10,7 @@
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedSewa == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" [style.borderBottomColor]="expandedSewa == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedSewa ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
@@ -20,20 +20,20 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img class="materialboxed" data-caption='gggg' [src]="$_pp2Conf.socket + '/uploads/user/' + row.data.user.image" style='max-width: 400px;align-self: center; justify-self: center;'>
+												<img class="materialboxed" data-caption='gggg' [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.data.pengguna.image" style='max-width: 400px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
 											<td>Nama Penyewa</td>
-											<td>{{ row.data.user.nama }}</td>
+											<td>{{ row.data.pengguna.nama }}</td>
 										</tr>
 										<tr>
 											<td>Nomor Seluler</td>
-											<td>{{ row.data.user.noHP }}</td>
+											<td>{{ row.data.pengguna.noHP }}</td>
 										</tr>
 										<tr>
 											<td>Alamat Penyewa</td>
-											<td>{{ row.data.user.alamat }}</td>
+											<td>{{ row.data.pengguna.alamat }}</td>
 										</tr>
 										<tr>
 											<td>Nama Mobil</td>
@@ -61,7 +61,7 @@
 						<ng-container matColumnDef="u_image">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
 							<mat-cell *matCellDef="let row;">
-								<img class="materialboxed" [src]="$_pp2Conf.socket + '/uploads/user/' + row.user.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img class="materialboxed" [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.pengguna.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: u_nama -->
@@ -69,10 +69,10 @@
 							<mat-header-cell *matHeaderCellDef mat-sort-header> Penyewa </mat-header-cell>
 							<mat-cell *matCellDef="let row;">
 								<span style='float: left !important; margin-right: 8px'>
-									<img [src]="$_pp2Conf.socket + '/uploads/user/' + row.user.image" style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
+									<img [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.pengguna.image" style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
 								</span>
 								<span>
-									<br>{{row.user.nama}}</span>
+									<br>{{row.pengguna.nama}}</span>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: m_nama -->
@@ -107,6 +107,9 @@
 								</button>
 								<button color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Penyewaan' (click)='remove(row.id)'>
 									<mat-icon>delete</mat-icon>
+								</button>
+								<button color='accent' mat-raised-button mat-icon-button matTooltip='Detail' (click)="rowClick(row)">
+									<mat-icon>details</mat-icon>
 								</button>
 							</mat-cell>
 						</ng-container>

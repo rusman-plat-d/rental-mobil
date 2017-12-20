@@ -27,6 +27,7 @@ const baseUrl = `http://localhost:${port}`;
 // Set the engine
 
 app.engine('html', (_, options, callback) => {
+	console.log('engine ', options.req.url)
 	renderModuleFactory(Pp2ServerModuleNgFactory, {
 		document: (readFileSync(join(__dirname, 'public', 'index.html'), 'utf8')) as string,
 		url: (options.req.url) as string,
@@ -42,14 +43,6 @@ app.set('view engine', 'html');
 
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
-app.use(express.static(join(__dirname, 'public')));
-
-app.get('*', (req, res) => {
-	res.set('Content-Type', 'text/html');
-	res.sendFile(join(__dirname, 'public', 'index.html'))
-});
-
-const server = createServer(app);
 
 // ---------------------------------------------
 // catch 404 and forward to error handler
@@ -61,21 +54,10 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-	// render the error page
-	res.status(err.status || 500);
-	res.set('Content-Type', 'text/html');
-	res.sendFile(join(__dirname, 'public', 'index.html'))
+	res.render('index', {req, res})
 });
 // ---------------------------------------------
 
-const SocketIOFileUpload = require('socketio-file-upload');
-app.use(SocketIOFileUpload.router)
-
-const $Socket = io(server);
-
-require('./socket.io/core')($Socket)
-
-server.listen(port, () => {
-	console.log(`Listening at ${baseUrl}`);
-	// console.log('LAZY_MODULE_MAP => ', LAZY_MODULE_MAP)
-});
+app.listen(port, (err) => {
+	console.log(baseUrl)
+})

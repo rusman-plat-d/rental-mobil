@@ -1,13 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 module.exports = {
-    entry: { server: './server.js' },
+    entry: { server: './dist/server.js' },
     resolve: { extensions: ['.js', '.ts'] },
     target: 'node',
     externals: [/(node_modules|main\..*\.js)/],
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name].js'
+        path: path.join(__dirname),
+        filename: 'app.js'
     },
     module: {
         rules: [

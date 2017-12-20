@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { MatSnackBar } from '@angular/material';
@@ -8,10 +9,6 @@ import { _FileImageComponent } from '../../../_dry/components/_file-image/_file-
 
 import { ConfigService } from '../../services/config.service';
 import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
-
-import { Server } from '../../../_dry/interfaces/socket.interface';
-
-declare var io: any;
 
 @Component({
 	selector: "pp2-dry-pengembalianForm",
@@ -29,51 +26,51 @@ export class _PengembalianFormComponent implements AfterViewInit, OnDestroy, OnI
 	type: string;
 	label: string;
 	disable: boolean = false;
-	$Socket: Server;
 	pengembalianForm: FormGroup;
 	constructor(
-		public $_ngFormBuilder: FormBuilder,
-		public $_Pp2_MQ: Pp2MediaQueryService,
-		public $_ngActivatedRoute: ActivatedRoute,
-		public $_ngRouter: Router,
-		public $_pp2Conf: ConfigService,
-		private $_matSnackBar: MatSnackBar
+		private $_matSnackBar: MatSnackBar,
+		private $_ngActivatedRoute: ActivatedRoute,
+		private $_ngFormBuilder: FormBuilder,
+		private $_ngHttpClient: HttpClient,
+		private $_ngRouter: Router,
+		public $_pp2Conf: ConfigService
 	) {
-		this.$Socket = io($_pp2Conf.socket+'/db/Pengembalian');
 		this.type = $_ngActivatedRoute.data['value']['type'];
 	}
-	ngAfterViewInit(){}
-	ngOnDestroy() {
-		this.$Socket = null;
-	}
+	ngAfterViewInit() { }
+	ngOnDestroy() {}
 	ngOnInit() {
+		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.pengembalianForm = this.$_ngFormBuilder.group({
 			id: [''],
 			kondisi: [''],
 			denda: ['']
 		});
-		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
-			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (pengembalian) => {
-				this.pengembalianForm.setValue({
-					id: '',
-					kondisi: '',
-					denda: ''
+		if ( id ) {
+			this.$_ngHttpClient.get(this.$_pp2Conf.baseUrl + '/api/db/file/pengembalian/get/' + id)
+				.subscribe((pengembalian) => {
+					this.pengembalianForm.setValue({
+						id: '',
+						kondisi: '',
+						denda: ''
+					})
 				})
-			})
 		}
 	}
-	
-	pp2OnSubmit(e: Event,val): void {
+
+	pp2OnSubmit(e: Event, val): void {
 		e.preventDefault();
-		try{
-		}catch(e){
-			this.$Socket.emit('update', val);
-			// this.$_ngRouter.navigate(['su','Pengembalian','lihat'])
+		try {
+		} catch (e) {
+			const data = new FormData();
+			data.append('data', val)
+			this.$_ngHttpClient.put(this.$_pp2Conf.baseUrl + '/api/db/file/pengembalian/put', data)
+			// this.$_ngRouter.navigate(['su','pengembalian','lihat'])
 			this.$_ngRouter.navigate([''])
-			this.$_matSnackBar.open('Akun Berhasil Didaftarkan')
-			setTimeout(() => {
-				this.$_matSnackBar.dismiss();
-			}, 4000)
+			// this.$_matSnackBar.open('Akun Berhasil Didaftarkan')
+			// setTimeout(() => {
+			// 	this.$_matSnackBar.dismiss();
+			// }, 4000)
 		}
 	}
 }

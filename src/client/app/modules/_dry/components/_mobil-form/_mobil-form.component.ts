@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,16 +8,8 @@ import { _ContainerComponent } from '../_container/_container.component';
 import { _NavComponent } from '../_nav/_nav.component';
 
 import { ConfigService } from '../../services/config.service';
-import { Pp2MediaQueryService } from '../../../_dry/services/Pp2-media-query.service';
 
 import { Mobil } from '../../interfaces/mobil.interface';
-import { Server } from '../../../_dry/interfaces/socket.interface';
-
-// import * as io from '../../libs/socket.io-client/socket.io';
-// import * as io from 'socket.io-client/dist/socket.io';
-// import * as io from 'socket.io/node_modules/socket.io-client/dist/socket.io';
-
-declare var io: any;
 
 @Component({
 	selector: "pp2-dry-mobilForm",
@@ -30,26 +23,22 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	type: string;
 	label: string;
 	disable: boolean = false;
-	$Socket: Server;
 	mobilForm: FormGroup;
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
 	constructor(
-		public $_ngFormBuilder: FormBuilder,
-		public $_Pp2_MQ: Pp2MediaQueryService,
-		public $_ngActivatedRoute: ActivatedRoute,
-		public $_ngRouter: Router,
+		private $_ngActivatedRoute: ActivatedRoute,
+		private $_ngFormBuilder: FormBuilder,
+		private $_ngHttpClient: HttpClient,
+		private $_ngRouter: Router,
 		public $_pp2Conf: ConfigService
 	) {
-		console.log(io)
-		this.$Socket = io($_pp2Conf.socket+'/db/mobil');
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Tambah Mobil' : 'Ubah Data Mobil';
 	}
-	ngAfterViewInit(){}
-	ngOnDestroy() {
-		this.$Socket = null;
-	}
+	ngAfterViewInit() { }
+	ngOnDestroy() {}
 	ngOnInit() {
+		const id = this.$_ngActivatedRoute.snapshot.params['id'];
 		this.mobilForm = this.$_ngFormBuilder.group({
 			id: [''],
 			nama: [''],
@@ -65,26 +54,27 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: [''],
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/gg.png';
-		if ( this.$_ngActivatedRoute.snapshot.params['id'] ) {
-			this.$Socket.emit('get', this.$_ngActivatedRoute.snapshot.params['id'], (Mobil: Mobil) => {
-				this.mobilForm.setValue({
-					id: Mobil.id,
-					nama: Mobil.nama,
-					platNo: Mobil.platNo,
-					kursi: Mobil.kursi,
-					bensin: Mobil.bensin,
-					hargaSewa: Mobil.hargaSewa,
-					image: Mobil.image,
-					kondisi: Mobil.kondisi,
-					_status: Mobil._status,
-					_disewa: Mobil._disewa,
-					_disewaSampai: Mobil._disewaSampai,
-					createdAt: Mobil.createdAt,
-					updatedAt: Mobil.updatedAt
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/mobil/placeholder.png';
+		if ( id ) {
+			this.$_ngHttpClient.get<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/get/' + id)
+				.subscribe((mobil: Mobil) => {
+					this.mobilForm.setValue({
+						id: mobil.id,
+						nama: mobil.nama,
+						platNo: mobil.platNo,
+						kursi: mobil.kursi,
+						bensin: mobil.bensin,
+						hargaSewa: mobil.hargaSewa,
+						image: mobil.image,
+						kondisi: mobil.kondisi,
+						_status: mobil._status,
+						_disewa: mobil._disewa,
+						_disewaSampai: mobil._disewaSampai,
+						createdAt: mobil.createdAt,
+						updatedAt: mobil.updatedAt
+					})
+					this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image;
 				})
-				this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.socket + '/uploads/mobil/' + Mobil.image;
-			})
 		}
 		this.disableForm();
 		this.mobilForm.valueChanges.subscribe(() => {
@@ -92,32 +82,25 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		})
 	}
 	disableForm(): void {
-		if ( this.$_ngActivatedRoute.data['value']['type'] === 'ubah' ) {
+		if (this.$_ngActivatedRoute.data['value']['type'] === 'ubah') {
 			this.disable = false || !this.mobilForm['valid'];
 		}
-		if ( (this.$_ngActivatedRoute.data['value']['type'] === 'tambah') ) {
-			try{
-				if ( this.C_Pp2_Dry_FI.i_file.files ) {
+		if ((this.$_ngActivatedRoute.data['value']['type'] === 'tambah')) {
+			try {
+				if (this.C_Pp2_Dry_FI.i_file.files) {
 					this.disable = false || !this.mobilForm.valid;
 				}
-			}catch(e){
-				this.disable = true || !this.mobilForm['valid'];
+			} catch (e) {
+				this.disable = true;
 			}
-		}else{ this.disable = false || !this.mobilForm['valid'] }
+		} else { this.disable = false || !this.mobilForm['valid'] }
 	}
-	tooltipMsg(): string{
+	tooltipMsg(): string {
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';
 	}
-	pp2OnSubmit(e: Event,val): void {
+	pp2OnSubmit(e: Event, val): void {
 		e.preventDefault();
-		console.log(val)
-		try{
-			if ( this.C_Pp2_Dry_FI.i_file['files'] ) {
-				this.C_Pp2_Dry_FI.save(this.$Socket, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus', 'mobil', 'lihat'])
-			}
-		}catch(e){
-			this.$Socket.emit('update', val);
-			this.$_ngRouter.navigate(['pengurus', 'mobil', 'lihat'])
-		}
+		const url = this.$_pp2Conf.baseUrl + '/api/db/file/mobil/' + (this.$_ngActivatedRoute.data['value']['type'] === 'tambah' ? 'post' : 'put');
+		this.C_Pp2_Dry_FI.save(url, val, this.$_ngActivatedRoute.data['value']['type'], ['pengurus', 'mobil', 'lihat'])
 	}
 }

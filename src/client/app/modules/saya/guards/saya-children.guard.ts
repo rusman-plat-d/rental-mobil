@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
-import { User } from '../../_dry/index';
+import { Pengguna } from '../../_dry/index';
 
 @Injectable()
 export class SayaChildrenGuard implements CanActivateChild {
@@ -25,17 +25,17 @@ export class SayaChildrenGuard implements CanActivateChild {
 			}, 4000)
 			this.$_ngRouter.navigate(['masuk']);
 		}
-		let User$: User[];
-		let MasukUser: User;
+		let Pengguna$: Pengguna[];
+		let MasukUser: Pengguna;
 		try{
-			User$ = JSON.parse(localStorage.user);
+			Pengguna$ = JSON.parse(localStorage.pengguna);
 			MasukUser = JSON.parse(localStorage.masukPengguna);
 		}catch(e){
-			User$ = [];
+			Pengguna$ = [];
 			MasukUser = {};
 		}
-		const hasil: User[] = User$.filter((user: User) => {
-			return (user.username == MasukUser.username) && (user.password == MasukUser.password);
+		const hasil: Pengguna[] = Pengguna$.filter((pengguna: Pengguna) => {
+			return (pengguna.username == MasukUser.username) && (pengguna.password == MasukUser.password);
 		});
 		let retVal = false;
 		if ( hasil.length == 1 ) {

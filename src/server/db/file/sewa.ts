@@ -3,7 +3,7 @@ import 'rxjs/add/operator/filter';
 
 import * as Mobil from './mobil';
 import * as Supir from './supir';
-import * as User from './user';
+import * as Pengguna from './pengguna';
 
 declare var require: any;
 declare var __dirname: any;
@@ -11,13 +11,13 @@ declare var __dirname: any;
 export interface Sewa {
 	denda?: number;
 	id?: string;
-	id_user?: string;
+	id_pengguna?: string;
 	id_mobil?: string;
 	id_supir?: string;
 	kondisi?: string;
 	mobil?: Mobil.Mobil;
 	supir?: Supir.Supir;
-	user?: User.User;
+	pengguna?: Pengguna.Pengguna;
 	tglMulai?: number;
 	tglSelesai?: number;
 	tglSewaMulai?: number;
@@ -52,7 +52,7 @@ export function gets(): Sewa[] {
 	let Sewa$_ = Sewa$;
 	for (let key in Sewa$_) {
 		Sewa$_[key].mobil = Mobil.get(Sewa$_[key].id_mobil)
-		Sewa$_[key].user = User.get(Sewa$_[key].id_user)
+		Sewa$_[key].pengguna = Pengguna.get(Sewa$_[key].id_pengguna)
 		if (Sewa$_[key].id_supir) {
 			Sewa$_[key].supir = Supir.get(Sewa$_[key].id_supir)
 		}
@@ -76,13 +76,11 @@ export function add(sewa: Sewa): void {
 }
 export function update(sewa: Sewa): void {
 	console.log('[db]Sewa: update');
-	Object.keys(Sewa$).map((key)=>{
-		if( Sewa$[key].id == sewa.id ){
-			Object.assign(Sewa$[key], Object.assign(sewa, {
-				updatedAt: Date.now()
-			}))
+	for(let i in Sewa$){
+		if( Sewa$[i].id == sewa.id ){
+			Object.assign(Sewa$[i], sewa, { updatedAt: Date.now() })
 		}
-	})
+	}
 	save();
 }
 export function remove(id: string): void {

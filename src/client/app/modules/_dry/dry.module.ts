@@ -11,8 +11,8 @@ import { _SupirFormComponent } from './components/_supir-form/_supir-form.compon
 import { _SupirViewTableComponent } from './components/_supir-view-table/_supir-view-table.component';
 import { _MobilFormComponent } from './components/_mobil-form/_mobil-form.component';
 import { _MobilViewTableComponent } from './components/_mobil-view-table/_mobil-view-table.component';
-import { _UserFormComponent } from './components/_user-form/_user-form.component';
-import { _UserViewTableComponent } from './components/_user-view-table/_user-view-table.component';
+import { _PenggunaFormComponent } from './components/_pengguna-form/_pengguna-form.component';
+import { _PenggunaViewTableComponent } from './components/_pengguna-view-table/_pengguna-view-table.component';
 import { _MobilViewGridComponent } from './components/_mobil-view-grid/_mobil-view-grid.component';
 import { _PengembalianFormComponent } from './components/_pengembalian-form/_pengembalian-form.component';
 import { _SewaFormComponent } from './components/_sewa-form/_sewa-form.component';
@@ -45,8 +45,8 @@ export const DryComponents = [
 	_SewaViewTableComponent,
 	_SupirViewGridComponent,
 
-	_UserFormComponent,
-	_UserViewTableComponent
+	_PenggunaFormComponent,
+	_PenggunaViewTableComponent
 ];
 
 export const DryDirectives = [

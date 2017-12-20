@@ -43,13 +43,11 @@ function add(supir) {
 exports.add = add;
 function update(supir) {
     console.log('[db]Supir: update');
-    Object.keys(Supir$).map(function (key) {
-        if (Supir$[key].id == supir.id) {
-            Object.assign(Supir$[key], Object.assign(supir, {
-                updatedAt: Date.now()
-            }));
+    for (var i in Supir$) {
+        if (Supir$[i].id == supir.id) {
+            Object.assign(Supir$[i], supir, { updatedAt: Date.now() });
         }
-    });
+    }
     save();
     return supir;
 }

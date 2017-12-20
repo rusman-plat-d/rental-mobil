@@ -38,17 +38,16 @@ function add(mobil) {
         updatedAt: Date.now()
     }));
     save();
+    return mobil;
 }
 exports.add = add;
 function update(mobil) {
     console.log('[db]Mobil: update');
-    Object.keys(Mobil$).map(function (key) {
-        if (Mobil$[key].id == mobil.id) {
-            Object.assign(Mobil$[key], Object.assign(mobil, {
-                updatedAt: Date.now()
-            }));
+    for (var i in Mobil$) {
+        if (Mobil$[i].id == mobil.id) {
+            Object.assign(Mobil$[i], mobil, { updatedAt: Date.now() });
         }
-    });
+    }
     save();
     return mobil;
 }

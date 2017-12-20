@@ -13,7 +13,7 @@
 					</mat-toolbar>
 					<mat-table #table [dataSource]="dataSourceWithDetails" matSort>
 						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-						<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="user-row" [style.borderBottomColor]="expandedMobil == row ? 'transparent' : ''" (click)="rowClick(row)"></mat-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;" [style.borderBottomColor]="expandedMobil == row ? 'transparent' : ''"></mat-row>
 						<mat-row *matRowDef="let row; columns: ['details']; when: isDetailRow" [@detailExpand]="row.data == expandedMobil ? 'expanded' : 'collapsed'" style="overflow: hidden"></mat-row>
 						<!-- Detail Column -->
 						<ng-container matColumnDef="details">
@@ -23,7 +23,7 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
@@ -98,7 +98,7 @@
 						<ng-container matColumnDef="image">
 							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.socket + '/uploads/mobil/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: _status -->
@@ -110,10 +110,13 @@
 						<ng-container matColumnDef="action">
 							<mat-header-cell *matHeaderCellDef> Tindakan </mat-header-cell>
 							<mat-cell *matCellDef="let row">
+								<button color='primary' mat-raised-button mat-icon-button matTooltip='Detail Mobil' (click)="rowClick(row)">
+									<mat-icon>details</mat-icon>
+								</button>
 								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Mobil' [routerLink]='"/pengurus/mobil/ubah/" + row.id'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
-								<button color='danger' mat-raised-button mat-icon-button matTooltip='Hapus Mobil' (click)='remove(row.id)'>
+								<button color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Mobil' (click)='remove(row.id)'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>
