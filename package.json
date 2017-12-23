@@ -91,6 +91,7 @@
 		"static-expiry": "0.0.11",
 		"timeout": "^0.2.1",
 		"vhost": "^3.0.2",
+		"uuid": "*",
 		"view-helpers": "^0.1.5"
 	},
 	"devDependencies": {
