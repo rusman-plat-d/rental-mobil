@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var uuid_1 = require("uuid");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/filter");
 var Mobil = require("./mobil");
@@ -45,7 +46,7 @@ exports.get = get;
 function add(sewa) {
     console.log('[db]Sewa: add');
     Sewa$.unshift(Object.assign(sewa, {
-        id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+        id: uuid_1.v4(),
         createdAt: Date.now(),
         updatedAt: Date.now()
     }));

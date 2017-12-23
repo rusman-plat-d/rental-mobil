@@ -72,10 +72,11 @@ export function update(supir: Supir): Supir {
 	save();
 	return _supir;
 }
-export function remove(id: string): void {
+export function remove(id: string): Supir {
 	console.log('[db]Supir: remove');
 	Supir$ = Supir$.filter((Supir: Supir) => {
 		return id !== Supir.id;
 	});
 	save();
+	return get(id);
 }

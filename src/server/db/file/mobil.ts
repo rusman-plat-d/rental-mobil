@@ -70,10 +70,11 @@ export function update(mobil: Mobil): Mobil {
 	save();
 	return _mobil;
 }
-export function remove(id: string): void {
+export function remove(id: string): Mobil {
 	console.log('[db]Mobil: remove');
 	Mobil$ = Mobil$.filter((Mobil: Mobil) => {
 		return id !== Mobil.id;
 	});
 	save();
+	return get(id);
 }

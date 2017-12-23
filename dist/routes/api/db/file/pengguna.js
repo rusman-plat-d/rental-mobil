@@ -4,7 +4,7 @@ var express_1 = require("express");
 var multer = require("multer");
 var Pengguna = require("../../../../db/file/pengguna");
 var join = require('path').join;
-var mkdirSync = require('fs').mkdirSync;
+var _a = require('fs'), mkdirSync = _a.mkdirSync, unlinkSync = _a.unlinkSync;
 var PenggunaRouter = express_1.Router();
 exports.PenggunaRouter = PenggunaRouter;
 var dest = join(__dirname, '..', '..', '..', '..', 'public', 'uploads', 'pengguna');
@@ -26,10 +26,12 @@ catch (e) { }
 PenggunaRouter
     .post('/post', upload.single('photo'), function (req, res) {
     console.log('POST: /api/db/file/pengguna/post');
-    var pengguna = req.body.pengguna;
+    var pengguna = JSON.parse(req.body.data);
     pengguna.image = req.file.filename;
-    Pengguna.add(pengguna);
-    res.json({ success: true });
+    res.json({
+        data: Pengguna.add(pengguna),
+        success: true
+    });
 })
     .get('/get/:id', function (req, res) {
     var id = req.params.id;
@@ -42,15 +44,17 @@ PenggunaRouter
 })
     .put('/put', upload.single('photo'), function (req, res) {
     console.log('PUT: /api/db/file/pengguna/put');
-    var pengguna = req.body.data;
+    var pengguna = JSON.parse(req.body.data);
     if (req.file)
         pengguna.image = req.file.filename;
-    Pengguna.update(pengguna);
-    res.json({ success: true });
+    res.json({
+        data: Pengguna.update(pengguna),
+        success: true
+    });
 })
     .delete('/delete/:id', function (req, res) {
     var id = req.params.id;
     console.log('DELETE: /api/db/file/pengguna/delete/' + id);
-    Pengguna.remove(id);
+    unlinkSync(join(dest, Pengguna.remove(id).image));
     res.json({ success: true });
 });

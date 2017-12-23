@@ -68,10 +68,11 @@ export function update(pengguna: Pengguna): void {
 	save();
 	return _pengguna;
 }
-export function remove(id: string): void {
+export function remove(id: string): Pengguna {
 	console.log('[db]Pengguna: remove');
 	Pengguna$ = Pengguna$.filter((pengguna: Pengguna) => {
 		return id !== pengguna.id;
 	});
 	save();
+	return get(id);
 }

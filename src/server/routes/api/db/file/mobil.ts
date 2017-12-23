@@ -8,7 +8,7 @@ declare var module: any,
 			require: any;
 
 const { join } = require('path')
-const { mkdirSync } = require('fs')
+const { mkdirSync, unlinkSync } = require('fs')
 
 const MobilRouter: Router = Router();
 const dest = join(__dirname, '..', '..', '..', '..', 'public', 'uploads', 'mobil');
@@ -64,7 +64,7 @@ MobilRouter
 	.delete('/delete/:id', (req, res) => {
 		const id = req.params.id;
 		console.log('DELETE: /api/db/file/mobil/delete/'+id)
-		Mobil.remove(id)
+		unlinkSync(join(dest, Mobil.remove(id).image))
 		res.json({success: true})
 	})
 

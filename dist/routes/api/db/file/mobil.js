@@ -4,7 +4,7 @@ var express_1 = require("express");
 var multer = require("multer");
 var Mobil = require("../../../../db/file/mobil");
 var join = require('path').join;
-var mkdirSync = require('fs').mkdirSync;
+var _a = require('fs'), mkdirSync = _a.mkdirSync, unlinkSync = _a.unlinkSync;
 var MobilRouter = express_1.Router();
 exports.MobilRouter = MobilRouter;
 var dest = join(__dirname, '..', '..', '..', '..', 'public', 'uploads', 'mobil');
@@ -55,6 +55,6 @@ MobilRouter
     .delete('/delete/:id', function (req, res) {
     var id = req.params.id;
     console.log('DELETE: /api/db/file/mobil/delete/' + id);
-    Mobil.remove(id);
+    unlinkSync(join(dest, Mobil.remove(id).image));
     res.json({ success: true });
 });

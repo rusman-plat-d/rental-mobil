@@ -1,17 +1,17 @@
 <div class='pp2-pengurus-nav pp2----nav'>
 	<nav>
 		<mat-toolbar color='primary'>
-			<button *ngIf='isDevMode()' mat-icon-button>
+			<button *ngIf='isDevMode()' class='nav menu' mat-icon-button>
 				<mat-icon class='pointer' (click)='$C_Mat_Sidenav_Click$.next()'>menu</mat-icon>
 			</button>
-			<span class='margin-l-20px pointer' routerLink='/'>Rental Mobil</span>
+			<span class='pointer' routerLink='/'>Rental Mobil</span>
 			<span class='flex-auto'></span>
 			<button class='hide-on-small-only' mat-button routerLink='/pengurus/penyewaan'><a>Penyewaan</a></button>
 			<button class='hide-on-small-only' mat-button routerLink='/pengurus/mobil/lihat'>Mobil</button>
 			<button class='hide-on-small-only' mat-button routerLink='/pengurus/pengguna/lihat'>Pengguna</button>
 			<button class='hide-on-small-only' mat-button routerLink='/pengurus/supir/lihat'>Supir</button>
 			<button class='hide-on-small-only' (click)='keluar()' mat-button><a>Keluar</a></button>
-			<button class='hide-on-med-and-up' mat-button mat-icon-button [matMenuTriggerFor]='C_Mat__Nav'><mat-icon>more_vert</mat-icon></button>
+			<button class='hide-on-med-and-up nav menu' mat-button mat-icon-button [matMenuTriggerFor]='C_Mat__Nav'><mat-icon>more_vert</mat-icon></button>
 		</mat-toolbar>
 
 		<mat-menu #C_Mat__Nav='matMenu' [overlapTrigger]='false'>

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var uuid_1 = require("uuid");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/filter");
 var writeFile = require('fs').writeFile;
@@ -32,7 +33,7 @@ exports.get = get;
 function add(pengguna) {
     console.log('[db]Pengguna: add');
     var _pengguna = Object.assign(pengguna, {
-        id: ((Math.random() * Math.random() * 1000).toString() + Date.now()).replace('.', '').replace('.', ''),
+        id: uuid_1.v4(),
         createdAt: Date.now(),
         updatedAt: Date.now()
     });
@@ -59,5 +60,6 @@ function remove(id) {
         return id !== pengguna.id;
     });
     save();
+    return get(id);
 }
 exports.remove = remove;

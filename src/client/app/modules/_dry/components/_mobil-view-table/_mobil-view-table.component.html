@@ -7,7 +7,7 @@
 				<button (click)='remove(mobil.id)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Mobil'><mat-icon>delete</mat-icon></button>
 				<button #btnClose (click)='C_Mat_Drawer.close()' color='accent' mat-icon-button mat-raised-button matTooltip='Tutup'><mat-icon>close</mat-icon></button>
 			</mat-toolbar>
-			<table>
+			<table class='browser-default'>
 				<tr>
 					<td colspan="2">
 						<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" style='max-height: 150px;width: 100%'>

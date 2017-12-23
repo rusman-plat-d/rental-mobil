@@ -61,19 +61,14 @@ button a {
 	padding: 0 255px;
 }
 
-@for $o from 1 through 10 {
-	.w#{$o*20}px {
-		width: #{$o*20}px;
-	}
-}
-
 .mat-sidenav{
-	width: 300px;
-	padding-top: 64px;
+	width: 300px !important;
+	padding-top: 64px !important;
 }
 @media (max-width: 750px) {
 	.mat-sidenav {
-		width: 80vw;
+		padding-top: 56px !important;
+		width: 80vw !important;
 	}
 }
 // .mat-drawer-backdrop.mat-drawer-shown {
@@ -104,14 +99,6 @@ h1 {
 .margin-l-20px {
 	margin-left: 20px;
 }
-@for $i from 1 through 10 {
-	.container-#{$i*10} {
-		width: $i*10%;
-	}
-	.padding-#{$i*10} {
-		padding: $i*20px;
-	}
-}
 .as-center {
 	align-self: center;
 }
@@ -125,14 +112,6 @@ h1 {
 .pad-8px{
 	padding: 8px !important;
 }
-// .container {
-// 	width: 650px !important;
-// }
-// @media (max-width: 800px) {
-// 	.container {
-// 		width: 90% !important;
-// 	}
-// }
 
 .margin-auto{
 	margin: 64px auto;
@@ -146,6 +125,9 @@ h1 {
 }
 .owit{
 	float: left;
+}
+.nav.menu{
+	margin: 0 12px !important;
 }
 .mat-toolbar a {
 	margin: none 10px !important;
@@ -164,8 +146,10 @@ h1 {
 @media (min-width: 600px) {
 	.dm-container{ height: calc(100vh - 64px - 48px) }
 }
-tr, td{
+table.browser-default tr,
+table.browser-default td{
 	height: auto !important;
 	margin: 0 !important;
 	padding: 0 !important;
 }
+

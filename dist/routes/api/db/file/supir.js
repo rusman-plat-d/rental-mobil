@@ -4,7 +4,7 @@ var express_1 = require("express");
 var multer = require("multer");
 var Supir = require("../../../../db/file/supir");
 var join = require('path').join;
-var mkdirSync = require('fs').mkdirSync;
+var _a = require('fs'), mkdirSync = _a.mkdirSync, unlinkSync = _a.unlinkSync;
 var SupirRouter = express_1.Router();
 exports.SupirRouter = SupirRouter;
 var dest = join(__dirname, '..', '..', '..', '..', 'public', 'uploads', 'supir');
@@ -55,6 +55,6 @@ SupirRouter
     .delete('/delete/:id', function (req, res) {
     var id = req.params.id;
     console.log('DELETE: /api/db/file/supir/delete/' + id);
-    Supir.remove(id);
+    unlinkSync(join(dest, Supir.remove(id).image));
     res.json({ success: true });
 });
