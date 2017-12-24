@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 })
 app.use('/', IndexRouter);
 
-const PORT = 443;
+const PORT = 4136;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { Pp2ServerModuleNgFactory, Pp2ServerModule, LAZY_MODULE_MAP } = require('./main.bundle');
