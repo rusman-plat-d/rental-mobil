@@ -30,6 +30,9 @@ app.engine('html', express_engine_1.ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', join(__dirname, 'public'));
 app.get('*.*', express.static(join(__dirname, 'public')));
+app.get('/', function (req, res) {
+    res.render('index', { req: req });
+});
 app.get('*', function (req, res) {
     res.render('index', { req: req });
 });
