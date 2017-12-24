@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 })
 app.use('/', IndexRouter);
 
-const PORT = 4136;
+const PORT = process.env.PORT || 4136;
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { Pp2ServerModuleNgFactory, Pp2ServerModule, LAZY_MODULE_MAP } = require('./main.bundle');
@@ -59,6 +59,11 @@ app.get('*', (req, res) => {
 });
 
 // // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node server listening on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Node server listening on http://localhost:${PORT}`);
+// });
+
+const server = createServer(app)
+server.listen(PORT, (err)=>{
+	console.log(err, PORT)
+})
