@@ -5,7 +5,7 @@ require("reflect-metadata");
 var core_1 = require("@angular/core");
 var express = require("express");
 var index_1 = require("./routes/index");
-var createServer = require('http').createServer;
+var Server = require('http').Server;
 var join = require('path').join;
 core_1.enableProdMode();
 var app = express();
@@ -33,7 +33,7 @@ app.get('*.*', express.static(join(__dirname, 'public')));
 app.get('*', function (req, res) {
     res.render('index', { req: req });
 });
-var server = createServer(app);
+var server = Server(app);
 server.listen(PORT, function (err) {
     console.log(err, PORT);
 });

@@ -11,7 +11,7 @@ import { enableProdMode } from '@angular/core';
 import * as express from 'express';
 import { IndexRouter } from './routes/index';
 
-const { createServer } = require('http');
+const { Server } = require('http');
 const { join } = require('path');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
@@ -63,7 +63,7 @@ app.get('*', (req, res) => {
 //   console.log(`Node server listening on http://localhost:${PORT}`);
 // });
 
-const server = createServer(app)
+const server = Server(app)
 server.listen(PORT, (err)=>{
 	console.log(err, PORT)
 })
