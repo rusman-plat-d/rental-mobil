@@ -57,7 +57,7 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: [''],
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/mobil/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = '/assets/img/placeholder-mobil.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<Mobil>(this.$_pp2Conf.baseUrl + '/api/db/file/mobil/get/' + id)
 				.subscribe((mobil: Mobil) => {

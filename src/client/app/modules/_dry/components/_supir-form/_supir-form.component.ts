@@ -54,7 +54,7 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			createdAt: [''],
 			updatedAt: ['']
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/supir/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/assets/placeholder-supir.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<Supir>(this.$_pp2Conf.baseUrl + '/api/db/file/supir/get/' + id)
 				.subscribe((supir: Supir) => {

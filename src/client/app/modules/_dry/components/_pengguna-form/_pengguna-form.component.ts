@@ -70,7 +70,7 @@ export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit 
 			createdAt: [''],
 			updatedAt: ['']
 		});
-		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/uploads/pengguna/placeholder.png';
+		this.C_Pp2_Dry_FI.img.nativeElement.src = this.$_pp2Conf.baseUrl + '/assets/placeholder-pengguna.png';
 		if ( id ) {
 			this.$_ngHttpClient.get<Pengguna>(this.$_pp2Conf.baseUrl + '/api/db/file/pengguna/get' + this.$_ngActivatedRoute.snapshot.params['id'])
 				.subscribe((pengguna: Pengguna) => {
