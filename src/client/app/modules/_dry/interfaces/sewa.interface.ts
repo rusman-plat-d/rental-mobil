@@ -9,8 +9,8 @@ export interface Sewa {
 	id_supir?: string;
 	kondisi?: string;
 	mobil?: Mobil;
-	supir?: Supir;
 	pengguna?: Pengguna;
+	supir?: Supir;
 	tglMulai?: number;
 	tglSelesai?: number;
 	tglSewaMulai?: number;

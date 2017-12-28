@@ -1,5 +1,5 @@
 <div class='pp2-su-mobilForm container pp2-content margin-auto'>
-	<form [formGroup]='mobilForm' fxLayout='column' (submit)='pp2OnSubmit($event, mobilForm.value)' fxLayoutAlign='center center'>
+	<form [formGroup]='mobilForm' fxLayout='column' fxLayoutAlign='center center'>
 		<mat-card class='full-width'>
 			<mat-card-header>
 				<mat-card-title>{{ label }}</mat-card-title>
@@ -49,7 +49,7 @@
 				</div>
 			</mat-card-content>
 			<mat-card-actions [fxHide]='sembunyikan'>
-				<button [disabled]='disable' mat-button type='submit'>Save</button>
+				<button (click)='pp2OnSubmit($event, mobilForm.value)' [disabled]='disable' mat-button type='button'>Save</button>
 			</mat-card-actions>
 		</mat-card>
 	</form>

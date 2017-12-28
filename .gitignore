@@ -1,11 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/tmp
+dist
+dist/**
+/dist
 /out-tsc
+/tmp
 
 # dependencies
 /node_modules
+functions/node_modules
 src/client/environments/firebase.ts
 
 # IDEs and editors

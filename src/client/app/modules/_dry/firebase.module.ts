@@ -8,6 +8,6 @@ import { firebaseConfig } from '../../../environments/firebase';
 export const FirebaseModule = [
 	AngularFireAuthModule,
 	AngularFireDatabaseModule,
-	AngularFireModule.initializeApp(firebaseConfig, 'pp2-rental'),
+	AngularFireModule.initializeApp(firebaseConfig),
 	AngularFirestoreModule.enablePersistence()
 ];

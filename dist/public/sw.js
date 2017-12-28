@@ -88,7 +88,15 @@ workboxSW.precache([
     "revision": "81dfde4d837c26e0aad2d73a373c239a"
   },
   {
-    "url": "assets/images/placeholder.png",
+    "url": "assets/img/placeholder-mobil.png",
+    "revision": "7cb70ded6cd1ea367c7d5bb118886093"
+  },
+  {
+    "url": "assets/img/placeholder-pengguna.png",
+    "revision": "7cb70ded6cd1ea367c7d5bb118886093"
+  },
+  {
+    "url": "assets/img/placeholder-supir.png",
     "revision": "7cb70ded6cd1ea367c7d5bb118886093"
   },
   {
@@ -225,7 +233,7 @@ workboxSW.precache([
   },
   {
     "url": "main.bundle.js",
-    "revision": "2de982046ad16c19c08ec71384f083b7"
+    "revision": "efba6002526fc4cde81317ee6f9d1576"
   },
   {
     "url": "manifest.appcache",

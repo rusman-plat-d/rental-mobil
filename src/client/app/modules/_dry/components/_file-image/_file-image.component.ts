@@ -15,6 +15,7 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 	fileExist: boolean = false;
 	i_file: HTMLInputElement;
 	SIOFU: any;
+	file: FileList;
 	get label() {
 		return this.fileExist ? 'Ganti' : 'Unggah';
 	}
@@ -26,13 +27,16 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 	) { }
 	ngOnDestroy() {
 		this.SIOFU = null;
+		
 	}
 	ngOnInit() {
 		const img = this.img.nativeElement;
 		this.i_file = this.$_ngRenderer2.createElement('input');
 		this.i_file.type = 'file';
-		this.i_file.onchange = () => {
+		this.i_file.onchange = (e) => {
 			if (this.i_file.files.length > 0) {
+				this.file = this.i_file.files;
+				this.change.next(e)
 				let fileToLoad = this.i_file.files[0]
 				let fileReader = new FileReader()
 				fileReader.onload = (fileLoadedEvent: any) => {
@@ -47,5 +51,8 @@ export class _FileImageComponent implements OnDestroy, OnInit {
 	}
 	chooseFile() {
 		this.i_file.dispatchEvent(new MouseEvent('click'))
+	}
+	log(a){
+		console.log(a)
 	}
 }

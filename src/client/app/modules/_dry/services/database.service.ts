@@ -44,7 +44,7 @@ export class DatabaseService<T> {
 	}
 	set table(val){
 		this._table = val
-		this.itemsRef = this.$_ngfDatabase.list('/' + this.table);
+		this.itemsRef = this.$_ngfDatabase.list('/' + val);
 		this.items = this.itemsRef.valueChanges()
 	}
 	where: any[][2];
@@ -57,6 +57,7 @@ export class DatabaseService<T> {
 		private $_ngfDatabase: AngularFireDatabase
 	) {}
 	create(data: T): firebase.database.ThenableReference {
+		console.log(this.itemsRef, data)
 		return this.itemsRef.push(data)
 	}
 	gets(): Observable<T[]>{

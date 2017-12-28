@@ -35,33 +35,34 @@ export class UploadService {
 	}
 
 	// Executes the file uploading to firebase https://firebase.google.com/docs/storage/web/upload-files
-	pushUpload(upload: Upload): Upload {
+	pushUpload(): Upload {
+		this.currentUpload;
 		const storageRef = firebase.storage().ref();
-		const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
+		const uploadTask = storageRef.child(`${this.basePath}/${this.currentUpload.file.name}`).put(this.currentUpload.file);
 
 		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot: firebase.storage.UploadTaskSnapshot) =>  {
-			// upload in progress
-			const snap = snapshot;
-			upload.progress = (snap.bytesTransferred / snap.totalBytes) * 100
+				// upload in progress
+				const snap = snapshot;
+				this.currentUpload.progress = (snap.bytesTransferred / snap.totalBytes) * 100
 			}, (error) => {
 				// upload failed
 				console.log(error);
 			}, () => {
 				// upload success
 				if (uploadTask.snapshot.downloadURL) {
-					this.currentUpload.url = upload.url = uploadTask.snapshot.downloadURL;
-					this.currentUpload.name = upload.name = upload.file.name;
-					this.saveFileData(upload);
+					this.currentUpload.url = uploadTask.snapshot.downloadURL;
+					this.currentUpload.name = this.currentUpload.file.name;
+					this.saveFileData();
 				} else {
 					console.error('No download URL!');
 				}
 			},
 		);
-		return upload;
+		return this.currentUpload;
 	}
 	// Writes the file details to the realtime db
-	private saveFileData(upload: Upload): firebase.database.ThenableReference {
-		return this.db.list(`${this.basePath}/`).push(upload);
+	private saveFileData(): firebase.database.ThenableReference {
+		return this.db.list(`${this.basePath}/`).push(this.currentUpload);
 	}
 	// Writes the file details to the realtime db
 	private deleteFileData(key: string): Promise<void> {
@@ -74,11 +75,7 @@ export class UploadService {
 		return storageRef.child(`${this.basePath}/${name}`).delete()
 	}
 	detectFiles($event: Event): void {
+		console.log($event)
 		this.selectedFiles = ($event.target as HTMLInputElement).files;
-	}
-	uploadSingle(): Upload {
-		const file = this.selectedFiles;
-		this.currentUpload = new Upload(file.item(0));
-		return this.pushUpload(this.currentUpload)
 	}
 }

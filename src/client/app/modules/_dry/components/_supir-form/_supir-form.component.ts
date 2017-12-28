@@ -57,8 +57,8 @@ export class _SupirFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	}
 	pp2OnSubmit(e: Event, supir: SupirId): void {
 		e.preventDefault();
-		if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
-			supir.image = this.$_pp2Upload.uploadSingle().url;
+		// if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
+			// supir.image = this.$_pp2Upload.uploadSingle().url;
 		this.$_pp2Database.create(supir);
 	}
 	supirFormObject(supir: SupirId = {}){

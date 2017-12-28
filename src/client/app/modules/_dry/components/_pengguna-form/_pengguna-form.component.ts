@@ -89,8 +89,8 @@ export class _PenggunaFormComponent implements AfterViewInit, OnDestroy, OnInit 
 	}
 	pp2OnSubmit(e: Event, pengguna: PenggunaId): void {
 		e.preventDefault();
-		if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
-			pengguna.image = this.$_pp2Upload.uploadSingle().url;
+		// if ( this.type === 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) )
+			// pengguna.image = this.$_pp2Upload.uploadSingle().url;
 		this.$_pp2Database.create(pengguna);
 	}
 }
