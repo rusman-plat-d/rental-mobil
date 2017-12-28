@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rental Mobil</title>
+	<style type="text/css">
+		body{
+			padding: 24px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<h1>Rental Mobil</h1>
+	</center>
+	<hr>
+	<table>
+		<tr>
+			<td>Nama Penyewa</td>
+			<td>$nama</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Periode Rental</td>
+			<td>$tglMulai s/d $tglSelesai ($total_sewa_hari Hari)</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Mobil</td>
+			<td>$nama - $hargaSewa</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Supir</td>
+			<td>$nama - $hargaSewa</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Total Harga</td>
+			<td>Rp. ($mobil.hargaSewa * $total_sewa_hari) + ($supir.hargaSewa * $total_sewa_hari)</td>
+			<td></td>
+		</tr>
+	</table>
+</body>
+</html>

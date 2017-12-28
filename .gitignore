@@ -6,6 +6,7 @@
 
 # dependencies
 /node_modules
+functions
 src/client/environments/firebase.ts
 
 # IDEs and editors
