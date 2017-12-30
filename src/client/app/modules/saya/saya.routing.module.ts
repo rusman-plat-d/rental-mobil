@@ -26,6 +26,7 @@ const routes: Routes = [
 		{ path: '**', pathMatch: 'full', redirectTo: '/saya' }
 	]}
 ];
+
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],

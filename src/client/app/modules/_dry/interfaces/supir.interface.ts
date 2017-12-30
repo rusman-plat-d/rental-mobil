@@ -14,6 +14,6 @@ export interface Supir {
 	updatedAt?: number;
 }
 
-export interface SupirId extends Supir{
-	id?: string;
+export interface Supir$Key extends Supir{
+	$key?: string;
 }

@@ -3,11 +3,13 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 import { Upload } from '../../classes/upload.class';
 
 import { _FileImageComponent } from '../../components/_file-image/_file-image.component';
 
-import { Mobil } from '../../interfaces/mobil.interface';
+import { Mobil$Key } from '../../interfaces/mobil.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -26,8 +28,10 @@ import { UploadService } from '../../services/upload.service';
 export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 	@ViewChild('fi') C_Pp2_Dry_FI: _FileImageComponent;
 
+	get disable() { return !this.mobilForm.valid; }
+	$_pp2Upload: UploadService = new UploadService(this.$_ngfDatabase);
+	$_pp2Database: DatabaseService<Mobil$Key> = new DatabaseService(this.$_ngfDatabase);
 	cities: string[] = ["Bandung", "Cirebon", "Jakarta", "Padang"];
-	get disable() { return false || !this.mobilForm.valid; }
 	label: string;
 	mobilForm: FormGroup;
 	sembunyikan = false;
@@ -38,12 +42,11 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		private $_ngFormBuilder: FormBuilder,
 		private $_ngHttpClient: HttpClient,
 		private $_ngRouter: Router,
+		private $_ngfDatabase: AngularFireDatabase,
 		private $_pp2Config: ConfigService,
-		private $_pp2Database: DatabaseService<Mobil>,
-		public $_pp2Upload: UploadService
 	) {
-		$_pp2Database.table = 'mobil';
-		$_pp2Upload.basePath = 'mobil';
+		this.$_pp2Database.table = 'mobil';
+		this.$_pp2Upload.basePath = 'mobil';
 		this.type = $_ngActivatedRoute.data['value']['type'];
 		this.label = this.type === 'tambah' ? 'Tambah Mobil' : 'Ubah Data Mobil';
 	}
@@ -59,16 +62,16 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.mobilForm = this.$_ngFormBuilder.group(this.mobilFormObject());
 		this.C_Pp2_Dry_FI.img.nativeElement.src = '/assets/img/placeholder-mobil.png';
 		if ( id ) {
-			this.$_ngHttpClient.get<Mobil>(this.$_pp2Config.baseUrl + '/api/db/file/mobil/get/' + id)
-				.subscribe((mobil: Mobil) => {
-					this.mobilForm.setValue(this.mobilFormObject(mobil))
-					this.C_Pp2_Dry_FI.img.nativeElement.src = mobil.image;
-				})
+			this.$_pp2Database.$data$.subscribe(($mobil) => {
+				const mobil = $mobil.filter(mobil => mobil.$key == id)[0]
+				this.mobilForm.setValue(this.mobilFormObject(mobil))
+				this.C_Pp2_Dry_FI.img.nativeElement.src = mobil.image;
+			})
 		}
-		console.clear()
 	}
-	mobilFormObject(mobil: Mobil = {}) {
+	mobilFormObject(mobil: Mobil$Key = {}) {
 		return {
+			$key: [''],
 			nama: mobil.nama || [''],
 			platNo: mobil.platNo || [''],
 			kursi: mobil.kursi || [''],
@@ -76,24 +79,29 @@ export class _MobilFormComponent implements AfterViewInit, OnDestroy, OnInit {
 			hargaSewa: mobil.hargaSewa || [''],
 			image: mobil.image || [''],
 			kondisi: mobil.kondisi || [''],
-			_status: mobil._status || [''],
-			_disewa: mobil._disewa || [''],
-			_disewaSampai: mobil._disewaSampai || [''],
-			createdAt: mobil.createdAt || [''],
-			updatedAt: mobil.updatedAt || ['']
+			_status: mobil._status || ['Tersedia'],
+			_disewa: mobil._disewa || ['0'],
+			_disewaSampai: mobil._disewaSampai || ['0'],
+			createdAt: mobil.createdAt || ['0'],
+			updatedAt: mobil.updatedAt || ['0']
 		}
 	}
 	tooltipMsg(): string {
 		return this.disable ? 'Pilih Foto terlebih dahulu' : 'Simpan perubahan';
 	}
-	pp2OnSubmit(e: Event, mobil: Mobil): void {
+	pp2OnSubmit(e: Event, mobil: Mobil$Key): void {
 		e.preventDefault();
-		setTimeout(() => {
+		if ( this.type == 'tambah' || (this.type == 'ubah' && this.C_Pp2_Dry_FI.fileExist) ) {
+			this.$_pp2Upload.$upload$.subscribe((e: Upload)=>{
+				delete mobil.$key;
+				this.$_pp2Database.create(Object.assign(mobil, { image: e.url }));
+				this.$_pp2Upload.$upload$.unsubscribe()
+			})
 			let image = this.$_pp2Upload.pushUpload();
-			console.log(image)
-			console.log(image.url)
-			console.log(Object.assign(mobil, {image: image.url}))
-			// this.$_pp2Database.create(Object.assign(mobil, {image: image == undefined ? '' : image }));
-		}, 1)
+		} else if ( this.type == 'ubah' && !this.C_Pp2_Dry_FI.fileExist ) {
+			const {$key} = mobil;
+			delete mobil.$key;
+			this.$_pp2Database.update($key, mobil)
+		}
 	}
 }

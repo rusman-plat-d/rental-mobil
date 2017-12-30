@@ -1,6 +1,6 @@
-import { Mobil } from './mobil.interface';
-import { Supir } from './supir.interface';
-import { Pengguna } from './pengguna.interface';
+import { Mobil$Key } from './mobil.interface';
+import { Supir$Key } from './supir.interface';
+import { Pengguna$Key } from './pengguna.interface';
 
 export interface Sewa {
 	denda?: number;
@@ -8,9 +8,9 @@ export interface Sewa {
 	id_pengguna?: string;
 	id_supir?: string;
 	kondisi?: string;
-	mobil?: Mobil;
-	pengguna?: Pengguna;
-	supir?: Supir;
+	mobil?: Mobil$Key;
+	pengguna?: Pengguna$Key;
+	supir?: Supir$Key;
 	tglMulai?: number;
 	tglSelesai?: number;
 	tglSewaMulai?: number;
@@ -23,6 +23,7 @@ export interface Sewa {
 	updatedAt?: number;
 }
 
-export interface SewaId extends Sewa{
-	id?: string;
+export interface Sewa$Key extends Sewa{
+	$key?: string;
 }
+export { Mobil$Key, Pengguna$Key, Supir$Key }

@@ -26,6 +26,7 @@ src/client/environments/firebase.ts
 /connect.lock
 /coverage
 /libpeerconnection.log
+firebase-debug.log
 npm-debug.log
 testem.log
 /typings

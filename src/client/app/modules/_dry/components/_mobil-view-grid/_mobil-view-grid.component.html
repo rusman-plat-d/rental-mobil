@@ -17,7 +17,7 @@
 						</span>
 					</mat-grid-tile-header>
 					<div class='mat-grid-tile-content' style="padding: 8px;">
-						<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" style="max-height: 200px; width: 90%; margin-left: 5%">
+						<img [src]='mobil.image' style="max-height: 200px; width: 90%; margin-left: 5%">
 						<p>
 							<br>
 							Kursi		:	{{ mobil.kursi }}	<br>
@@ -28,7 +28,7 @@
 					</div>
 					<mat-grid-tile-footer>
 						<h3 mat-line></h3>
-						<a><button (click)='pindah(mobil.id)' color='primary' mat-raised-button style="color: #FFF !important" type="button">Sewa</button></a>
+						<a><button (click)='pindah(mobil.$key)' color='primary' mat-raised-button style="color: #FFF !important" type="button">Sewa</button></a>
 					</mat-grid-tile-footer>
 				</mat-grid-tile>
 			</mat-grid-list>

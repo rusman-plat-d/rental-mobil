@@ -1,0 +1,10 @@
+fb auth
+* this.auth.emailSignUp({email,password})
+* this.auth.emailLogin({email,password})
+* import * as firebase from 'firebase';
+	resetPassword(email: string) {
+		var auth = firebase.auth();
+		return auth.sendPasswordResetEmail(email)
+			.then(() => console.log("email sent"))
+			.catch((error) => console.log(error))
+	}

@@ -16,7 +16,7 @@
 									<mat-form-field class='full-width'>
 										<mat-select formControlName='mobil' name='mobil' placeholder='Mobil'>
 											<mat-option *ngFor='let mobil of Mobil$' [value]='$_pp2.stringify(mobil)'>
-												<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" class='iil'>
+												<img [src]="mobil.image" class='iil ------'>
 												<span class="owit">{{ mobil.nama }}</span>
 											</mat-option>
 										</mat-select>
@@ -66,7 +66,7 @@
 									<mat-form-field class='full-width'>
 										<mat-select formControlName='supir' name='supir' placeholder='Supir' [required]='butuhSupir.checked'>
 											<mat-option *ngFor='let supir of Supir$' [value]='$_pp2.stringify(supir)'>
-												<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + supir.image" class='iil'>
+												<img [src]="supir.image" class='iil'>
 												<span class="owit">{{ supir.nama }}</span>
 											</mat-option>
 										</mat-select>

@@ -18,7 +18,7 @@
 								<colgroup width='150px'></colgroup>
 								<tr>
 									<td colspan="2" style="padding: 5px;">
-										<img class="materialboxed" data-caption='gggg' [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.data.pengguna.image" style='max-width: 400px;align-self: center; justify-self: center;'>
+										<img class="materialboxed" data-caption='gggg' [src]='row.data.pengguna.image' style='max-width: 400px;align-self: center; justify-self: center;'>
 									</td>
 								</tr>
 								<tr>
@@ -59,7 +59,7 @@
 				<ng-container matColumnDef="u_image">
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
 					<mat-cell *matCellDef="let row;">
-						<img class="materialboxed" [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.pengguna.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+						<img class="materialboxed" [src]='row.pengguna.image' style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 					</mat-cell>
 				</ng-container>
 				<!-- Column Definition: u_nama -->
@@ -67,7 +67,7 @@
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Penyewa </mat-header-cell>
 					<mat-cell *matCellDef="let row;">
 						<span style='float: left !important; margin-right: 8px'>
-							<img [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.pengguna.image" style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
+							<img [src]='row.pengguna.image' style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
 						</span>
 						<span>
 							<br>{{row.pengguna.nama}}</span>
@@ -78,7 +78,7 @@
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Mobil </mat-header-cell>
 					<mat-cell *matCellDef="let row;">
 						<span style='float: left !important; margin-right: 8px'>
-							<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.mobil.image" style='height: 56px;width: 64px;align-self: center; justify-self: center;'>
+							<img [src]='row.mobil.image' style='height: 56px;width: 64px;align-self: center; justify-self: center;'>
 						</span>
 						<span> <br>{{row.mobil.nama}} </span>
 					</mat-cell>
@@ -88,7 +88,7 @@
 					<mat-header-cell *matHeaderCellDef mat-sort-header> Supir </mat-header-cell>
 					<mat-cell *matCellDef="let row;">
 						<span *ngIf='row.supir' style='float: left !important; margin-right: 8px'>
-							<img [src]="$_pp2Conf.baseUrl + '/uploads/supir/' + row.supir.image" style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
+							<img [src]='row.supir.image' style='max-height: 56px;max-width: 56px;align-self: center; justify-self: center;'>
 						</span>
 						<span> <br>{{row.supir?.nama ? row.supir?.nama : '---'}} </span>
 					</mat-cell>
@@ -125,7 +125,7 @@
 					</mat-cell>
 				</ng-container>
 			</mat-table>
-			<mat-paginator color='accent' #paginator [length]="_database.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+			<mat-paginator color='accent' #paginator [length]='length' [pageIndex]='0' [pageSize]='5' [pageSizeOptions]='[5, 10, 25, 100]'></mat-paginator>
 		</mat-card-content>
 	</mat-card>
 </div>

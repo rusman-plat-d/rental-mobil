@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { _ContainerComponent, _FileImageComponent, Pp2MediaQueryService, UploadService, DatabaseService, Mobil, MobilId, Upload } from '../../modules/_dry/index';
+import { _ContainerComponent, _FileImageComponent, Pp2MediaQueryService, UploadService, DatabaseService, Mobil, Mobil$Key, Upload } from '../../modules/_dry/index';
 import { NavComponent_ } from '../_nav/_nav.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class DevComponent implements AfterViewInit, OnInit {
 		public $_ngRouter: Router,
 		@Inject(DOCUMENT) public $_ngDOCUMENT,
 		public $_pp2Upload: UploadService,
-		public $_pp2Database: DatabaseService<MobilId>
+		public $_pp2Database: DatabaseService<Mobil$Key>
 	) {}
 	ngAfterViewInit(){
 		this.C_Pp2__Nav.$C_Mat_Sidenav_Click$.subscribe(() => {this.C_Pp2_Dry_Container.C_Mat_Sidenav.toggle();})

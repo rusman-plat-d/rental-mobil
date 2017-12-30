@@ -3,6 +3,8 @@ import { AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewCh
 import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -12,7 +14,7 @@ import { _KonfirmasiHapusDialogComponent } from '../_konfirmasi-hapus-dialog/_ko
 
 import { TableExpand } from '../../animations/table-expand.animation';
 
-import { Supir, SupirId } from '../../interfaces/supir.interface';
+import { Supir$Key } from '../../interfaces/supir.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -33,35 +35,35 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 	@ViewChild(MatSort) C_Mat_Sort: MatSort;
 	@ViewChild('filter') filter: ElementRef;
 	
-	get length(): number { return this._database.data.length; }
+	get length(): number {let v=0;try{this.$_pp2Database.data.length}catch(e){}return v }
 
+	$_pp2Database: DatabaseService<Supir$Key> = new DatabaseService<Supir$Key>(this.$_ngfDatabase)
+	$_pp2Upload: UploadService = new UploadService(this.$_ngfDatabase)
 	dialogRef: MatDialogRef<_KonfirmasiHapusDialogComponent>;
 	// displayedColumns: SupirProperties[] = ['id', 'nama', 'noSim', 'noHP', 'jk', 'hargaSewa', 'alamat', 'email', 'image', '_status', '_disewaSampai', 'createdAt', 'updatedAt'];
 	displayedColumns: SupirProperties[] = ['image', 'nama', '_status'];
-	supir: SupirId = {id: ''};
-	supirMatTableDataSource = new MatTableDataSource<SupirId>();
+	supir: Supir$Key = {$key: ''};
+	supirMatTableDataSource = new MatTableDataSource<Supir$Key>();
 
 	constructor(
 		@Inject(DOCUMENT) doc: Document,
 		public $_matDialog: MatDialog,
 		private $_ngRouter: Router,
-		public _database: DatabaseService<SupirId>,
-		public $_pp2Upload: UploadService,
+		private $_ngfDatabase: AngularFireDatabase,
 		public $_pp2Conf: ConfigService
 	) {
 		// Possible useful example for the open and closeAll events.
 		// Adding a class to the body if a dialog opens and
 		// removing it after all open dialogs are closed
-		$_matDialog.afterOpen.subscribe(() => {
-			if (!doc.body.classList.contains('no-scroll')) doc.body.classList.add('no-scroll');
-		});
-		$_matDialog.afterAllClosed.subscribe(() => {
-			doc.body.classList.remove('no-scroll');
-		});
-		_database.table='supir';
-		this.supirMatTableDataSource.sortingDataAccessor = (supir: SupirId, prop: string) => {
+		$_matDialog.afterOpen.subscribe(() => { if (!doc.body.classList.contains('no-scroll')) doc.body.classList.add('no-scroll'); });
+		$_matDialog.afterAllClosed.subscribe(() => { doc.body.classList.remove('no-scroll'); });
+		this.$_pp2Database.table='supir';
+		this.$_pp2Database.$data$.subscribe(()=>{
+			this.supirMatTableDataSource!.data = this.$_pp2Database.data.slice();
+		})
+		this.supirMatTableDataSource.sortingDataAccessor = (supir: Supir$Key, prop: string) => {
 			switch (prop) {
-				case 'id': return +supir.id;
+				case '$key': return +supir.$key;
 				case 'nama': return +supir.nama;
 				case 'noSIM': return +supir.noSIM;
 				case 'noHP': return +supir.noHP;
@@ -78,17 +80,15 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 				default: return '';
 			}
 		}
-		this.supirMatTableDataSource.filterPredicate = (supir: SupirId, filter: string) => JSON.stringify(supir).indexOf(filter) != -1;
+		this.supirMatTableDataSource.filterPredicate = (supir: Supir$Key, filter: string) => JSON.stringify(supir).indexOf(filter) != -1;
 	}
 	ngAfterViewInit(){
 		this.supirMatTableDataSource!.paginator = this.C_Mat_Paginator;
 		this.supirMatTableDataSource!.sort = this.C_Mat_Sort;
 	}
-	ngOnDestroy(){
-		this._database = null;
-	}
+	ngOnDestroy(){}
 	ngOnInit() {
-		this.supirMatTableDataSource!.data = this._database.data.slice();
+		this.supirMatTableDataSource!.data = this.$_pp2Database.data.slice();
 		Observable.fromEvent(this.filter.nativeElement, 'keyup')
 			.distinctUntilChanged()
 			.subscribe(() => {
@@ -101,16 +101,10 @@ export class _SupirViewTableComponent implements AfterViewInit, OnDestroy, OnIni
 		// this.wasExpanded.has(row) ? this.wasExpanded.delete(row) : this.wasExpanded.add(row);
 	}
 	remove(id: string) {
-		this.dialogRef = this.$_matDialog.open(_KonfirmasiHapusDialogComponent, {
-			width: '300px',
-			disableClose: true,
-			data: {
-				jenis: 'Pengguna',
-			}
-		})
+		this.dialogRef = this.$_matDialog.open(_KonfirmasiHapusDialogComponent, { width: '300px', disableClose: true })
 		this.dialogRef.componentInstance
 			.$btn$.subscribe((res: 'O' | 'X')=>{
-				if (res === 'O') this._database.remove(id)
+				if (res === 'O') this.$_pp2Database.remove(id)
 				this.dialogRef.close()
 				this.dialogRef = null;
 			})

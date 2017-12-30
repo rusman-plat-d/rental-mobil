@@ -47,10 +47,10 @@ export class Pp2Module {
 	) {
 		const platform = isPlatformBrowser(platformId) ? 'on the browser' : 'in the server';
 		console.log(`Running ${platform} with appId=${appId}`);
-		// if ( platform == 'on the browser' ) {
-		// 	const swRegister = document.createElement('script');
-		// 	swRegister.src = 'assets/sw-register.js';
-		// 	document.body.appendChild(swRegister);
-		// }
+		if ( platform == 'on the browser' ) {
+			const swRegister = document.createElement('script');
+			swRegister.src = 'assets/sw-register.js';
+			document.body.appendChild(swRegister);
+		}
 	}
 }

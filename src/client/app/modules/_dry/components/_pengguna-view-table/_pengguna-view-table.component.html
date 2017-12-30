@@ -3,14 +3,14 @@
 		<mat-drawer #C_Mat_Drawer align='end' mode='side' (open)='btnClose.focus()' style='width: 300px'>
 			<mat-toolbar color='primary'>
 				<span class='flex-auto'></span>
-				<button color='primary' mat-icon-button mat-raised-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + pengguna.id'><mat-icon>mode_edit</mat-icon></button>
-				<button (click)='remove(pengguna.id)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Pengguna'><mat-icon>delete</mat-icon></button>
+				<button color='primary' mat-icon-button mat-raised-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + pengguna.$key'><mat-icon>mode_edit</mat-icon></button>
+				<button (click)='remove(pengguna.$key)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Pengguna'><mat-icon>delete</mat-icon></button>
 				<button #btnClose (click)='C_Mat_Drawer.close()' color='accent' mat-icon-button mat-raised-button matTooltip='Tutup'><mat-icon>close</mat-icon></button>
 			</mat-toolbar>
 			<table class='browser-default'>
 				<tr>
 					<td colspan="2">
-						<img [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + pengguna.image" style='max-height: 360px;width: 100%;'>
+						<img [src]="pengguna.image" style='max-height: 360px;width: 100%;'>
 					</td>
 				</tr>
 				<tr>
@@ -58,7 +58,7 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
@@ -93,7 +93,7 @@
 						<!-- Column Definition: id -->
 						<ng-container matColumnDef="id">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+							<mat-cell *matCellDef="let row"> {{row.$key}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: nama -->
 						<ng-container matColumnDef="nama">
@@ -129,7 +129,7 @@
 						<ng-container matColumnDef="image">
 							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.baseUrl + '/uploads/pengguna/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img [src]="row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: action -->
@@ -139,16 +139,16 @@
 								<button (click)="rowClick(row)" color='primary' mat-raised-button mat-icon-button matTooltip='Detail Pengguna'>
 									<mat-icon>details</mat-icon>
 								</button>
-								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + row.id'>
+								<button color='accent' mat-raised-button mat-icon-button matTooltip='Ubah Data Pengguna' [routerLink]='"/pengurus/pengguna/ubah/" + row.$key'>
 									<mat-icon>mode_edit</mat-icon>
 								</button>
-								<button (click)='remove(row.id)' color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Pengguna'>
+								<button (click)='remove(row.$key)' color='warn' mat-raised-button mat-icon-button matTooltip='Hapus Pengguna'>
 									<mat-icon>delete</mat-icon>
 								</button>
 							</mat-cell>
 						</ng-container>
 					</mat-table>
-					<mat-paginator color='accent' #paginator [length]="_database.data.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+					<mat-paginator color='accent' #paginator [length]="length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 				</mat-card-content>
 			</mat-card>
 		</mat-drawer-content>

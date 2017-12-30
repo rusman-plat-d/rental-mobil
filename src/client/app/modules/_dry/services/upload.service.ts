@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Upload } from '../classes/upload.class';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
@@ -11,6 +11,7 @@ export class UploadService {
 	currentUpload: Upload;
 	uploadsRef: AngularFireList<Upload>;
 	uploads: Observable<Upload[]>;
+	$upload$: EventEmitter<Upload> = new EventEmitter<Upload>();
 	selectedFiles: FileList | null;
 
 	constructor(private db: AngularFireDatabase) { }
@@ -53,6 +54,7 @@ export class UploadService {
 					this.currentUpload.url = uploadTask.snapshot.downloadURL;
 					this.currentUpload.name = this.currentUpload.file.name;
 					this.saveFileData();
+					this.$upload$.next(this.currentUpload);
 				} else {
 					console.error('No download URL!');
 				}
@@ -62,7 +64,7 @@ export class UploadService {
 	}
 	// Writes the file details to the realtime db
 	private saveFileData(): firebase.database.ThenableReference {
-		return this.db.list(`${this.basePath}/`).push(this.currentUpload);
+		return this.db.list(`uploads/${this.basePath}/`).push(this.currentUpload);
 	}
 	// Writes the file details to the realtime db
 	private deleteFileData(key: string): Promise<void> {

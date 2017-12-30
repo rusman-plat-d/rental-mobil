@@ -3,14 +3,14 @@
 		<mat-drawer #C_Mat_Drawer align='end' mode='side' (open)='btnClose.focus()' style='width: 300px'>
 			<mat-toolbar color='primary'>
 				<span class='flex-auto'></span>
-				<button color='primary' mat-icon-button mat-raised-button matTooltip='Ubah Data Mobil' [routerLink]='"/pengurus/mobil/ubah/" + mobil.id'><mat-icon>mode_edit</mat-icon></button>
-				<button (click)='remove(mobil.id)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Mobil'><mat-icon>delete</mat-icon></button>
+				<button color='primary' mat-icon-button mat-raised-button matTooltip='Ubah Data Mobil' [routerLink]='"/pengurus/mobil/ubah/" + mobil.$key'><mat-icon>mode_edit</mat-icon></button>
+				<button (click)='remove(mobil.$key)' color='warn' mat-icon-button mat-raised-button matTooltip='Hapus Mobil'><mat-icon>delete</mat-icon></button>
 				<button #btnClose (click)='C_Mat_Drawer.close()' color='accent' mat-icon-button mat-raised-button matTooltip='Tutup'><mat-icon>close</mat-icon></button>
 			</mat-toolbar>
 			<table class='browser-default'>
 				<tr>
 					<td colspan="2">
-						<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + mobil.image" style='max-height: 150px;width: 100%'>
+						<img [src]="mobil.image" style='max-height: 150px;width: 100%'>
 					</td>
 				</tr>
 				<tr>
@@ -62,7 +62,7 @@
 										<colgroup width='150px'></colgroup>
 										<tr>
 											<td colspan="2" style="padding: 5px;">
-												<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
+												<img [src]="row.data.image" style='max-width: 550px;align-self: center; justify-self: center;'>
 											</td>
 										</tr>
 										<tr>
@@ -101,7 +101,7 @@
 						<!-- Column Definition: id -->
 						<ng-container matColumnDef="id">
 							<mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-							<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+							<mat-cell *matCellDef="let row"> {{row.$key}} </mat-cell>
 						</ng-container>
 						<!-- Column Definition: nama -->
 						<ng-container matColumnDef="nama">
@@ -137,7 +137,7 @@
 						<ng-container matColumnDef="image">
 							<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<img [src]="$_pp2Conf.baseUrl + '/uploads/mobil/' + row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
+								<img [src]="row.image" style='max-height: 50px;max-width: 50px;align-self: center; justify-self: center;'>
 							</mat-cell>
 						</ng-container>
 						<!-- Column Definition: _status -->

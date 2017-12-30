@@ -12,6 +12,6 @@ export interface Pengguna {
 	updatedAt?: number;
 }
 
-export interface PenggunaId extends Pengguna{
-	id?: string;
+export interface Pengguna$Key extends Pengguna{
+	$key?: string;
 }

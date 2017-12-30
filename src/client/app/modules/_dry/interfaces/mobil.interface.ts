@@ -13,6 +13,6 @@ export interface Mobil {
 	updatedAt?: number;
 }
 
-export interface MobilId extends Mobil {
-	id?: string;
+export interface Mobil$Key extends Mobil {
+	$key?: string;
 }

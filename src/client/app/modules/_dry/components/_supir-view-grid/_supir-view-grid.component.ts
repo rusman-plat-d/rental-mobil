@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Supir, SupirId } from '../../interfaces/supir.interface';
+import { Supir$Key } from '../../interfaces/supir.interface';
 
 import { ConfigService } from '../../services/config.service';
 import { DatabaseService } from '../../services/database.service';
@@ -23,7 +23,7 @@ import { Pp2MediaQueryService } from '../../services/Pp2-media-query.service';
 })
 export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	@Output() $C_Mat_Sidenav_Click$ = new EventEmitter();
-	get Supir$(): Supir[] { return this.$_pp2Database.data }
+	get Supir$(): Supir$Key[] { return this.$_pp2Database.data }
 	get cols(): number {
 		if (this.$_pp2MQ.screen.gtOE.l)
 			return 3;
@@ -34,7 +34,7 @@ export class _SupirViewGridComponent implements AfterViewInit, OnInit {
 	}
 	constructor(
 		public $_pp2Conf: ConfigService,
-		private $_pp2Database: DatabaseService<SupirId>,
+		private $_pp2Database: DatabaseService<Supir$Key>,
 		private $_pp2MQ: Pp2MediaQueryService,
 		private $_ngRouter: Router
 	) {
